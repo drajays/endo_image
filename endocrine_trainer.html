@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Endocrine Imaging Trainer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .medical-gradient { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); }
+        .card-hover:hover { transform: translateY(-5px); transition: all 0.3s ease; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+    <!-- Navigation Header -->
+    <header class="medical-gradient text-white shadow-lg p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="app.goHome()">
+                <i class="fas fa-microscope text-2xl"></i>
+                <h1 class="text-xl font-bold tracking-tight">Endocrine Imaging <span class="font-light opacity-80">Trainer</span></h1>
+            </div>
+            <div id="user-progress" class="text-sm bg-white/20 px-3 py-1 rounded-full font-medium">
+                Progress: 0%
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="container mx-auto p-4 md:p-8">
+        
+        <!-- Home View: Module Selection -->
+        <div id="view-home" class="view">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-slate-800 mb-4">Welcome, Resident</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto">Master the art of endocrine imaging through structured notes and pattern recognition. Select a module to begin your training.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Pituitary Module Card -->
+                <div onclick="app.startModule('pituitary')" class="card-hover bg-white p-6 rounded-2xl shadow-sm border border-slate-200 cursor-pointer group">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                        <i class="fas fa-brain text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Pituitary MRI</h3>
+                    <p class="text-slate-500 text-sm mb-4">100 High-yield points covering anatomy, micro/macroadenomas, and post-op evaluation.</p>
+                    <div class="flex items-center text-blue-600 font-semibold text-sm">
+                        Start Training <i class="fas fa-arrow-right ml-2"></i>
+                    </div>
+                </div>
+                <!-- Placeholder Modules -->
+                <div class="bg-slate-100 p-6 rounded-2xl border border-dashed border-slate-300 opacity-60">
+                    <div class="w-12 h-12 bg-slate-200 text-slate-400 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-lock text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-slate-400">Adrenal Imaging</h3>
+                    <p class="text-slate-400 text-sm">Coming soon in the next update.</p>
+                </div>
+                <div class="bg-slate-100 p-6 rounded-2xl border border-dashed border-slate-300 opacity-60">
+                    <div class="w-12 h-12 bg-slate-200 text-slate-400 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-lock text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-slate-400">Thyroid & Parathyroid</h3>
+                    <p class="text-slate-400 text-sm">Coming soon in the next update.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module Dashboard View -->
+        <div id="view-module-dash" class="view hidden">
+            <div class="flex items-center gap-4 mb-8">
+                <button onclick="app.goHome()" class="p-2 text-slate-500 hover:text-blue-600 transition-colors">
+                    <i class="fas fa-chevron-left text-xl"></i>
+                </button>
+                <h2 id="module-title" class="text-2xl font-bold text-slate-800">Pituitary MRI Training</h2>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                <!-- Sidebar: Lesson List -->
+                <div class="lg:col-span-1 space-y-3" id="lesson-list">
+                    <!-- Lessons will be injected here -->
+                </div>
+                <!-- Main Content: Notes or Quiz -->
+                <div class="lg:col-span-3">
+                    <div id="module-content-card" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 min-h-[600px]">
+                        <div id="content-placeholder" class="flex flex-col items-center justify-center h-full text-center py-20">
+                            <i class="fas fa-book-open text-5xl text-slate-200 mb-4"></i>
+                            <p class="text-slate-400">Select a lesson from the left to begin learning.</p>
+                        </div>
+                        <div id="content-area" class="hidden">
+                            <!-- Content injected here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz View -->
+        <div id="view-quiz" class="view hidden">
+            <div class="max-w-3xl mx-auto">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-slate-800">Knowledge Check</h2>
+                    <div id="quiz-progress" class="text-sm font-medium text-slate-500">Question 1 of 10</div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-8">
+                    <div id="quiz-image-container" class="mb-6 hidden">
+                        <div class="bg-slate-900 rounded-xl overflow-hidden flex items-center justify-center relative group">
+                            <img id="quiz-image" src="" alt="MRI Case" class="max-h-96 w-auto">
+                            <div class="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs p-2 opacity-0 group-hover:opacity-100 transition-opacity text-center">
+                                Case Image: Analyze the morphology and signal
+                            </div>
+                        </div>
+                    </div>
+                    <div id="quiz-question" class="text-lg font-semibold mb-6 text-slate-800"></div>
+                    <div id="quiz-options" class="grid grid-cols-1 gap-3">
+                        <!-- Options injected here -->
+                    </div>
+                    <div id="quiz-feedback" class="mt-6 p-4 rounded-xl hidden">
+                        <!-- Feedback injected here -->
+                    </div>
+                    <div class="mt-8 flex justify-end">
+                        <button id="btn-next-question" onclick="app.nextQuestion()" class="hidden bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                            Next Question <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        const PITUITARY_DATA = {
+            title: "Pituitary MRI Mastery",
+            lessons: [
+                {
+                    id: "l1",
+                    title: "Normal Anatomy & Physiology",
+                    points: [
+                        "The normal gland height varies by age and sex: typically < 8 mm in adults.",
+                        "In menstruating females, up to 10 mm is normal; during late pregnancy/postpartum, physiological hypertrophy up to 12 mm with a convex upper border is expected.",
+                        "The posterior pituitary 'bright spot' is normally seen on unenhanced T1-weighted images.",
+                        "This bright spot represents vasopressin packaged with neurophysin II in neurosecretory vesicles.",
+                        "Absence of the bright spot is not entirely specific; it is absent in ~20% of normal individuals but is a hallmark of central diabetes insipidus.",
+                        "The normal pituitary stalk should taper: < 3 mm at the optic chiasm and < 2 mm at the pituitary insertion.",
+                        "The stalk normally enhances intensely and homogeneously due to the lack of a blood-brain barrier.",
+                        "The optic chiasm typically sits ~8 mm above the diaphragma sellae.",
+                        "A 'pre-fixed' chiasm sits over the tuberculum sellae; a 'post-fixed' chiasm sits over the dorsum sellae, altering the visual field defect pattern if compressed.",
+                        "The cavernous sinus contains the internal carotid artery (ICA) and cranial nerves III, IV, V1, V2, and VI.",
+                        "CN VI (Abducens) runs freely within the sinus adjacent to the ICA, making it highly vulnerable to lateral tumor extension.",
+                        "CN III, IV, V1, and V2 are embedded in the lateral dural wall of the cavernous sinus.",
+                        "The 'empty sella' is often an incidental finding caused by a herniation of the subarachnoid space through an incompetent diaphragma sellae.",
+                        "Primary empty sella is common in idiopathic intracranial hypertension (IIH); evaluate the optic nerve sheaths for distension.",
+                        "Ectopic posterior pituitary presents as a T1 bright spot at the median eminence, usually with an absent or truncated stalk, often linked to congenital GH deficiency."
+                    ],
+                    imageHint: "T1 Sagittal view showing the posterior bright spot and stalk anatomy."
+                },
+                {
+                    id: "l2",
+                    title: "MRI Protocols & Physics",
+                    points: [
+                        "T1-weighted images are best for defining anatomy, hemorrhage, and the posterior bright spot.",
+                        "T2-weighted images differentiate soft/cystic vs. fibrous tissue, helping neurosurgeons predict tumor consistency.",
+                        "Dynamic contrast-enhanced (DCE) MRI is the gold standard for microadenomas.",
+                        "In DCE, images are acquired every 15–30 seconds after gadolinium injection.",
+                        "The normal anterior gland enhances before the adenoma (peak normal enhancement at 30–60 seconds).",
+                        "A microadenoma typically appears as a focal, hypoenhancing (darker) lesion during the early arterial phase.",
+                        "On delayed imaging (30–60 minutes), the normal gland washes out, while the adenoma retains contrast, becoming isointense or hyperintense.",
+                        "Fat suppression (Fat-Sat) is critical post-operatively to distinguish residual tumor from fat grafts.",
+                        "FIESTA/CISS (heavily T2-weighted 3D sequences) are excellent for tracing the exact course of cranial nerves.",
+                        "Dental braces or metallic implants can cause susceptibility artifacts on gradient-echo sequences."
+                    ],
+                    imageHint: "Comparison between T1, T2, and DCE sequences in the sella."
+                },
+                {
+                    id: "l3",
+                    title: "Microadenomas",
+                    points: [
+                        "Defined strictly as an adenoma < 10 mm in maximum diameter.",
+                        "Corticotroph (Cushing's) microadenomas are notoriously the smallest and hardest to find; may require 3-Tesla MRI or IPSS.",
+                        "Indirect sign: Focal convexity or upward bulging of the superior contour of the gland.",
+                        "Indirect sign: Deviation of the pituitary stalk away from the lesion.",
+                        "Indirect sign: Asymmetric focal sloping or erosion of the sellar floor.",
+                        "The normal stalk can be slightly eccentric; stalk deviation alone without a visible mass is insufficient.",
+                        "Incidentalomas (< 5 mm) are found in 10-20% of the healthy population; biochemical correlation is mandatory.",
+                        "Microadenomas rarely cause visual symptoms; if bitemporal hemianopsia exists, look for other causes.",
+                        "Prolactinomas are the most common secretory microadenomas.",
+                        "Cystic microadenomas can mimic Rathke's cleft cysts but usually lack the characteristic T2 hypointense nodule.",
+                        "Hemorrhage into a microadenoma can render it spontaneously T1 hyperintense.",
+                        "In Cushing's, if MRI is negative, the tumor might be in the cavernous sinus wall or the stalk.",
+                        "Volume averaging artifact in thin slices can falsely create the appearance of a microadenoma.",
+                        "Always review all three planes (sagittal, coronal, axial); a true lesion must be visible in at least two.",
+                        "SPGR sequences are highly sensitive for detecting subtle microadenomas on 3T scanners."
+                    ],
+                    imageHint: "Coronal T1 post-contrast showing a hypoenhancing microadenoma with stalk deviation."
+                },
+                {
+                    id: "l4",
+                    title: "Macroadenomas & Invasion",
+                    points: [
+                        "Defined as ≥ 10 mm; 'Giant' adenomas are ≥ 40 mm.",
+                        "The classic 'Snowman' or 'Figure-8' sign occurs when a macroadenoma is constricted by the diaphragma sellae.",
+                        "Suprasellar extension obliterates the suprasellar cistern and compresses the optic chiasm.",
+                        "The Knosp Classification predicts cavernous sinus invasion on coronal MRI.",
+                        "Knosp Grade 0: Tumor is medial to the medial tangent of the intracavernous ICA.",
+                        "Knosp Grade 1: Tumor extends between the medial and intercarotid lines.",
+                        "Knosp Grade 2: Tumor extends beyond the intercarotid line but not past the lateral tangent.",
+                        "Knosp Grade 3: Tumor extends lateral to the lateral tangent of the ICA (True invasion highly likely).",
+                        "Knosp Grade 4: Total encasement of the intracavernous ICA.",
+                        "True macroadenomas usually expand the sella; a large mass in a normal-sized sella is likely a metastasis or meningioma.",
+                        "The 'Stalk Effect': Non-functioning macroadenoma compresses the stalk, causing mild hyperprolactinemia (< 100 ng/mL).",
+                        "True macroprolactinomas typically present with prolactin levels > 250 ng/mL.",
+                        "Dural tail sign is rare in adenomas; if present, suspect a meningioma.",
+                        "Macroadenomas are generally soft and homogeneous, but hemorrhage/necrosis creates heterogeneity."
+                    ],
+                    imageHint: "Coronal MRI showing a 'Snowman' shaped macroadenoma and ICA relationship (Knosp grading)."
+                },
+                {
+                    id: "l5",
+                    title: "Apoplexy, Cysts, & Hemorrhage",
+                    points: [
+                        "Pituitary apoplexy: Sudden headache, vision loss, ophthalmoplegia driven by acute hemorrhage or infarction.",
+                        "Acute blood (deoxyhemoglobin) is T1 isointense and T2 extremely dark.",
+                        "Subacute blood (methemoglobin) is characteristically T1 hyperintense (bright) and T2 bright.",
+                        "Indirect sign of apoplexy: Unexplained sphenoid sinus mucosal thickening directly below the sella.",
+                        "T2* Gradient Echo (GRE) or SWI sequences will show 'blooming' artifact confirming microscopic blood.",
+                        "Rathke's Cleft Cyst (RCC): Non-enhancing, centrally located between the anterior and posterior lobes.",
+                        "RCC classic sign: An intracystic, non-enhancing T1-bright/T2-dark nodule (the 'dot' sign).",
+                        "RCC classic sign: The 'Claw sign'—enhancing normal pituitary tissue stretched around the cyst.",
+                        "Craniopharyngioma (Adamantinomatous): Childhood, highly cystic, calcifications, 'machinery oil' T1 hyperintense cysts.",
+                        "Craniopharyngioma (Papillary): Adults, mostly solid, lacks calcification and machinery oil.",
+                        "Arachnoid cysts: Follow CSF signal (T1 dark, T2 bright, FLAIR suppress) and do not enhance.",
+                        "Epidermoid cysts: T1 dark, T2 bright, but restrict diffusion on DWI (appear bright).",
+                        "Hemorrhagic cysts in an adenoma enhance at the periphery; RCC does not have a true enhancing wall.",
+                        "A fluid-fluid level in a sellar mass is highly indicative of prior hemorrhage."
+                    ],
+                    imageHint: "T1-weighted image of a Rathke's Cleft Cyst showing the 'dot sign' and the 'claw sign'."
+                },
+                {
+                    id: "l6",
+                    title: "The Mimics & Inflammatory",
+                    points: [
+                        "Lymphocytic Hypophysitis: Late pregnancy/postpartum. Symmetrically enlarged gland, intense enhancement, thickened stalk.",
+                        "Loss of the posterior bright spot is almost universal in lymphocytic hypophysitis (causing DI).",
+                        "IgG4-Related Hypophysitis: Older males, profound stalk thickening, associated with pachymeningitis.",
+                        "Sarcoidosis: Nodular stalk thickening and extension along the leptomeninges.",
+                        "Tuberculosis: Tuberculoma mimicking macroadenoma; basilar exudates and extreme stalk thickening.",
+                        "Metastases: Breast/lung common. Rapid growth, destroy bone, early DI (posterior pituitary predilection).",
+                        "Meningioma: Tuberculum sellae/planum sphenoidale. Hyperostosis and 'dural tail' sign.",
+                        "Meningiomas rarely enlarge the sella turcica itself.",
+                        "Langerhans Cell Histiocytosis (LCH): Child with DI and isolated thickened pituitary stalk.",
+                        "Germinoma: Pineal region mass + suprasellar mass (bifocal) in a young patient with DI.",
+                        "Aneurysm: Rule out cavernous/supraclinoid ICA aneurysm (flow voids on T2) before biopsy.",
+                        "Hamartoma of the tuber cinereum: Non-enhancing, between mammillary bodies and stalk, gelastic seizures."
+                    ],
+                    imageHint: "Coronal MRI showing symmetrical gland enlargement and stalk thickening (Hypophysitis)."
+                },
+                {
+                    id: "l7",
+                    title: "Post-Operative Evaluation",
+                    points: [
+                        "Baseline post-operative MRI should ideally be obtained 3 to 4 months after surgery.",
+                        "Scanning too early (weeks 1–6) reveals surgical debris, blood, and Gelfoam mimicking tumor.",
+                        "Fat grafts placed in the sella to prevent CSF leaks are T1 hyperintense.",
+                        "Always use Fat-Sat T1 post-contrast to distinguish fat grafts from enhancing residual tumor.",
+                        "Gelfoam can mimic an abscess; may trap air (signal voids) and shows peripheral enhancement.",
+                        "The normal pituitary gland may take months to 're-expand' or drop down into the sella.",
+                        "Post-op stalk deviation is common and not always indicative of residual tumor.",
+                        "Thin rind of enhancement along the resection cavity is normal granulation tissue.",
+                        "Nodular, asymmetric enhancement > 2-3 mm is suspicious for residual adenoma.",
+                        "Monitor recurrence by comparing with the 3-month baseline, not the pre-op scan.",
+                        "In Cushing's, recurrence is hard to find; dynamic contrast is mandatory.",
+                        "Cabergoline for prolactinomas: Tumor shrinks, may undergo cystic degeneration or fibrosis (darker T2).",
+                        "Rapid shrinkage on dopamine agonists can create secondary empty sella / CSF rhinorrhea.",
+                        "Radiation therapy induces progressive empty sella and can cause optic chiasm necrosis."
+                    ],
+                    imageHint: "Post-op Fat-Sat T1 image showing a fat graft (suppressed) vs enhancing residual tumor."
+                }
+            ],
+            quizzes: [
+                {
+                    question: "A 32-year-old female presents with bitemporal hemianopsia. MRI shows a 6mm focal hypoenhancing lesion in the left side of the pituitary gland during the early arterial phase of DCE-MRI. What is the most likely diagnosis?",
+                    options: [
+                        "Macroprolactinoma",
+                        "Microadenoma",
+                        "Rathke's Cleft Cyst",
+                        "Pituitary Apoplexy"
+                    ],
+                    correct: 1,
+                    explanation: "A lesion < 10mm is a microadenoma. Focal hypoenhancement during the early arterial phase is the classic appearance of a pituitary adenoma on DCE-MRI.",
+                    image: "https://via.placeholder.com/600x400?text=Coronal+DCE-MRI+Hypoenhancing+Lesion"
+                },
+                {
+                    question: "Which Knosp Grade describes a tumor that extends lateral to the lateral tangent of the intracavernous ICA?",
+                    options: [
+                        "Grade 1",
+                        "Grade 2",
+                        "Grade 3",
+                        "Grade 4"
+                    ],
+                    correct: 2,
+                    explanation: "Knosp Grade 3 is defined as tumor extension lateral to the lateral tangent of the ICA, indicating true cavernous sinus invasion.",
+                    image: "https://via.placeholder.com/600x400?text=Knosp+Classification+Diagram"
+                },
+                {
+                    question: "In a patient with suspected pituitary apoplexy, which MRI finding is a critical indirect sign?",
+                    options: [
+                        "T1 hyperintense posterior bright spot",
+                        "Sphenoid sinus mucosal thickening",
+                        "Symmetrical stalk thickening",
+                        "Dural tail sign"
+                    ],
+                    correct: 1,
+                    explanation: "Unexplained sphenoid sinus mucosal thickening (sympathetic effusion) directly below the sella is a critical indirect sign of pituitary apoplexy.",
+                    image: "https://via.placeholder.com/600x400?text=Sellar+Mass+with+Sphenoid+Effusion"
+                },
+                {
+                    question: "What is the 'dot sign' in the context of sellar imaging?",
+                    options: [
+                        "The posterior pituitary bright spot",
+                        "A calcification in a craniopharyngioma",
+                        "An intracystic non-enhancing T1-bright/T2-dark nodule in a Rathke's Cleft Cyst",
+                        "A microadenoma in Cushing's disease"
+                    ],
+                    correct: 2,
+                    explanation: "The 'dot sign' is an intracystic, non-enhancing T1-bright/T2-dark nodule characteristic of Rathke's Cleft Cysts.",
+                    image: "https://via.placeholder.com/600x400?text=Rathke+Cleft+Cyst+Dot+Sign"
+                },
+                {
+                    question: "When is the ideal time to perform the baseline post-operative MRI after transsphenoidal surgery?",
+                    options: [
+                        "1 week post-op",
+                        "2-4 weeks post-op",
+                        "3-4 months post-op",
+                        "1 year post-op"
+                    ],
+                    correct: 2,
+                    explanation: "The baseline post-operative MRI should ideally be obtained 3 to 4 months after surgery to avoid mistaking surgical debris and blood for residual tumor.",
+                    image: "https://via.placeholder.com/600x400?text=Post-Op+Sellar+Cavity"
+                },
+                {
+                    question: "A child presents with new-onset diabetes insipidus (DI) and MRI shows an isolated thickened pituitary stalk without a sellar mass. What is the most likely diagnosis?",
+                    options: [
+                        "Papillary Craniopharyngioma",
+                        "Langerhans Cell Histiocytosis (LCH)",
+                        "Lymphocytic Hypophysitis",
+                        "Pituitary Adenoma"
+                    ],
+                    correct: 1,
+                    explanation: "LCH is a classic cause of isolated stalk thickening and DI in pediatric populations.",
+                    image: "https://via.placeholder.com/600x400?text=Thickened+Pituitary+Stalk"
+                },
+                {
+                    question: "Which feature distinguishes an Epidermoid cyst from an Arachnoid cyst on MRI?",
+                    options: [
+                        "T1 signal intensity",
+                        "T2 signal intensity",
+                        "Diffusion restriction on DWI",
+                        "Contrast enhancement"
+                    ],
+                    correct: 2,
+                    explanation: "Both look similar on T1 and T2 (T1 dark, T2 bright), but epidermoid cysts restrict diffusion (bright on DWI), whereas arachnoid cysts do not.",
+                    image: "https://via.placeholder.com/600x400?text=DWI+Restriction+Comparison"
+                }
+            ]
+        };
+
+        class EndocrineApp {
+            constructor() {
+                this.currentModule = null;
+                this.currentLesson = null;
+                this.quizIndex = 0;
+                this.score = 0;
+                this.progress = 0;
+            }
+
+            goHome() {
+                this.switchView('view-home');
+            }
+
+            switchView(viewId) {
+                document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+                document.getElementById(viewId).classList.remove('hidden');
+            }
+
+            startModule(moduleId) {
+                if (moduleId === 'pituitary') {
+                    this.currentModule = PITUITARY_DATA;
+                    document.getElementById('module-title').innerText = this.currentModule.title;
+                    this.renderLessonList();
+                    this.switchView('view-module-dash');
+                }
+            }
+
+            renderLessonList() {
+                const list = document.getElementById('lesson-list');
+                list.innerHTML = '';
+                this.currentModule.lessons.forEach((lesson, index) => {
+                    const btn = document.createElement('div');
+                    btn.className = `p-4 rounded-xl cursor-pointer transition-all border-l-4 flex justify-between items-center ${this.currentLesson === lesson.id ? 'bg-blue-50 border-blue-600 text-blue-700 font-semibold' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'}`;
+                    btn.innerHTML = `
+                        <span class="text-sm">${index + 1}. ${lesson.title}</span>
+                        <i class="fas ${this.currentLesson === lesson.id ? 'fa-check-circle text-blue-600' : 'fa-circle text-slate-300'} text-xs"></i>
+                    `;
+                    btn.onclick = () => this.loadLesson(lesson.id);
+                    list.appendChild(btn);
+                });
+
+                // Add Quiz Button
+                const quizBtn = document.createElement('div');
+                quizBtn.className = `p-4 rounded-xl cursor-pointer transition-all border-l-4 bg-indigo-600 text-white font-bold hover:bg-indigo-700 flex justify-between items-center`;
+                quizBtn.innerHTML = `
+                    <span class="text-sm"><i class="fas fa-vial mr-2"></i> Knowledge Check</span>
+                    <i class="fas fa-play text-xs"></i>
+                `;
+                quizBtn.onclick = () => this.startQuiz();
+                list.appendChild(quizBtn);
+            }
+
+            loadLesson(lessonId) {
+                this.currentLesson = lessonId;
+                this.renderLessonList();
+                
+                const lesson = this.currentModule.lessons.find(l => l.id === lessonId);
+                const contentArea = document.getElementById('content-area');
+                const placeholder = document.getElementById('content-placeholder');
+                
+                placeholder.classList.add('hidden');
+                contentArea.classList.remove('hidden');
+
+                let pointsHtml = lesson.points.map(p => `
+                    <div class="flex gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0">
+                        <div class="flex-shrink-0 w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs font-bold mt-1">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <p class="text-slate-700 leading-relaxed">${p}</p>
+                    </div>
+                `).join('');
+
+                contentArea.innerHTML = `
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold text-slate-800 mb-2">${lesson.title}</h3>
+                        <div class="h-1 w-20 bg-blue-600 rounded"></div>
+                    </div>
+                    <div class="mb-8 p-4 bg-amber-50 border border-amber-100 rounded-xl flex gap-4 items-start">
+                        <i class="fas fa-lightbulb text-amber-500 mt-1"></i>
+                        <div>
+                            <span class="font-semibold text-amber-800 block text-sm">Radiology Pearl:</span>
+                            <p class="text-amber-700 text-sm">${lesson.imageHint}</p>
+                        </div>
+                    </div>
+                    <div class="space-y-1">
+                        ${pointsHtml}
+                    </div>
+                `;
+                
+                this.updateProgress(10); // Simple increment
+            }
+
+            startQuiz() {
+                this.quizIndex = 0;
+                this.score = 0;
+                this.switchView('view-quiz');
+                this.showQuestion();
+            }
+
+            showQuestion() {
+                const quiz = this.currentModule.quizzes[this.quizIndex];
+                const qText = document.getElementById('quiz-question');
+                const qOptions = document.getElementById('quiz-options');
+                const qImgCont = document.getElementById('quiz-image-container');
+                const qImg = document.getElementById('quiz-image');
+                const qProg = document.getElementById('quiz-progress');
+                const feedback = document.getElementById('quiz-feedback');
+                const nextBtn = document.getElementById('btn-next-question');
+
+                feedback.classList.add('hidden');
+                nextBtn.classList.add('hidden');
+                qProg.innerText = `Question ${this.quizIndex + 1} of ${this.currentModule.quizzes.length}`;
+
+                qText.innerText = quiz.question;
+                
+                if (quiz.image) {
+                    qImgCont.classList.remove('hidden');
+                    qImg.src = quiz.image;
+                } else {
+                    qImgCont.classList.add('hidden');
+                }
+
+                qOptions.innerHTML = '';
+                quiz.options.forEach((opt, idx) => {
+                    const btn = document.createElement('button');
+                    btn.className = "text-left p-4 rounded-xl border-2 border-slate-200 hover:border-blue-400 hover:bg-blue-50 transition-all font-medium text-slate-700";
+                    btn.innerText = opt;
+                    btn.onclick = () => this.checkAnswer(idx);
+                    qOptions.appendChild(btn);
+                });
+            }
+
+            checkAnswer(choiceIdx) {
+                const quiz = this.currentModule.quizzes[this.quizIndex];
+                const options = document.getElementById('quiz-options').children;
+                const feedback = document.getElementById('quiz-feedback');
+                const nextBtn = document.getElementById('btn-next-question');
+
+                // Disable all options
+                for (let btn of options) {
+                    btn.disabled = true;
+                    btn.classList.remove('hover:border-blue-400', 'hover:bg-blue-50');
+                }
+
+                if (choiceIdx === quiz.correct) {
+                    options[choiceIdx].classList.replace('border-slate-200', 'border-green-500');
+                    options[choiceIdx].classList.add('bg-green-50', 'text-green-700');
+                    feedback.className = "mt-6 p-4 rounded-xl bg-green-100 text-green-800 block";
+                    feedback.innerHTML = `<strong>Correct!</strong> ${quiz.explanation}`;
+                    this.score++;
+                } else {
+                    options[choiceIdx].classList.replace('border-slate-200', 'border-red-500');
+                    options[choiceIdx].classList.add('bg-red-50', 'text-red-700');
+                    options[quiz.correct].classList.replace('border-slate-200', 'border-green-500');
+                    options[quiz.correct].classList.add('bg-green-50', 'text-green-700');
+                    feedback.className = "mt-6 p-4 rounded-xl bg-red-100 text-red-800 block";
+                    feedback.innerHTML = `<strong>Incorrect.</strong> ${quiz.explanation}`;
+                }
+
+                nextBtn.classList.remove('hidden');
+            }
+
+            nextQuestion() {
+                this.quizIndex++;
+                if (this.quizIndex < this.currentModule.quizzes.length) {
+                    this.showQuestion();
+                } else {
+                    this.finishQuiz();
+                }
+            }
+
+            finishQuiz() {
+                const perc = Math.round((this.score / this.currentModule.quizzes.length) * 100);
+                document.getElementById('view-quiz').innerHTML = `
+                    <div class="max-w-md mx-auto text-center py-20 bg-white rounded-3xl shadow-xl border border-slate-200">
+                        <div class="w-24 h-24 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-trophy text-4xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-slate-800 mb-2">Training Complete!</h2>
+                        <p class="text-slate-500 mb-6">You've completed the Pituitary MRI module.</p>
+                        <div class="text-5xl font-black text-blue-600 mb-8">${perc}%</div>
+                        <button onclick="location.reload()" class="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition-all w-full">
+                            Back to Dashboard
+                        </button>
+                    </div>
+                `;
+                this.updateProgress(100);
+            }
+
+            updateProgress(val) {
+                this.progress = val;
+                document.getElementById('user-progress').innerText = `Progress: ${this.progress}%`;
+            }
+        }
+
+        const app = new EndocrineApp();
+    </script>
+</body>
+</html>
