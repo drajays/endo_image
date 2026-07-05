@@ -2,3 +2,10 @@
 .DS_Store
 */.DS_Store
 **/.DS_Store
+
+# Scratch build artifacts (module authoring)
+*.py
+__pycache__/
+adrenal2_batches/
+adrenal2_data.json
+ocr_results.json
