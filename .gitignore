@@ -3,9 +3,9 @@
 */.DS_Store
 **/.DS_Store
 
-# Scratch build artifacts (module authoring)
-*.py
-__pycache__/
-adrenal2_batches/
-adrenal2_data.json
-ocr_results.json
+# Local-only raw / scratch files — never upload (module authoring: OCR, batches, scripts)
+no_upload/
+
+# Local-only Claude guidance — keep local, do not publish to the repo
+CLAUDE.md
+.claude/
