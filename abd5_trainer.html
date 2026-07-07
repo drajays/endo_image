@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abdominal CT Module V Trainer | Endocrine & Abdominal Imaging</title>
+<meta name="description" content="Master abdominal CT anatomy & technique with real case images, hidden captions, expert MCQs, descriptive questions, and a save-able annotation tool for endocrinology fellows.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a; --bg2: #111827; --bg3: #1a2235; --card: #161e30;
+    --border: rgba(99,120,180,0.18);
+    --accent: #ea580c; --accent2: #f97316; --accent-glow: rgba(234,88,12,0.25);
+    --green: #f43f5e; --red: #ef4444; --amber: #f43f5e; --blue: #3b82f6;
+    --text: #e2e8f0; --muted: #64748b; --muted2: #94a3b8;
+    --radius: 14px; --radius-sm: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Inter", sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+  body::before {
+    content: ""; position: fixed; inset: 0;
+    background: radial-gradient(ellipse 80% 50% at 20% 10%, rgba(16,185,129,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 80% 80%, rgba(5,150,105,0.06) 0%, transparent 60%);
+    pointer-events: none; z-index: 0;
+  }
+  a { color: inherit; }
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,14,26,0.85); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px; height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+  .logo-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center; font-size: 18px;
+    box-shadow: 0 0 16px var(--accent-glow);
+  }
+  .logo-text { font-weight: 700; font-size: 15px; }
+  .logo-text span { color: var(--accent); }
+  .header-stats { display: flex; align-items: center; gap: 12px; }
+  .stat-pill {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 20px; padding: 4px 12px;
+    display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600;
+  }
+  .stat-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+  main { position: relative; z-index: 1; }
+  .view { display: none; }
+  .view.active { display: block; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+  /* HOME */
+  .hero { text-align: center; margin-bottom: 40px; padding-top: 50px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3);
+    border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 600; color: var(--accent); margin-bottom: 20px;
+  }
+  h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; line-height: 1.15;
+    background: linear-gradient(135deg, #e2e8f0 0%, #94a3b8 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 16px;
+  }
+  h1 .aw { background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-sub { font-size: 16px; color: var(--muted2); max-width: 560px; margin: 0 auto 36px; line-height: 1.7; }
+  .stats-row { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-bottom: 48px; }
+  .stat-item { text-align: center; }
+  .stat-num { font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .stat-label { font-size: 12px; color: var(--muted); font-weight: 500; margin-top: 2px; }
+  .modes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; max-width: 900px; margin: 0 auto; padding-bottom: 40px; }
+  .mode-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 28px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden; }
+  .mode-card:hover { border-color: rgba(16,185,129,0.4); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+  .mode-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px; }
+  .mode-icon.amber { background: rgba(245,158,11,0.15); }
+  .mode-icon.orange { background: rgba(249,115,22,0.15); }
+  .mode-icon.green { background: rgba(16,185,129,0.15); }
+  .mode-title { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+  .mode-desc { font-size: 13px; color: var(--muted2); line-height: 1.5; margin-bottom: 16px; }
+  .mode-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(245,158,11,0.1); border-radius: 6px; padding: 3px 8px; }
+  /* GALLERY */
+  .view-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+  .view-title { font-size: 22px; font-weight: 700; }
+  .view-subtitle { font-size: 13px; color: var(--muted2); margin-top: 3px; }
+  .btn-back { display: inline-flex; align-items: center; gap: 8px; background: var(--bg3); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 8px 16px; color: var(--muted2); font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+  .btn-back:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+  .filter-btn { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; border: 1px solid var(--border); background: var(--bg3); color: var(--muted2); cursor: pointer; transition: all 0.2s; }
+  .filter-btn.active, .filter-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(245,158,11,0.1); }
+  .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px; }
+  .g-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; cursor: pointer; transition: all 0.25s; display: flex; flex-direction: column; }
+  .g-card:hover { border-color: rgba(16,185,129,0.4); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.35); }
+  .g-thumb { width: 100%; aspect-ratio: 4/3; object-fit: cover; background: #000; border-bottom: 1px solid var(--border); }
+  .g-body { padding: 14px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+  .g-fig { font-size: 11px; color: var(--muted); font-weight: 600; }
+  .g-title { font-size: 13px; font-weight: 600; line-height: 1.4; }
+  .g-meta { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 6px; }
+  .tag { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.03em; }
+  .tag-normal{background:rgba(148,163,184,.15);color:#cbd5e1}
+  .tag-adenoma{background:rgba(16,185,129,.15);color:#34d399}
+  .tag-pheo{background:rgba(239,68,68,.15);color:#f87171}
+  .tag-carcinoma{background:rgba(220,38,38,.2);color:#fca5a5}
+  .tag-meta{background:rgba(249,115,22,.15);color:#fb923c}
+  .tag-myelo{background:rgba(234,179,8,.15);color:#facc15}
+  .tag-cyst{background:rgba(59,130,246,.15);color:#60a5fa}
+  .tag-hemorrhage{background:rgba(190,24,93,.2);color:#f472b6}
+  .tag-hyperplasia{background:rgba(139,92,246,.15);color:#e11d48}
+  .tag-other{background:rgba(100,116,139,.18);color:#94a3b8}
+  .tag-technique{background:rgba(6,182,212,.15);color:#22d3ee}
+  .tag-char{background:rgba(168,85,247,.15);color:#c084fc}
+  .q-count { font-size: 11px; color: var(--muted2); font-weight: 600; }
+  /* CASE VIEW */
+  .case-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+  @media (max-width: 900px){ .case-grid { grid-template-columns: 1fr; } }
+  .img-panel { position: sticky; top: 84px; }
+  .img-stage { position: relative; background: #000; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .img-stage img { display: block; width: 100%; }
+  #annoCanvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; cursor: crosshair; }
+  .img-nav { display: flex; justify-content: space-between; margin-top: 12px; gap: 8px; }
+  .nav-btn { flex: 1; background: var(--bg3); border: 1px solid var(--border); color: var(--muted2); border-radius: var(--radius-sm); padding: 9px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all .2s; }
+  .nav-btn:hover:not(:disabled){ border-color: var(--accent); color: var(--accent); }
+  .nav-btn:disabled { opacity: .35; cursor: default; }
+  /* Annotation toolbar */
+  .anno-tools { display: flex; align-items: center; gap: 8px; margin-top: 12px; flex-wrap: wrap; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px; }
+  .anno-tools .lbl { font-size: 11px; color: var(--muted); font-weight: 600; margin-right: 2px; }
+  .swatch { width: 22px; height: 22px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
+  .swatch.active { border-color: #fff; }
+  .tool-btn { background: var(--bg3); border: 1px solid var(--border); color: var(--muted2); border-radius: 6px; padding: 6px 10px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .2s; }
+  .tool-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .tool-btn.on { background: rgba(245,158,11,.15); border-color: var(--accent); color: var(--accent); }
+  .comment-box { width: 100%; margin-top: 12px; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-family: inherit; font-size: 13px; padding: 10px; resize: vertical; min-height: 64px; line-height: 1.5; }
+  .comment-box:focus { outline: none; border-color: var(--accent); }
+  .save-row { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+  .save-note { font-size: 11px; color: var(--muted); }
+  /* Caption */
+  .caption-toggle { margin-top: 12px; width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 11px; color: var(--muted2); font-size: 13px; font-weight: 600; cursor: pointer; transition: all .2s; }
+  .caption-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  .caption-body { display: none; margin-top: 10px; background: var(--bg2); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius-sm); padding: 14px; font-size: 13px; line-height: 1.65; color: var(--muted2); }
+  .caption-body.visible { display: block; }
+  /* Question panel */
+  .q-panel { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; }
+  .q-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .q-kind { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--accent); }
+  .q-dots { display: flex; gap: 6px; }
+  .q-dot { width: 26px; height: 6px; border-radius: 3px; background: var(--bg3); cursor: pointer; transition: all .2s; }
+  .q-dot.active { background: var(--accent); }
+  .q-dot.done { background: var(--green); }
+  .q-progress { font-size: 12px; color: var(--muted); font-weight: 600; margin-bottom: 10px; }
+  .q-text { font-size: 16px; font-weight: 600; line-height: 1.5; margin-bottom: 18px; }
+  .opts { display: flex; flex-direction: column; gap: 10px; }
+  .opt { text-align: left; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 13px 15px; font-size: 14px; color: var(--text); cursor: pointer; transition: all .18s; display: flex; gap: 10px; align-items: flex-start; font-family: inherit; }
+  .opt:hover:not(.locked){ border-color: var(--accent); }
+  .opt .k { font-weight: 700; color: var(--muted); }
+  .opt.selected { border-color: var(--accent); background: rgba(16,185,129,.08); }
+  .opt.correct { border-color: var(--green); background: rgba(16,185,129,.12); }
+  .opt.wrong { border-color: var(--red); background: rgba(239,68,68,.12); }
+  .opt.locked { cursor: default; }
+  .explain { margin-top: 16px; background: var(--bg2); border: 1px solid var(--border); border-left: 3px solid var(--green); border-radius: var(--radius-sm); padding: 14px; font-size: 13px; line-height: 1.65; color: var(--muted2); display: none; }
+  .explain.show { display: block; }
+  .explain.showhint { display: block; border-left-color: var(--accent); }
+  .explain b { color: var(--text); }
+  .model-ans { margin-top: 14px; background: var(--bg2); border: 1px solid var(--border); border-left: 3px solid var(--blue); border-radius: var(--radius-sm); padding: 14px; font-size: 13.5px; line-height: 1.7; color: var(--muted2); display: none; }
+  .model-ans.show { display: block; }
+  .model-ans .h { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--blue); font-weight: 700; margin-bottom: 6px; }
+  .btn-row { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+  .btn { border: none; border-radius: var(--radius-sm); padding: 11px 18px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all .2s; font-family: inherit; }
+  .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #1a1205; }
+  .btn-primary:hover { box-shadow: 0 6px 20px var(--accent-glow); }
+  .btn-ghost { background: var(--bg3); border: 1px solid var(--border); color: var(--muted2); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .btn:disabled { opacity: .4; cursor: default; }
+  .your-notes-area { margin-top: 18px; }
+  .notes-toggle { font-size: 12px; color: var(--muted2); font-weight: 600; cursor: pointer; user-select: none; }
+  .notes-toggle:hover { color: var(--accent); }
+  /* EXAM */
+  #view-exam .wrap { max-width: 760px; }
+  .exam-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px; }
+  .exam-img { width: 100%; border-radius: var(--radius-sm); border: 1px solid var(--border); margin-bottom: 16px; background: #000; }
+  .exam-bar { height: 6px; background: var(--bg3); border-radius: 3px; overflow: hidden; margin-bottom: 18px; }
+  .exam-bar > div { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width .3s; }
+  .result-big { text-align: center; padding: 30px 0; }
+  .result-score { font-size: 3.5rem; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--bg3); border: 1px solid var(--green); color: var(--text); padding: 12px 22px; border-radius: 30px; font-size: 13px; font-weight: 600; z-index: 300; opacity: 0; transition: all .35s; box-shadow: 0 8px 30px rgba(0,0,0,.4); }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+  .hidden { display: none !important; }
+  .footer { text-align: center; color: var(--muted); font-size: 12px; padding: 30px 0; }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo" onclick="showView('view-home')">
+    <div class="logo-icon">🔬</div>
+    <div class="logo-text">Abdominal CT <span>Module V</span> Trainer</div>
+  </div>
+  <div class="header-stats">
+    <div class="stat-pill"><span class="dot"></span><span id="hdr-score">0 / 0</span></div>
+  </div>
+</header>
+<main>
+  <!-- HOME -->
+  <section id="view-home" class="view active">
+    <div class="wrap">
+      <div class="hero">
+        <div class="hero-badge">🩺 Endocrinology Fellow Training – Module V</div>
+        <h1>Abdominal CT <span class="aw">Module V — Anatomy & Technique</span> Case Trainer</h1>
+        <p class="hero-sub">Real abdominal imaging cases with hidden expert captions, board-style MCQs and descriptive questions. Annotate images, jot comments, and save your work locally.</p>
+        <div class="stats-row">
+          <div class="stat-item"><div class="stat-num" id="s-cases">0</div><div class="stat-label">CASES</div></div>
+          <div class="stat-item"><div class="stat-num" id="s-mcqs">0</div><div class="stat-label">MCQs</div></div>
+          <div class="stat-item"><div class="stat-num" id="s-desc">0</div><div class="stat-label">DESCRIPTIVE Qs</div></div>
+        </div>
+      </div>
+      <div class="modes-grid">
+        <div class="mode-card" onclick="showGallery()">
+          <div class="mode-icon amber">🖼️</div>
+          <div class="mode-title">Browse Case Gallery</div>
+          <div class="mode-desc">Work through all cases by category. Study each image, answer its questions, and annotate.</div>
+          <div class="mode-badge" id="badge-gallery">All cases</div>
+        </div>
+        <div class="mode-card" onclick="openRandom()">
+          <div class="mode-icon orange">🎲</div>
+          <div class="mode-title">Random Case</div>
+          <div class="mode-desc">Jump to a random abdominal case for quick, unpredictable practice.</div>
+          <div class="mode-badge">Surprise me</div>
+        </div>
+        <div class="mode-card" onclick="startExam()">
+          <div class="mode-icon green">📝</div>
+          <div class="mode-title">Exam Mode</div>
+          <div class="mode-desc">A timed-feel quiz of 20 randomly drawn MCQs across all cases, with a final score.</div>
+          <div class="mode-badge">20 questions</div>
+        </div>
+      </div>
+      <div class="footer">Built for endocrinology fellows • Data stays in your browser • <span id="foot-count"></span></div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="view-gallery" class="view">
+    <div class="wrap">
+      <div class="view-header">
+        <div>
+          <div class="view-title">Case Gallery</div>
+          <div class="view-subtitle" id="gallery-sub"></div>
+        </div>
+        <button class="btn-back" onclick="showView('view-home')">← Home</button>
+      </div>
+      <div class="filter-bar" id="filter-bar"></div>
+      <div class="gallery-grid" id="gallery-grid"></div>
+    </div>
+  </section>
+
+  <!-- CASE -->
+  <section id="view-case" class="view">
+    <div class="wrap">
+      <div class="view-header">
+        <div>
+          <div class="view-title" id="case-title"></div>
+          <div class="view-subtitle" id="case-sub"></div>
+        </div>
+        <button class="btn-back" onclick="showGallery()">← Gallery</button>
+      </div>
+      <div class="case-grid">
+        <div class="img-panel">
+          <div class="img-stage">
+            <img id="case-img" alt="Abdominal CT case" onload="resizeCanvas()">
+            <canvas id="annoCanvas"></canvas>
+          </div>
+          <div class="anno-tools">
+            <span class="lbl">Annotate:</span>
+            <span class="swatch active" style="background:#f43f5e" data-color="#f43f5e" onclick="setColor(this)"></span>
+            <span class="swatch" style="background:#ef4444" data-color="#ef4444" onclick="setColor(this)"></span>
+            <span class="swatch" style="background:#f43f5e" data-color="#f43f5e" onclick="setColor(this)"></span>
+            <span class="swatch" style="background:#3b82f6" data-color="#3b82f6" onclick="setColor(this)"></span>
+            <span class="swatch" style="background:#ffffff" data-color="#ffffff" onclick="setColor(this)"></span>
+            <button class="tool-btn on" id="btn-draw" onclick="toggleDraw()">✏️ Draw</button>
+            <button class="tool-btn" onclick="undoAnno()">↶ Undo</button>
+            <button class="tool-btn" onclick="clearAnno()">🗑 Clear</button>
+          </div>
+          <textarea class="comment-box" id="comment-box" placeholder="Your comments / notes on this case…"></textarea>
+          <div class="save-row">
+            <button class="btn btn-primary" onclick="saveWork()">💾 Save annotation & notes</button>
+            <span class="save-note" id="save-note"></span>
+          </div>
+          <button class="caption-toggle" id="caption-toggle" onclick="toggleCaption()">👁 Reveal Expert Caption</button>
+          <div class="caption-body" id="caption-body"></div>
+          <div class="img-nav">
+            <button class="nav-btn" id="prev-case" onclick="navigateCase(-1)">← Prev case</button>
+            <button class="nav-btn" id="next-case" onclick="navigateCase(1)">Next case →</button>
+          </div>
+        </div>
+        <div class="q-panel" id="q-panel"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXAM -->
+  <section id="view-exam" class="view">
+    <div class="wrap">
+      <div class="view-header">
+        <div><div class="view-title">Exam Mode</div><div class="view-subtitle" id="exam-sub"></div></div>
+        <button class="btn-back" onclick="showView('view-home')">← Quit</button>
+      </div>
+      <div class="exam-card" id="exam-card"></div>
+    </div>
+  </section>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+const IMAGES = [
+  {
+    "file": "abd5/20260707080552.jpg",
+    "figNum": "Fig 1",
+    "category": "Normal",
+    "tagClass": "tag-normal",
+    "title": "Cross-Sectional Anatomy at the Level of the First Lumbar Vertebra (L1)",
+    "caption": "Axial contrast-enhanced CT section through the level of the first lumbar vertebral body (L1). Demonstrates the anatomical relationships between the aorta, inferior vena cava (IVC), portal vein (PV), splenic vein (SV), superior mesenteric artery (SMA), pancreas, liver, spleen, adrenal glands, and kidneys.",
+    "is_multipanel": false,
+    "mcqs": [
+      {
+        "q": "At the anatomical level of the first lumbar vertebra (L1), what is the normal spatial relationship between the splenic vein and the body of the pancreas?",
+        "opts": [
+          "The splenic vein courses along the posterior aspect of the body and tail of the pancreas before joining the superior mesenteric vein",
+          "The splenic vein runs anterior to the body of the pancreas, directly separating it from the stomach",
+          "The splenic vein penetrates through the central ductal parenchyma of the pancreatic body",
+          "The splenic vein loops superior to the celiac axis and enters the inferior vena cava directly"
+        ],
+        "ans": 0,
+        "exp": "The splenic vein provides a reliable anatomical landmark on axial CT, running directly along the posterior groove of the pancreatic body and tail from the splenic hilum toward the portal confluence.",
+        "hint": "Look along the posterior border of the pancreas for the main venous drainage of the spleen."
+      },
+      {
+        "q": "Which major vascular structure is normally located immediately anterior to the left lumbar vertebral body and serves as the origin point for the superior mesenteric artery at approximately the L1 level?",
+        "opts": [
+          "The inferior vena cava, which receives the renal veins at this specific vertebral level",
+          "The abdominal aorta, which gives off the superior mesenteric artery anteriorly just inferior to the celiac trunk",
+          "The main portal vein, which ascends directly into the porta hepatis anterior to the vertebra",
+          "The left renal artery, which arches anteriorly over the crus of the diaphragm"
+        ],
+        "ans": 1,
+        "exp": "The abdominal aorta lies anterior and slightly to the left of the lumbar spine. At the L1 vertebral level, it originates the superior mesenteric artery (SMA) from its anterior aspect approximately 1 cm below the celiac axis.",
+        "hint": "Consider the primary arterial trunk lying directly over the spine."
+      },
+      {
+        "q": "Why is the recognition of normal anatomical structures at the L1 vertebral level critical during abdominal CT evaluation of endocrine and retroperitoneal disorders?",
+        "opts": [
+          "Because the inferior mesenteric artery originates at L1 and supplies the adrenal medulla directly",
+          "Because the thyroid gland and parathyroid adenomas frequently descend into the retroperitoneum at the L1 level",
+          "Because the adrenal glands sit superomedial to the kidneys near this level and must be differentiated from vascular structures like the splenic vessels and gastric fundus",
+          "Because the portal vein terminates into the renal veins at the L1 vertebral body"
+        ],
+        "ans": 2,
+        "exp": "The adrenal glands are situated at the T12-L1 level superomedial to the upper renal poles. Accurate identification of the splenic vessels, portal vein, and gastric fundus is necessary to avoid misinterpreting normal anatomy as adrenal masses or retroperitoneal lymphadenopathy.",
+        "hint": "Think about the anatomical neighbors of the adrenal glands in the upper retroperitoneum."
+      }
+    ],
+    "id": 1
+  },
+  {
+    "file": "abd5/20260707080628.jpg",
+    "figNum": "Fig 2",
+    "category": "Normal",
+    "tagClass": "tag-normal",
+    "title": "Upper Abdominal Visceral Relationships – Portal Confluence and Pancreatic Tail",
+    "caption": "Axial contrast-enhanced CT scan illustrating normal anatomical relationships across the upper abdomen. Highlights the portal vein, stomach, gallbladder, liver parenchyma, inferior vena cava, pancreatic tail, splenic vein, spleen, and left kidney.",
+    "is_multipanel": false,
+    "mcqs": [
+      {
+        "q": "What is the normal anatomical relationship between the left adrenal gland, the upper pole of the left kidney, and the tail of the pancreas on cross-sectional imaging?",
+        "opts": [
+          "The left adrenal gland surrounds the left renal artery directly inferior to the renal hilum",
+          "The left adrenal gland is situated lateral to the left kidney and anterior to the spleen",
+          "The left adrenal gland lies directly within the gastrosplenic ligament anterior to the stomach",
+          "The left adrenal gland lies anteromedial to the upper pole of the left kidney and posterior or posterosuperior to the tail of the pancreas and splenic vessels"
+        ],
+        "ans": 3,
+        "exp": "The left adrenal gland occupies a triangular space bordered anterolaterally by the stomach and spleen, anteriorly by the pancreatic tail and splenic vessels, and posterolaterally by the upper pole of the left kidney.",
+        "hint": "Consider the retroperitoneal space between the left kidney and the pancreas."
+      },
+      {
+        "q": "How does the main portal vein normally form, and where is it located relative to the inferior vena cava on standard axial CT sections?",
+        "opts": [
+          "It forms from the confluence of the superior mesenteric vein and splenic vein posterior to the neck of the pancreas, sitting anterior and slightly lateral to the inferior vena cava",
+          "It forms from the junction of the hepatic veins and inferior mesenteric vein anterior to the duodenum",
+          "It arises directly from the celiac trunk and courses posterior to the aorta",
+          "It drains the renal veins directly into the right atrium along the right paraspinal gutter"
+        ],
+        "ans": 0,
+        "exp": "The portal confluence occurs posterior to the pancreatic neck where the superior mesenteric and splenic veins unite. The main portal vein then ascends toward the porta hepatis, positioned anterior to the inferior vena cava and separated by the Epiploic foramen of Winslow.",
+        "hint": "Think about the venous confluence behind the neck of the pancreas."
+      },
+      {
+        "q": "On routine portal venous phase CT imaging, what is the expected relative enhancement density of normal liver parenchyma compared to the spleen and blood vessels?",
+        "opts": [
+          "The liver parenchyma is diffusely non-enhancing and hypoattenuating compared to abdominal fat",
+          "The liver parenchyma shows homogeneous contrast enhancement that is slightly lower in attenuation than or equal to the normal spleen",
+          "The liver demonstrates intense early arterial flashing that exceeds the attenuation of the aorta by 50 HU",
+          "The liver parenchyma normally demonstrates alternating rings of high and low density surrounding every portal triad"
+        ],
+        "ans": 1,
+        "exp": "During the portal venous phase (approximately 70 seconds post-injection), normal liver parenchyma enhances homogeneously (typically 100-130 HU), appearing slightly lower in density than or roughly equal to uniform splenic parenchyma.",
+        "hint": "Compare normal solid organ parenchyma density during the standard abdominal phase."
+      }
+    ],
+    "id": 2
+  },
+  {
+    "file": "abd5/20260707080650.jpg",
+    "figNum": "Fig 3",
+    "category": "Normal",
+    "tagClass": "tag-normal",
+    "title": "Duodenal Loop and Hepatic Ligamentous Anatomy",
+    "caption": "Anatomical chart illustrating the relationships of the four parts of the duodenum (D1 through D4), head of the pancreas, gallbladder, and hepatic lobes separated by the round ligament (ligamentum teres). Demonstrates the course of the duodenum around the pancreatic head toward the duodenojejunal flexure.",
+    "is_multipanel": false,
+    "mcqs": [
+      {
+        "q": "Which anatomical fissure and remnant structure separates the left lobe of the liver from the quadrate lobe (medial segment of the left lobe, Segment IVb)?",
+        "opts": [
+          "The fissure for the ligamentum venosum separating the caudate lobe from the left lobe",
+          "The main lobar fissure housing the middle hepatic vein and gallbladder fossa",
+          "The fissure for the round ligament of the liver (ligamentum teres hepatis), which represents the obliterated umbilical vein",
+          "The right portal scissura dividing the anterior and posterior segments of the right lobe"
+        ],
+        "ans": 2,
+        "exp": "The fissure for the round ligament (ligamentum teres) contains the fibrous remnant of the left umbilical vein and anatomically separates the lateral segment of the left lobe (Segments II/III) from the quadrate lobe (Segment IVb).",
+        "hint": "Look for the vertical umbilical fissure on the inferior hepatic surface."
+      },
+      {
+        "q": "Which specific portion of the duodenum is intimately related to the head of the pancreas and receives the common bile duct and main pancreatic duct via the ampulla of Vater?",
+        "opts": [
+          "The ascending or fourth part of the duodenum (D4)",
+          "The superior or first part of the duodenum (D1)",
+          "The horizontal or third part of the duodenum (D3)",
+          "The descending or second part of the duodenum (D2)"
+        ],
+        "ans": 3,
+        "exp": "The descending (second) part of the duodenum (D2) curves around the right border of the pancreatic head. The major duodenal papilla (ampulla of Vater) opens onto its posteromedial wall, draining bile and pancreatic secretions.",
+        "hint": "This is the vertical section of the C-loop where ERCP cannulation takes place."
+      },
+      {
+        "q": "How does the third (horizontal) part of the duodenum (D3) orient relative to the major mesenteric vascular structures?",
+        "opts": [
+          "It passes transversely across the retroperitoneum, anterior to the inferior vena cava and abdominal aorta, but posterior to the superior mesenteric artery and vein",
+          "It loops anterior to the transverse colon and superior mesenteric artery directly beneath the abdominal wall",
+          "It ascends vertically behind the right kidney and enters the lesser sac through the splenic hilum",
+          "It courses superior to the portal vein and anterior to the quadrate lobe of the liver"
+        ],
+        "ans": 0,
+        "exp": "The horizontal third part of the duodenum (D3) travels transversely between the aorta/IVC posteriorly and the superior mesenteric artery/vein anteriorly. A narrow aortomesenteric angle can compress D3, causing Superior Mesenteric Artery (Wilkie) syndrome.",
+        "hint": "Think about the vascular nutcracker angle between the aorta and the SMA."
+      }
+    ],
+    "id": 3
+  },
+  {
+    "file": "abd5/20260707080706.jpg",
+    "figNum": "Fig 4",
+    "category": "Normal",
+    "tagClass": "tag-normal",
+    "title": "Hepatic Venous Outflow and Retroperitoneal Adrenal Localization",
+    "caption": "Axial contrast-enhanced CT level demonstrating the confluence of the middle and right hepatic veins draining into the inferior vena cava. Illustrates the bilateral adrenal glands situated anterior and superomedial to the kidneys in the retroperitoneal space.",
+    "is_multipanel": false,
+    "mcqs": [
+      {
+        "q": "What is the normal vascular drainage pathway of the right, middle, and left hepatic veins as evaluated on upper abdominal CT imaging?",
+        "opts": [
+          "They drain anteriorly and inferiorly into the portal confluence to supply the hepatic parenchyma",
+          "They drain superiorly and posteriorly directly into the intrahepatic portion of the inferior vena cava just below the diaphragm",
+          "They join the splenic vein to form the main portal vein at the porta hepatis",
+          "They empty into the right renal vein before entering the inferior vena cava"
+        ],
+        "ans": 1,
+        "exp": "The three major hepatic veins (right, middle, and left) converge toward the posterior superior liver surface to empty directly into the inferior vena cava (IVC) approximately 1-2 cm below the right atrium.",
+        "hint": "Consider the outflow tract draining the liver into the systemic venous circulation."
+      },
+      {
+        "q": "On axial cross-sectional CT, how can the right adrenal gland be reliably distinguished from adjacent structures in the right upper quadrant?",
+        "opts": [
+          "By its location anterior to the rectus abdominis muscle along the peritoneal reflection",
+          "By tracing a cystic duct directly connecting it to the neck of the gallbladder",
+          "By identifying its linear, V-shaped, or Y-shaped structure located immediately posterior to the inferior vena cava and between the right liver lobe and right crus of the diaphragm",
+          "By a prominent arterial stalk arising directly from the superior mesenteric artery"
+        ],
+        "ans": 2,
+        "exp": "The right adrenal gland is located immediately posterior to the IVC, lateral to the right diaphragmatic crus, and medial to the bare area of the liver. It classically displays a linear, V-shaped, or inverted Y-shaped configuration.",
+        "hint": "Look right behind the IVC along the right crus of the diaphragm."
+      },
+      {
+        "q": "Why is the left portal vein oriented horizontally in the fissure for the ligamentum teres on axial CT slices?",
+        "opts": [
+          "Because it descends vertically along the right paraspinal gutter to join the renal vein",
+          "Because it represents an anomalous systemic venous shunt connecting the spleen to the left atrium",
+          "Because it wraps around the inferior border of the stomach before entering the splenic hilum",
+          "Because it turns anteriorly and medially from the main portal bifurcation to supply Segments II, III, and IV of the left hepatic lobe"
+        ],
+        "ans": 3,
+        "exp": "After branching from the main portal vein, the left portal vein has a brief transverse portion before turning sharply anterior and medial (the umbilical portion) within the fissure for the round ligament to supply the left liver lobe.",
+        "hint": "Think about the intrahepatic portal branch supplying the left lobe segments."
+      }
+    ],
+    "id": 4
+  },
+  {
+    "file": "abd5/20260707080745.jpg",
+    "figNum": "Fig 5",
+    "category": "Normal",
+    "tagClass": "tag-normal",
+    "title": "Biliary Drainage Anatomy – Distal Common Bile Duct and Duodenum",
+    "caption": "Targeted axial CT section illustrating the trajectory of the distal common bile duct (CBD) as it courses posterior to the pancreatic head toward the second part of the duodenum (D2). Shows normal relationships with the left hepatic lobe, stomach, and abdominal aorta.",
+    "is_multipanel": false,
+    "mcqs": [
+      {
+        "q": "Where is the distal common bile duct normally located relative to the head of the pancreas on cross-sectional CT imaging?",
+        "opts": [
+          "It courses through the posterior or posterolateral aspect of the pancreatic head before entering the posteromedial wall of the second part of the duodenum",
+          "It runs anterior to the neck of the pancreas directly beneath the pylorus",
+          "It passes lateral to the spleen within the gastrosplenic ligament",
+          "It ascends within the anterior abdominal wall along the linea alba"
+        ],
+        "ans": 0,
+        "exp": "The distal common bile duct (intrapancreatic portion) travels through or embedded within the posterior/posterolateral parenchyma of the pancreatic head, terminating at the ampulla of Vater in the second part of the duodenum (D2).",
+        "hint": "Look along the posterior margin of the pancreatic head for the biliary duct."
+      },
+      {
+        "q": "What is the normal upper limit of diameter for the common bile duct on CT imaging in an adult patient with an intact gallbladder?",
+        "opts": [
+          "Approximately 15 to 18 mm in all normal young adults",
+          "Approximately 6 to 7 mm (with up to 1 mm add-on per decade after age 60)",
+          "Less than 1 mm, making it completely invisible on standard CT imaging",
+          "Approximately 25 to 30 mm when evaluated in the portal venous phase"
+        ],
+        "ans": 1,
+        "exp": "The normal common bile duct measures up to 6-7 mm in diameter in younger adults with an intact gallbladder. Mild dilation up to 8-10 mm can occur normally with aging (roughly 1 mm per decade over 60) or post-cholecystectomy.",
+        "hint": "Remember the general rule of roughly 6 mm for standard adult biliary diameter."
+      },
+      {
+        "q": "Which structure forms the medial border of the duodenal C-loop and must be scrutinized on CT when evaluating for biliary obstruction or periampullary lesions?",
+        "opts": [
+          "The tail of the pancreas and splenic hilum",
+          "The quadrate lobe of the liver and round ligament",
+          "The head and uncinate process of the pancreas",
+          "The left adrenal gland and upper renal pole"
+        ],
+        "ans": 2,
+        "exp": "The C-loop of the duodenum tightly embraces the head and uncinate process of the pancreas. Pathology in the pancreatic head (such as adenocarcinoma) frequently causes biliary obstruction and duodenal invasion.",
+        "hint": "Think about the solid organ head nestled directly inside the duodenal loop."
+      }
+    ],
+    "id": 5
+  },
+  {
+    "file": "abd5/20260707080804.jpg",
+    "figNum": "Fig 6",
+    "category": "Normal",
+    "tagClass": "tag-normal",
+    "title": "Multi-Panel Non-Contrast Upper Abdominal CT – SOMATOM Plus Anatomy Series",
+    "caption": "Four annotated axial non-contrast CT panels from a SOMATOM Plus scanner surveying upper abdominal anatomy: the abdominal aorta with the SMA/SMV confluence, the pancreatic head within the duodenal C-loop, the splenic vein, gallbladder fundus, and the ascending, transverse, and descending colon. The burned-in kV and mAs values in the margins are the acquisition parameters.",
+    "is_multipanel": true,
+    "mcqs": [
+      {
+        "q": "On these panels a midline retroperitoneal vessel lies just left of the vertebral body and gives off the superior mesenteric artery anteriorly. Which vessel is it?",
+        "opts": [
+          "Inferior vena cava",
+          "Abdominal aorta",
+          "Portal vein",
+          "Splenic vein"
+        ],
+        "ans": 1,
+        "exp": "The abdominal aorta lies just left of midline anterior to the vertebral body and gives off the SMA from its anterior surface at about the L1 level. The IVC sits to its right, and the portal and splenic veins are anterior, related to the pancreas.",
+        "hint": "It is the pulsatile vessel from which the SMA arises."
+      },
+      {
+        "q": "The panels label both the superior mesenteric vein (SMV) and superior mesenteric artery (SMA). What is their normal axial relationship, and why does it matter?",
+        "opts": [
+          "The SMV lies directly posterior to the aorta",
+          "The SMA normally lies to the right of the SMV",
+          "The SMV normally lies to the right of the SMA; reversal suggests malrotation",
+          "The SMA and SMV share a single common trunk"
+        ],
+        "ans": 2,
+        "exp": "Normally the SMV runs to the right of the SMA. Loss or reversal of this relationship (the 'SMV rotation sign') raises concern for intestinal malrotation.",
+        "hint": "Vein to the right of the artery is the normal pattern."
+      },
+      {
+        "q": "The head of the pancreas is labelled cradled within the C-loop of the duodenum. Which duodenal segment is most intimately related to the pancreatic head and drains the ampulla?",
+        "opts": [
+          "First part (D1), the duodenal cap",
+          "Fourth part (D4), near the duodenojejunal flexure",
+          "Third part (D3), crossing anterior to the aorta",
+          "Second (descending) part (D2)"
+        ],
+        "ans": 3,
+        "exp": "The pancreatic head sits within the duodenal C-loop, most intimately against the descending (D2) segment, where the common bile duct and main pancreatic duct drain at the major papilla.",
+        "hint": "It is the segment that carries the ampulla of Vater."
+      },
+      {
+        "q": "One panel labels the splenic vein coursing behind the pancreas. Which vessel does it join to form the portal vein?",
+        "opts": [
+          "Inferior mesenteric vein",
+          "Superior mesenteric vein, behind the pancreatic neck",
+          "Left renal vein",
+          "Middle hepatic vein"
+        ],
+        "ans": 1,
+        "exp": "The splenic vein joins the SMV behind the neck of the pancreas to form the portal vein. The inferior mesenteric vein usually drains into the splenic vein upstream of that confluence.",
+        "hint": "Portal vein = splenic vein + this vessel behind the pancreatic neck."
+      },
+      {
+        "q": "These images are acquired without intravenous contrast (the panels are marked 'NON CONTRAST'). Why is an unenhanced series essential in an adrenal/abdominal protocol?",
+        "opts": [
+          "It opacifies the ureters to detect obstructing calculi",
+          "It maximises hepatic and portal venous enhancement",
+          "It provides the baseline attenuation (HU) needed to characterise adrenal nodules and to detect calcification, fat, or acute haemorrhage",
+          "It alone allows the portal-venous washout fraction to be computed"
+        ],
+        "ans": 2,
+        "exp": "Unenhanced attenuation is the cornerstone of adrenal characterisation (≤10 HU indicates a lipid-rich adenoma) and reveals calcification, macroscopic fat, and acute haemorrhage that contrast can mask. It is also the baseline value used in washout calculations.",
+        "hint": "You need a pre-contrast HU number to call a lipid-rich adenoma."
+      }
+    ],
+    "id": 6
+  },
+  {
+    "file": "abd5/20260707080914.jpg",
+    "figNum": "Fig 7",
+    "category": "Technique",
+    "tagClass": "tag-technique",
+    "title": "Anterolateral Abdominal Wall Musculature and Fascial Layers",
+    "caption": "Anatomical cross-sectional breakdown of the abdominal wall musculature and subcutaneous fascial planes. Details the rectus abdominis, linea alba, linea semilunaris, external oblique, internal oblique, transversus abdominis, Camper fascia, Scarpa fascia, and retroperitoneal paraspinal muscles.",
+    "is_multipanel": false,
+    "mcqs": [
+      {
+        "q": "Which fibrous structure is formed by the midline aponeurotic interlacing of the external oblique, internal oblique, and transversus abdominis muscles between the two rectus abdominis bellies?",
+        "opts": [
+          "The inguinal ligament of Poupart",
+          "The linea semilunaris",
+          "The arcuate line of Douglas",
+          "The linea alba"
+        ],
+        "ans": 3,
+        "exp": "The linea alba is a tough, avascular, fibrous midline tendinous band extending from the xiphoid process to the pubic symphysis, formed by the fusion of the anterior and posterior rectus sheaths.",
+        "hint": "This is the vertical white midline tendon separating the left and right rectus abdominis muscles."
+      },
+      {
+        "q": "From superficial to deep, what is the correct anatomical arrangement of the three anterolateral abdominal wall muscle layers located lateral to the linea semilunaris?",
+        "opts": [
+          "External oblique muscle -> Internal oblique muscle -> Transversus abdominis muscle",
+          "Transversus abdominis muscle -> Internal oblique muscle -> External oblique muscle",
+          "Rectus abdominis muscle -> Psoas major muscle -> Quadratus lumborum muscle",
+          "Internal oblique muscle -> External oblique muscle -> Pyramidalis muscle"
+        ],
+        "ans": 0,
+        "exp": "The anterolateral abdominal wall consists of three muscular sheets: the outermost external oblique (fibers running inferomedially), the middle internal oblique (fibers running superomedially), and the innermost transversus abdominis (horizontal transverse fibers).",
+        "hint": "Remember the sequence: External -> Internal -> Transverse."
+      },
+      {
+        "q": "In the subcutaneous fat of the lower abdominal wall, how are Camper's fascia and Scarpa's fascia distinguished anatomically?",
+        "opts": [
+          "Camper's fascia is the deep peritoneal lining of the abdomen, whereas Scarpa's fascia covers the renal capsule",
+          "Camper's fascia is the superficial fatty layer of subcutaneous tissue, whereas Scarpa's fascia is the deeper, more membranous fibrous layer situated just superficial to the abdominal muscle aponeuroses",
+          "Camper's fascia surrounds the psoas muscle, whereas Scarpa's fascia separates the rectus bellies",
+          "Camper's fascia is dense bone periosteum, whereas Scarpa's fascia is pure articular cartilage"
+        ],
+        "ans": 1,
+        "exp": "In the lower abdomen, the subcutaneous tissue separates into two distinct strata: Camper's fascia (the superficial fatty layer) and Scarpa's fascia (the deep membranous layer that fuses inferiorly with the fascia lata of the thigh).",
+        "hint": "Think: Camper is Superficial (fatty), Scarpa is Deep (membranous)."
+      }
+    ],
+    "id": 7
+  },
+  {
+    "file": "abd5/20260707080946.jpg",
+    "figNum": "Fig 8",
+    "category": "Technique",
+    "tagClass": "tag-technique",
+    "title": "Body Composition Compartments – Visceral Fat, Subcutaneous Fat, and Musculature",
+    "caption": "Cross-sectional CT mapping of body composition compartments across the abdomen. Differentiates the subcutaneous fat area from the intraperitoneal visceral fat area, while identifying major structural muscle groups including the rectus abdominis, oblique muscles, psoas muscles, and paraspinal muscle group.",
+    "is_multipanel": false,
+    "mcqs": [
+      {
+        "q": "In automated CT body composition analysis, how is visceral adipose tissue (VAT) anatomically differentiated from subcutaneous adipose tissue (SAT) at the L3 vertebral level?",
+        "opts": [
+          "Visceral adipose tissue is defined by Hounsfield units greater than +50 HU, whereas subcutaneous adipose tissue measures below -200 HU",
+          "Visceral adipose tissue is confined entirely within the pleural cavity above the diaphragm, whereas subcutaneous adipose tissue surrounds the kidneys",
+          "Visceral adipose tissue is enclosed within the inner margin of the abdominal wall musculature and peritoneal cavity, whereas subcutaneous adipose tissue lies superficial to the muscle wall beneath the skin",
+          "Visceral adipose tissue represents intramuscular lipid droplets within the psoas muscle, whereas subcutaneous fat lies in the retroperitoneal space"
+        ],
+        "ans": 2,
+        "exp": "On CT segmentation, the deep fascial plane of the abdominal wall musculature serves as the boundary: fat internal to this muscular wall around the intraperitoneal organs is visceral adipose tissue (VAT), while fat external to the musculature is subcutaneous adipose tissue (SAT).",
+        "hint": "Consider the muscular wall of the abdomen as the dividing fence between visceral and subcutaneous fat."
+      },
+      {
+        "q": "Why is cross-sectional quantification of psoas and paraspinal muscle area at the L3 vertebral level increasingly utilized in the evaluation of endocrinopathies and oncology?",
+        "opts": [
+          "Because paraspinal fat infiltration indicates impending rupture of an abdominal aortic aneurysm",
+          "Because paraspinal muscle enlargement directly confirms hypersecretion of growth hormone in acromegaly",
+          "Because psoas muscle calcification is the primary diagnostic criterion for Cushing syndrome",
+          "Because total skeletal muscle cross-sectional area at L3 correlates strongly with whole-body muscle mass and serves as a validated imaging biomarker for sarcopenia, frailty, and metabolic prognosis"
+        ],
+        "ans": 3,
+        "exp": "The cross-sectional area of skeletal muscle (psoas, paraspinal, and abdominal wall muscles) measured at L3 provides an accurate, standardized index of whole-body muscle mass. Sarcopenia detected on routine CT is an independent predictor of surgical morbidity and chemotherapy toxicity.",
+        "hint": "Think about L3 muscle area as a surrogate for overall physical frailty and muscle mass."
+      },
+      {
+        "q": "What standardized Hounsfield Unit (HU) threshold range is established for segmenting and quantifying adipose tissue on standard CT body composition algorithms?",
+        "opts": [
+          "Between -190 HU and -30 HU",
+          "Between +10 HU and +80 HU",
+          "Between -500 HU and -400 HU",
+          "Between +100 HU and +300 HU"
+        ],
+        "ans": 0,
+        "exp": "Adipose tissue is universally identified on CT within the negative attenuation window of -190 HU to -30 HU. Values between -30 HU and +150 HU correspond to water, proteinaceous fluid, and skeletal muscle.",
+        "hint": "Fat always has moderate negative Hounsfield values on CT."
+      }
+    ],
+    "id": 8
+  }
+];
+
+const CAT_NAMES = {Normal:"Normal",Adenoma:"Adenoma",Pheochromocytoma:"Pheochromocytoma",Carcinoma:"Carcinoma",Metastasis:"Metastasis",Myelolipoma:"Myelolipoma",Cyst:"Cyst",Hemorrhage:"Hemorrhage",Hyperplasia:"Hyperplasia",Other:"Other / Rare",Technique:"Technique",Characterization:"Characterization"};
+const LS_KEY = "abd5_trainer_v1";
+
+/* ---------- persistence ---------- */
+function loadStore(){ try { return JSON.parse(localStorage.getItem(LS_KEY)) || {}; } catch(e){ return {}; } }
+function saveStore(s){ localStorage.setItem(LS_KEY, JSON.stringify(s)); }
+let store = loadStore();
+let score = store.score || {correct:0, total:0};
+
+/* ---------- view routing ---------- */
+function showView(id){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function updateHdrScore(){ document.getElementById('hdr-score').textContent = score.correct + " / " + score.total; }
+
+/* ---------- home stats ---------- */
+function initHome(){
+  const nCases = IMAGES.length;
+  const nMcq = IMAGES.reduce((a,c)=>a+(c.mcqs?c.mcqs.length:0),0);
+  const nDesc = IMAGES.reduce((a,c)=>a+(c.descriptive?c.descriptive.length:0),0);
+  document.getElementById('s-cases').textContent = nCases;
+  document.getElementById('s-mcqs').textContent = nMcq;
+  document.getElementById('s-desc').textContent = nDesc;
+  document.getElementById('foot-count').textContent = nCases + " cases · " + nMcq + " MCQs · " + nDesc + " descriptive";
+  document.getElementById('badge-gallery').textContent = nCases + " cases";
+  updateHdrScore();
+}
+
+/* ---------- gallery ---------- */
+let activeFilter = "all";
+function showGallery(){ showView('view-gallery'); renderFilters(); renderGallery(); }
+function renderFilters(){
+  const cats = ["all", ...Array.from(new Set(IMAGES.map(c=>c.category)))];
+  const bar = document.getElementById('filter-bar');
+  bar.innerHTML = cats.map(c=>{
+    const label = c==="all" ? "All ("+IMAGES.length+")" : (CAT_NAMES[c]||c)+" ("+IMAGES.filter(x=>x.category===c).length+")";
+    return `<button class="filter-btn ${c===activeFilter?'active':''}" onclick="setFilter('${c}')">${label}</button>`;
+  }).join('');
+}
+function setFilter(c){ activeFilter=c; renderFilters(); renderGallery(); }
+function renderGallery(){
+  const list = activeFilter==="all" ? IMAGES : IMAGES.filter(c=>c.category===activeFilter);
+  document.getElementById('gallery-sub').textContent = list.length + " cases" + (activeFilter!=="all" ? " · "+(CAT_NAMES[activeFilter]||activeFilter) : "");
+  document.getElementById('gallery-grid').innerHTML = list.map(c=>{
+    const qn = c.mcqs ? c.mcqs.length + " MCQ" + (c.mcqs.length>1?"s":"") : c.descriptive.length + " descriptive";
+    const done = store.progress && store.progress[c.id] ? '✓ ' : '';
+    return `<div class="g-card" onclick="openCase(${c.id})">
+      <img class="g-thumb" loading="lazy" src="${c.file}" alt="${c.title}">
+      <div class="g-body">
+        <div class="g-fig">${c.figNum||''}</div>
+        <div class="g-title">${done}${c.title}</div>
+        <div class="g-meta"><span class="tag ${c.tagClass}">${CAT_NAMES[c.category]||c.category}</span><span class="q-count">${qn}</span></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ---------- case view ---------- */
+let curCase=null, curQ=0, answered=[];
+function openRandom(){ openCase(IMAGES[Math.floor(Math.random()*IMAGES.length)].id); }
+function openCase(id){
+  curCase = IMAGES.find(c=>c.id===id);
+  curQ = 0;
+  answered = (curCase.mcqs||[]).map(()=>null);
+  showView('view-case');
+  document.getElementById('case-title').textContent = curCase.title;
+  document.getElementById('case-sub').textContent = (curCase.figNum? curCase.figNum+" · ":"") + (CAT_NAMES[curCase.category]||curCase.category);
+  document.getElementById('case-img').src = curCase.file;
+  // caption reset (hidden)
+  const cb=document.getElementById('caption-body'); cb.textContent = curCase.caption || "No caption provided for this case — answer the descriptive questions from the image.";
+  cb.classList.remove('visible');
+  document.getElementById('caption-toggle').textContent = '👁 Reveal Expert Caption';
+  // load saved work
+  const saved = (store.work && store.work[curCase.id]) || {};
+  document.getElementById('comment-box').value = saved.comment || "";
+  document.getElementById('save-note').textContent = saved.ts ? "last saved "+new Date(saved.ts).toLocaleString() : "";
+  pendingAnnoData = saved.anno || null;
+  strokes = [];
+  // nav buttons
+  const idx = IMAGES.indexOf(curCase);
+  document.getElementById('prev-case').disabled = idx===0;
+  document.getElementById('next-case').disabled = idx===IMAGES.length-1;
+  renderQ();
+}
+function navigateCase(d){
+  const idx = IMAGES.indexOf(curCase)+d;
+  if(idx>=0 && idx<IMAGES.length) openCase(IMAGES[idx].id);
+}
+function toggleCaption(){
+  const cb=document.getElementById('caption-body');
+  cb.classList.toggle('visible');
+  document.getElementById('caption-toggle').textContent = cb.classList.contains('visible') ? '🙈 Hide Caption' : '👁 Reveal Expert Caption';
+}
+
+/* renders either MCQ or descriptive */
+function renderQ(){
+  const p = document.getElementById('q-panel');
+  if(curCase.descriptive){ return renderDescriptive(); }
+  const qs = curCase.mcqs, q = qs[curQ];
+  const dots = qs.map((_,i)=>`<span class="q-dot ${i===curQ?'active':''} ${answered[i]!=null?'done':''}" onclick="gotoQ(${i})"></span>`).join('');
+  const state = answered[curQ]; // null | selectedIndex
+  const locked = state!=null;
+  const opts = q.opts.map((o,i)=>{
+    let cls="opt";
+    if(locked){ cls+=" locked";
+      if(i===q.ans) cls+=" correct";
+      else if(i===state) cls+=" wrong";
+    }
+    const k = String.fromCharCode(65+i);
+    return `<button class="${cls}" onclick="selectOpt(${i})"><span class="k">${k}</span><span>${o}</span></button>`;
+  }).join('');
+  p.innerHTML = `
+    <div class="q-head"><span class="q-kind">🧠 Multiple Choice</span><div class="q-dots">${dots}</div></div>
+    <div class="q-progress">Question ${curQ+1} of ${qs.length}</div>
+    <div class="q-text">${q.q}</div>
+    <div class="opts" id="opts">${opts}</div>
+    <div class="explain ${locked?'show':''}" id="explain">${locked?('<b>Explanation.</b> '+q.exp):''}</div>
+    <div class="explain showhint hidden" id="hintbox"><b>Hint.</b> ${q.hint||''}</div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" id="btn-hint" onclick="showHint()" ${locked?'disabled':''}>💡 Hint</button>
+      <button class="btn btn-ghost" id="btn-next" onclick="nextQ()" ${curQ<qs.length-1?'':'disabled'}>Next question →</button>
+    </div>`;
+}
+let selPending=null;
+function selectOpt(i){
+  if(answered[curQ]!=null) return;
+  answered[curQ]=i;
+  if(i===curCase.mcqs[curQ].ans) score.correct++;
+  score.total++;
+  markProgress();
+  store.score=score; saveStore(store); updateHdrScore();
+  renderQ();
+}
+function showHint(){ document.getElementById('hintbox').classList.remove('hidden'); }
+function gotoQ(i){ curQ=i; renderQ(); }
+function nextQ(){ if(curQ<curCase.mcqs.length-1){ curQ++; renderQ(); } }
+
+/* descriptive */
+let descIdx=0, descRevealed=[];
+function renderDescriptive(){
+  const p=document.getElementById('q-panel');
+  const qs=curCase.descriptive;
+  if(descRevealed.length!==qs.length) descRevealed=qs.map(()=>false);
+  const q=qs[descIdx];
+  const dots=qs.map((_,i)=>`<span class="q-dot ${i===descIdx?'active':''} ${descRevealed[i]?'done':''}" onclick="gotoDesc(${i})"></span>`).join('');
+  p.innerHTML=`
+    <div class="q-head"><span class="q-kind">✍️ Descriptive (no options)</span><div class="q-dots">${dots}</div></div>
+    <div class="q-progress">Question ${descIdx+1} of ${qs.length} · reason from the image, then check the model answer</div>
+    <div class="q-text">${q.q}</div>
+    <div class="model-ans ${descRevealed[descIdx]?'show':''}" id="model"><div class="h">Model answer</div>${q.model}</div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="revealModel()">${descRevealed[descIdx]?'Model answer shown':'Reveal model answer'}</button>
+      <button class="btn btn-ghost" onclick="nextDesc()" ${descIdx<qs.length-1?'':'disabled'}>Next question →</button>
+    </div>`;
+}
+function revealModel(){ descRevealed[descIdx]=true; markProgress(); renderDescriptive(); }
+function gotoDesc(i){ descIdx=i; renderDescriptive(); }
+function nextDesc(){ if(descIdx<curCase.descriptive.length-1){ descIdx++; renderDescriptive(); } }
+function markProgress(){ store.progress=store.progress||{}; store.progress[curCase.id]=true; saveStore(store); }
+
+/* reset descriptive index on case open */
+const _openCase = openCase;
+openCase = function(id){ descIdx=0; descRevealed=[]; _openCase(id); };
+
+/* ---------- annotation canvas ---------- */
+const canvas=document.getElementById('annoCanvas');
+const ctx=canvas.getContext('2d');
+let drawing=false, drawMode=true, curColor="#f43f5e", strokes=[], curStroke=null, pendingAnnoData=null;
+function resizeCanvas(){
+  const img=document.getElementById('case-img');
+  canvas.width=img.clientWidth; canvas.height=img.clientHeight;
+  if(pendingAnnoData){ const im=new Image(); im.onload=()=>ctx.drawImage(im,0,0,canvas.width,canvas.height); im.src=pendingAnnoData; pendingAnnoData=null; strokes=[]; }
+  else redraw();
+}
+window.addEventListener('resize',()=>{ if(document.getElementById('view-case').classList.contains('active')) resizeCanvas(); });
+function setColor(el){ document.querySelectorAll('.swatch').forEach(s=>s.classList.remove('active')); el.classList.add('active'); curColor=el.dataset.color; if(!drawMode) toggleDraw(); }
+function toggleDraw(){ drawMode=!drawMode; const b=document.getElementById('btn-draw'); b.classList.toggle('on',drawMode); canvas.style.pointerEvents=drawMode?'auto':'none'; }
+function pos(e){ const r=canvas.getBoundingClientRect(); const t=e.touches?e.touches[0]:e; return {x:(t.clientX-r.left), y:(t.clientY-r.top)}; }
+function start(e){ if(!drawMode) return; e.preventDefault(); drawing=true; curStroke={color:curColor, pts:[pos(e)]}; }
+function move(e){ if(!drawing) return; e.preventDefault(); curStroke.pts.push(pos(e)); redraw(true); }
+function end(){ if(!drawing) return; drawing=false; if(curStroke&&curStroke.pts.length>1) strokes.push(curStroke); curStroke=null; }
+function redraw(live){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const all = live&&curStroke ? strokes.concat([curStroke]) : strokes;
+  all.forEach(s=>{ ctx.strokeStyle=s.color; ctx.lineWidth=3; ctx.lineCap='round'; ctx.lineJoin='round'; ctx.beginPath();
+    s.pts.forEach((p,i)=> i? ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y)); ctx.stroke(); });
+}
+function undoAnno(){ strokes.pop(); redraw(); }
+function clearAnno(){ strokes=[]; pendingAnnoData=null; ctx.clearRect(0,0,canvas.width,canvas.height); }
+canvas.addEventListener('mousedown',start); canvas.addEventListener('mousemove',move); window.addEventListener('mouseup',end);
+canvas.addEventListener('touchstart',start,{passive:false}); canvas.addEventListener('touchmove',move,{passive:false}); canvas.addEventListener('touchend',end);
+function saveWork(){
+  store.work=store.work||{};
+  const hasDrawing = strokes.length>0;
+  store.work[curCase.id]={ comment:document.getElementById('comment-box').value, anno: hasDrawing?canvas.toDataURL('image/png'):null, ts:Date.now() };
+  saveStore(store);
+  document.getElementById('save-note').textContent="last saved "+new Date().toLocaleString();
+  toast("Saved to this browser");
+}
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1900); }
+
+/* ---------- exam mode ---------- */
+let exam=null;
+function startExam(){
+  const pool=[];
+  IMAGES.forEach(c=>{ (c.mcqs||[]).forEach((m,i)=> pool.push({c,m})); });
+  for(let i=pool.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [pool[i],pool[j]]=[pool[j],pool[i]]; }
+  exam={ items:pool.slice(0,Math.min(20,pool.length)), i:0, correct:0, sel:null };
+  showView('view-exam');
+  renderExam();
+}
+function renderExam(){
+  const card=document.getElementById('exam-card');
+  if(exam.i>=exam.items.length) return renderExamResult();
+  const {c,m}=exam.items[exam.i];
+  document.getElementById('exam-sub').textContent="Question "+(exam.i+1)+" of "+exam.items.length;
+  const pct=Math.round(exam.i/exam.items.length*100);
+  const locked=exam.sel!=null;
+  const opts=m.opts.map((o,idx)=>{
+    let cls="opt"; if(locked){ cls+=" locked"; if(idx===m.ans)cls+=" correct"; else if(idx===exam.sel)cls+=" wrong"; }
+    return `<button class="${cls}" onclick="examSelect(${idx})"><span class="k">${String.fromCharCode(65+idx)}</span><span>${o}</span></button>`;
+  }).join('');
+  card.innerHTML=`
+    <div class="exam-bar"><div style="width:${pct}%"></div></div>
+    <img class="exam-img" src="${c.file}" alt="case">
+    <div class="q-text">${m.q}</div>
+    <div class="opts">${opts}</div>
+    <div class="explain ${locked?'show':''}">${locked?('<b>'+(exam.sel===m.ans?'Correct.':'Not quite.')+'</b> '+m.exp):''}</div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="examNext()" ${locked?'':'disabled'}>${exam.i===exam.items.length-1?'See result':'Next →'}</button></div>`;
+}
+function examSelect(i){ if(exam.sel!=null)return; exam.sel=i; if(i===exam.items[exam.i].m.ans) exam.correct++; renderExam(); }
+function examNext(){ exam.i++; exam.sel=null; renderExam(); }
+function renderExamResult(){
+  const pct=Math.round(exam.correct/exam.items.length*100);
+  const msg = pct>=80?"Excellent — sharp abdominal eye! 🎯" : pct>=60?"Solid work — review the misses. 👍" : "Keep training — revisit the gallery. 📚";
+  document.getElementById('exam-sub').textContent="Complete";
+  document.getElementById('exam-card').innerHTML=`
+    <div class="result-big"><div class="result-score">${pct}%</div>
+    <p style="margin:10px 0 4px;font-weight:600">${exam.correct} / ${exam.items.length} correct</p>
+    <p style="color:var(--muted2);font-size:14px">${msg}</p></div>
+    <div class="btn-row" style="justify-content:center">
+      <button class="btn btn-primary" onclick="startExam()">🔄 New exam</button>
+      <button class="btn btn-ghost" onclick="showView('view-home')">Home</button>
+    </div>`;
+}
+
+initHome();
+</script>
+</body>
+</html>

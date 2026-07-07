@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Abdominal CT Basics Trainer | Endocrine & Abdominal Imaging</title>
-<meta name="description" content="Master adrenal CT/MRI with real case images, hidden captions, expert MCQs, descriptive questions, and a save-able annotation tool for endocrinology fellows.">
+<meta name="description" content="Master abdominal CT basics with real case images, hidden captions, expert MCQs, descriptive questions, and a save-able annotation tool for endocrinology fellows.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -197,7 +197,7 @@
 <header>
   <div class="logo" onclick="showView('view-home')">
     <div class="logo-icon">🔬</div>
-    <div class="logo-text">Adrenal Mod II <span>Imaging</span> Trainer</div>
+    <div class="logo-text">Abdominal CT <span>Basics</span> Trainer</div>
   </div>
   <div class="header-stats">
     <div class="stat-pill"><span class="dot"></span><span id="hdr-score">0 / 0</span></div>
@@ -208,9 +208,9 @@
   <section id="view-home" class="view active">
     <div class="wrap">
       <div class="hero">
-        <div class="hero-badge">🩺 Endocrinology Fellow Training – Module II</div>
-        <h1>Adrenal Module III <span class="aw">CT & MRI</span> Case Trainer</h1>
-        <p class="hero-sub">Real adrenal imaging cases with hidden expert captions, board-style MCQs and descriptive questions. Annotate images, jot comments, and save your work locally.</p>
+        <div class="hero-badge">🩺 Endocrinology Fellow Training – Abdominal CT Basics</div>
+        <h1>Abdominal CT <span class="aw">Basics & Fundamentals</span> Case Trainer</h1>
+        <p class="hero-sub">Real abdominal imaging cases with hidden expert captions, board-style MCQs and descriptive questions. Annotate images, jot comments, and save your work locally.</p>
         <div class="stats-row">
           <div class="stat-item"><div class="stat-num" id="s-cases">0</div><div class="stat-label">CASES</div></div>
           <div class="stat-item"><div class="stat-num" id="s-mcqs">0</div><div class="stat-label">MCQs</div></div>
@@ -227,7 +227,7 @@
         <div class="mode-card" onclick="openRandom()">
           <div class="mode-icon orange">🎲</div>
           <div class="mode-title">Random Case</div>
-          <div class="mode-desc">Jump to a random adrenal case for quick, unpredictable practice.</div>
+          <div class="mode-desc">Jump to a random abdominal case for quick, unpredictable practice.</div>
           <div class="mode-badge">Surprise me</div>
         </div>
         <div class="mode-card" onclick="startExam()">
@@ -269,7 +269,7 @@
       <div class="case-grid">
         <div class="img-panel">
           <div class="img-stage">
-            <img id="case-img" alt="Adrenal imaging case" onload="resizeCanvas()">
+            <img id="case-img" alt="Abdominal CT case" onload="resizeCanvas()">
             <canvas id="annoCanvas"></canvas>
           </div>
           <div class="anno-tools">
@@ -3001,7 +3001,7 @@ function examSelect(i){ if(exam.sel!=null)return; exam.sel=i; if(i===exam.items[
 function examNext(){ exam.i++; exam.sel=null; renderExam(); }
 function renderExamResult(){
   const pct=Math.round(exam.correct/exam.items.length*100);
-  const msg = pct>=80?"Excellent — sharp adrenal eye! 🎯" : pct>=60?"Solid work — review the misses. 👍" : "Keep training — revisit the gallery. 📚";
+  const msg = pct>=80?"Excellent — sharp abdominal eye! 🎯" : pct>=60?"Solid work — review the misses. 👍" : "Keep training — revisit the gallery. 📚";
   document.getElementById('exam-sub').textContent="Complete";
   document.getElementById('exam-card').innerHTML=`
     <div class="result-big"><div class="result-score">${pct}%</div>
