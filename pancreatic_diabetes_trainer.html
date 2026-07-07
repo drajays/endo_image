@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pancreatic Imaging in Diabetes Trainer | Endocrine Imaging</title>
+<meta name="description" content="Case-based board-style trainer on pancreatic imaging signatures in diabetes for endocrinology fellows: chronic pancreatitis, FCPD, type 3c, monogenic and structural mimics.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0f14; --panel:#121821; --panel2:#1a2230; --border:#243044;
+  --text:#e8eef6; --muted:#9fb0c6; --muted2:#c3cfe0;
+  --accent:#d946ef; --accent2:#a855f7; --accent-glow:rgba(217,70,239,0.25);
+  --good:#22c55e; --bad:#ef4444; --warn:#f59e0b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:0;z-index:20;background:rgba(11,15,20,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.hbar{display:flex;align-items:center;justify-content:space-between;height:62px;max-width:1080px;margin:0 auto;padding:0 20px}
+.logo{display:flex;align-items:center;gap:12px;cursor:pointer}
+.logo-icon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 0 16px var(--accent-glow)}
+.logo-text{font-weight:700;font-size:15px}
+.logo-text span{color:var(--accent)}
+.hstats{display:flex;gap:10px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:7px;background:var(--panel2);border:1px solid var(--border);border-radius:20px;padding:6px 13px;font-size:12.5px;font-weight:600;color:var(--muted2)}
+.pill .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent-glow)}
+.btn{cursor:pointer;border:1px solid var(--border);background:var(--panel2);color:var(--text);border-radius:11px;padding:11px 18px;font-size:14px;font-weight:600;font-family:inherit;transition:.15s}
+.btn:hover{border-color:var(--accent);color:#fff}
+.btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;box-shadow:0 4px 18px var(--accent-glow)}
+.btn.ghost{background:transparent}
+section{padding:34px 0}
+/* home */
+.hero{text-align:center;padding:46px 0 10px}
+.hero-badge{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);background:var(--accent-glow);border:1px solid var(--border);border-radius:20px;padding:5px 14px;margin-bottom:20px}
+.hero h1{font-size:38px;font-weight:800;line-height:1.15;letter-spacing:-.02em;margin-bottom:14px}
+.hero h1 .aw{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--muted);max-width:680px;margin:0 auto 26px;font-size:16px}
+.stat-row{display:flex;justify-content:center;gap:34px;flex-wrap:wrap;margin:8px 0 30px}
+.stat-num{font-size:32px;font-weight:800;color:var(--accent)}
+.stat-label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.mode-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;margin-top:6px}
+.mode-card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px;cursor:pointer;transition:.15s;text-align:left}
+.mode-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.mode-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;background:var(--accent-glow);margin-bottom:14px}
+.mode-title{font-weight:700;font-size:17px;margin-bottom:5px}
+.mode-desc{font-size:13.5px;color:var(--muted)}
+/* filter chips */
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin:6px 0 22px}
+.chip{cursor:pointer;border:1px solid var(--border);background:var(--panel);border-radius:20px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--muted2);transition:.15s}
+.chip:hover{border-color:var(--accent)}
+.chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+/* gallery */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:18px;cursor:pointer;transition:.15s;position:relative;display:flex;flex-direction:column;gap:10px}
+.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;align-self:flex-start}
+.card h3{font-size:16px;font-weight:700;line-height:1.3}
+.card .meta{font-size:12.5px;color:var(--muted);display:flex;gap:12px;align-items:center;margin-top:auto}
+.done-badge{position:absolute;top:16px;right:16px;font-size:13px;color:var(--good)}
+/* case view */
+.case-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.case-panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:0;overflow:hidden;margin-bottom:22px}
+.concept-hero{padding:30px 26px;background:linear-gradient(135deg,rgba(217,70,239,.10),rgba(168,85,247,.05));display:flex;gap:18px;align-items:flex-start}
+.concept-hero .big-ic{font-size:40px;line-height:1}
+.concept-hero h2{font-size:22px;font-weight:800;margin-bottom:6px}
+.case-img{width:100%;display:block;background:#000}
+.reveal-box{padding:20px 26px;border-top:1px solid var(--border)}
+.reveal-box .lbl{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;margin-bottom:8px}
+.concept-text{color:var(--muted2);font-size:15px;display:none}
+.concept-text.show{display:block}
+.q-block{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin-bottom:16px}
+.q-num{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.q-stem{font-size:16px;font-weight:600;margin-bottom:14px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel2);color:var(--text);border-radius:10px;padding:12px 15px;margin-bottom:9px;cursor:pointer;font-size:14.5px;font-family:inherit;transition:.12s}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt:disabled{cursor:default}
+.opt.correct{border-color:var(--good);background:rgba(34,197,94,.12)}
+.opt.wrong{border-color:var(--bad);background:rgba(239,68,68,.12)}
+.opt .mk{font-weight:700;margin-right:9px;color:var(--muted)}
+.q-tools{display:flex;gap:10px;margin-top:4px}
+.mini{font-size:12.5px;color:var(--accent);cursor:pointer;background:none;border:none;font-family:inherit;font-weight:600;padding:4px 0}
+.hint-box,.exp-box{margin-top:12px;padding:12px 14px;border-radius:10px;font-size:14px;display:none}
+.hint-box{background:rgba(245,158,11,.10);border:1px solid rgba(245,158,11,.3);color:#fcd9a1}
+.exp-box{background:var(--panel2);border:1px solid var(--border);color:var(--muted2)}
+.hint-box.show,.exp-box.show{display:block}
+.nav-row{display:flex;justify-content:space-between;margin:26px 0 10px;gap:12px}
+/* exam */
+.exam-wrap{max-width:760px;margin:0 auto}
+.progress-bar{height:7px;background:var(--panel2);border-radius:10px;overflow:hidden;margin-bottom:20px}
+.progress-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0;transition:.3s}
+.result-big{text-align:center;padding:40px 0}
+.result-score{font-size:56px;font-weight:800;color:var(--accent)}
+/* tag colors */
+.tag-modality{background:rgba(56,189,248,.16);color:#7dd3fc}
+.tag-cp{background:rgba(245,158,11,.16);color:#fcd34d}
+.tag-fcpd{background:rgba(249,115,22,.16);color:#fdba74}
+.tag-t3c{background:rgba(217,70,239,.16);color:#f0abfc}
+.tag-t1d{background:rgba(59,130,246,.16);color:#93c5fd}
+.tag-t2d{background:rgba(16,185,129,.16);color:#6ee7b7}
+.tag-mono{background:rgba(168,85,247,.16);color:#d8b4fe}
+.tag-mimic{background:rgba(239,68,68,.16);color:#fca5a5}
+.tag-struct{background:rgba(20,184,166,.16);color:#5eead4}
+.tag-workup{background:rgba(148,163,184,.18);color:#cbd5e1}
+.foot{border-top:1px solid var(--border);color:var(--muted);font-size:12.5px;padding:26px 0 40px;text-align:center;line-height:1.7}
+.hidden{display:none!important}
+@media(max-width:600px){.hero h1{font-size:29px}.concept-hero{flex-direction:column}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hbar">
+    <div class="logo" onclick="go('home')">
+      <div class="logo-icon">🩸</div>
+      <div class="logo-text">Pancreatic Imaging in <span>Diabetes</span></div>
+    </div>
+    <div class="hstats">
+      <div class="pill"><span class="dot"></span><span id="hdr-prog">0 / 18 cases</span></div>
+      <button class="btn ghost" style="padding:8px 12px;font-size:12.5px" onclick="resetProg()">Reset</button>
+    </div>
+  </div>
+</header>
+
+<!-- HOME -->
+<main id="view-home">
+  <div class="wrap">
+    <div class="hero">
+      <div class="hero-badge">🧭 Endocrine Radiology · Fellow Trainer</div>
+      <h1>Pancreatic Imaging <span class="aw">Signatures in Diabetes</span></h1>
+      <p>Board-style, case-based questions on the CT / MRCP / EUS / US findings that separate chronic pancreatitis, FCPD, type 3c, monogenic and structural causes of diabetes from their dangerous mimics.</p>
+      <div class="stat-row">
+        <div><div class="stat-num">18</div><div class="stat-label">Cases</div></div>
+        <div><div class="stat-num">54</div><div class="stat-label">Board MCQs</div></div>
+        <div><div class="stat-num">10</div><div class="stat-label">Topics</div></div>
+      </div>
+      <div class="mode-row">
+        <div class="mode-card" onclick="go('gallery')"><div class="mode-icon">📚</div><div class="mode-title">Study by Topic</div><div class="mode-desc">Browse cases, reveal the key concept, and work through the questions with hints and explanations.</div></div>
+        <div class="mode-card" onclick="openRandom()"><div class="mode-icon">🎲</div><div class="mode-title">Random Case</div><div class="mode-desc">Jump to a random signature for quick, unpredictable practice.</div></div>
+        <div class="mode-card" onclick="startExam()"><div class="mode-icon">📝</div><div class="mode-title">Exam Mode</div><div class="mode-desc">20 shuffled questions, scored at the end — no hints, just answers.</div></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- GALLERY -->
+<main id="view-gallery" class="hidden">
+  <div class="wrap"><section>
+    <h2 style="font-size:24px;font-weight:800;margin-bottom:4px">Case Library</h2>
+    <p style="color:var(--muted);margin-bottom:14px">Filter by topic. Each card is one imaging signature with board-style questions.</p>
+    <div class="chips" id="chips"></div>
+    <div class="grid" id="grid"></div>
+  </section></div>
+</main>
+
+<!-- CASE -->
+<main id="view-case" class="hidden"><div class="wrap"><section>
+  <button class="btn ghost" style="margin-bottom:16px" onclick="go('gallery')">← Back to library</button>
+  <div id="case-body"></div>
+  <div class="nav-row">
+    <button class="btn" id="prevBtn" onclick="navCase(-1)">← Previous</button>
+    <button class="btn primary" id="nextBtn" onclick="navCase(1)">Next case →</button>
+  </div>
+</section></div></main>
+
+<!-- EXAM -->
+<main id="view-exam" class="hidden"><div class="wrap"><section>
+  <div class="exam-wrap" id="exam-body"></div>
+</section></div></main>
+
+<footer class="foot">
+  <div class="wrap">
+    Educational trainer for endocrinology & diabetes fellows · not medical advice — use local radiology protocols and multidisciplinary review.<br>
+    Question content derived from the "Pancreatic Imaging Signatures in Diabetes" fellows resource (100 curated open references). Progress is saved locally in your browser.
+  </div>
+</footer>
+
+<script>
+const CASES=[{"category":"Modality","tagClass":"tag-modality","title":"Choosing the Right Test — CT vs MRCP vs EUS vs US","concept":"Each modality answers a different question. Non-contrast CT is best for calcifications, intraductal stones, atrophy, pseudocysts and complications. MRI/MRCP is the best non-invasive duct map (strictures, side branches, divisum, cysts, congenital anomalies) and adds functional/fibrosis assessment. EUS is most sensitive for early parenchymal/ductal change and can sample masses. Transabdominal US is a fast, radiation-free screen for coarse shadowing calcifications, duct dilation and pseudocyst but is limited by bowel gas and body habitus.","mcqs":[{"q":"A diabetes fellow wants to confirm suspected parenchymal and intraductal calcifications. Which single test is best?","opts":["Non-contrast CT","Contrast-enhanced portal venous CT","Diffusion-weighted MRI","Transabdominal ultrasound"],"ans":0,"exp":"Non-contrast CT has the highest sensitivity for calcification and intraductal stones because contrast and dense parenchymal enhancement can obscure small calcific foci.","hint":"Contrast can hide small calcium; which phase shows it best?"},{"q":"Which modality is the best non-invasive map of the main and side-branch pancreatic ducts, divisum and congenital anomalies?","opts":["Transabdominal ultrasound","Non-contrast CT","Plain radiography","MRI / MRCP"],"ans":3,"exp":"MRCP provides a projectional map of the whole ductal tree without radiation or contrast, making it first-line for ductal anatomy, divisum and side-branch disease.","hint":"The 'cholangiopancreatography' in its name is the clue."},{"q":"Which test is most sensitive for early parenchymal and ductal changes of chronic pancreatitis and can also obtain tissue?","opts":["Non-contrast CT","Transabdominal ultrasound","Endoscopic ultrasound (EUS)","Secretin-MRCP"],"ans":2,"exp":"EUS resolves subtle early features (hyperechoic foci/strands, lobularity, duct irregularity, side-branch dilation) and allows FNA/FNB of masses or AIP mimics.","hint":"It is endoscopic and can biopsy."}],"id":1},{"category":"Modality","tagClass":"tag-modality","title":"Secretin-MRCP and Fibrosis-Sensitive MRI","concept":"Secretin transiently stimulates pancreatic fluid secretion: on s-MRCP it improves ductal depiction and lets you estimate exocrine output by grading duodenal filling. Quantitative MRI markers — reduced native T1 signal, increased extracellular volume fraction (ECV), and MR elastography stiffness — reflect fibrosis and can flag early chronic pancreatitis when cross-sectional imaging looks normal.","mcqs":[{"q":"What does intravenous secretin add during MRCP?","opts":["It suppresses fat signal to quantify steatosis","It transiently improves ductal visualisation and grades exocrine output by duodenal filling","It shortens T2* to measure iron","It opacifies pancreatic arteries for perfusion mapping"],"ans":1,"exp":"Secretin stimulates fluid and bicarbonate secretion, distending ducts (better depiction) and filling the duodenum, which is graded semi-quantitatively as a surrogate of exocrine function.","hint":"Think fluid secretion — ducts and downstream duodenum."},{"q":"Which MRI finding best reflects pancreatic fibrosis in early chronic pancreatitis?","opts":["Increased proton density fat fraction","Reduced native T1 signal with increased extracellular volume fraction","High T2* value","High ADC on diffusion"],"ans":1,"exp":"Fibrosis lowers native T1 signal and expands the interstitial (extracellular) space, raising ECV; MR elastography stiffness rises in parallel.","hint":"Fibrosis expands the extracellular space."},{"q":"A patient has recurrent pancreatitis-type pain but a normal CT. Which fibrosis-sensitive approach is most appropriate next?","opts":["Plain abdominal radiograph","Repeat non-contrast CT in 6 months","Nuclear gastric emptying study","Secretin-MRCP with T1 mapping/MR elastography, and/or EUS"],"ans":3,"exp":"When CT is normal but early CP is suspected, functional/fibrosis-sensitive MRI (secretin-MRCP, T1 mapping, MRE) and EUS at an expert centre are the recommended next steps.","hint":"You need a more sensitive functional test, not a repeat of the negative one."}],"id":2},{"category":"ChronicPancreatitis","tagClass":"tag-cp","title":"Chronic Pancreatitis — The Classic Imaging Signature","concept":"Established chronic pancreatitis shows parenchymal and/or intraductal calcifications, an irregular main pancreatic duct with dilation and strictures, glandular atrophy, and sometimes pseudocysts. On MRI there is reduced T1 signal and delayed enhancement from fibrosis. Diabetes arising in this setting is classified as type 3c (diabetes of the exocrine pancreas).","mcqs":[{"q":"Which combination is the classic CT signature of established chronic pancreatitis?","opts":["Calcifications, main-duct dilation/irregularity, and glandular atrophy","Diffuse enlargement with a capsule-like rim","A single hypoenhancing mass with vascular encasement","Fat-density replacement of the whole gland"],"ans":0,"exp":"The triad of calcification, ductal dilation/irregularity and atrophy is the hallmark of established CP; the rim/sausage pattern suggests AIP and the hypoenhancing mass suggests cancer.","hint":"Calcium + duct + shrinkage."},{"q":"Diabetes developing because of chronic pancreatitis is best classified as:","opts":["Type 1 diabetes","Type 3c (diabetes of the exocrine pancreas)","Maturity-onset diabetes of the young","Type 2 diabetes"],"ans":1,"exp":"Diabetes caused by exocrine pancreatic disease (CP, cancer, CF, resection, hemochromatosis) is type 3c, which also features exocrine insufficiency and brittle control.","hint":"Exocrine-disease diabetes has its own number."},{"q":"The Cambridge classification of chronic pancreatitis grades severity primarily by:","opts":["Main and side-branch ductal changes","Serum IgG4 level","Pancreatic volume alone","Degree of parenchymal fat"],"ans":0,"exp":"Cambridge grading (originally ERCP, adapted for MRCP/CT) is based on the main pancreatic duct and side-branch abnormalities.","hint":"It is a ductal grading system."}],"id":3},{"category":"ChronicPancreatitis","tagClass":"tag-cp","title":"Early / Suspected Chronic Pancreatitis and EUS Criteria","concept":"A normal CT does not exclude early chronic pancreatitis. When pain, steatorrhea or recurrent pancreatitis persist, use MRCP with secretin and/or EUS at an expert centre. EUS uses Rosemont/Japanese criteria — hyperechoic foci with shadowing, lobularity, hyperechoic strands, main-duct irregularity, dilated side branches, and stones. Minimal findings should not be over-labelled as CP; combine imaging with function tests, genetics and follow-up.","mcqs":[{"q":"A 30-year-old with recurrent acute pancreatitis and steatorrhea has a normal CT. What is the best next step?","opts":["Empirical pancreatic enzyme replacement only","Reassure and stop investigation","Immediate ERCP with stenting","MRCP with secretin and/or EUS at an expert centre"],"ans":3,"exp":"Normal CT cannot exclude early CP; secretin-MRCP and EUS are the sensitive next tests before any invasive intervention.","hint":"Escalate to a more sensitive test, not to therapy."},{"q":"Which set of features is part of the EUS (Rosemont) criteria for chronic pancreatitis?","opts":["Sausage shape, rim halo, delayed enhancement","Low T2*, high R2*","Hyperechoic foci with shadowing, lobularity, duct irregularity, dilated side branches, stones","Double-duct sign with distal atrophy"],"ans":2,"exp":"Rosemont criteria combine parenchymal (foci, strands, lobularity) and ductal (irregularity, dilation, side branches, stones) features to grade CP.","hint":"These are grey-scale echo features of the gland and duct."},{"q":"What is the main pitfall of diagnosing chronic pancreatitis from minimal imaging findings?","opts":["Overlooking iron overload","Underestimating cancer risk","Missing renal cysts","Over-diagnosis — minor changes overlap with normal and mimics, so combine imaging with function tests, genetics and follow-up"],"ans":3,"exp":"Subtle findings are non-specific; over-calling CP is a recognised error. Diagnosis should integrate imaging, pancreatic function testing, risk factors/genetics and longitudinal follow-up.","hint":"Minimal findings are easy to over-interpret."}],"id":4},{"category":"FCPD","tagClass":"tag-fcpd","title":"FCPD / Tropical / Chronic Calcific Pancreatitis","concept":"Fibrocalculous pancreatic diabetes (FCPD), tropical chronic pancreatitis and chronic calcific pancreatitis present in lean, young patients from endemic tropical regions with abdominal pain, steatorrhea and diabetes. Imaging shows large dense intraductal calculi in a dilated main pancreatic duct with parenchymal calcification and atrophy. The diabetes is usually insulin-requiring but relatively ketosis-resistant, and exocrine insufficiency should be screened.","mcqs":[{"q":"A lean 24-year-old from South India has diabetes, steatorrhea and CT showing large main-duct stones. Most likely diagnosis?","opts":["Pancreatic cancer","FCPD / tropical chronic calcific pancreatitis (type 3c)","Autoimmune pancreatitis","Type 1 diabetes"],"ans":1,"exp":"Lean young phenotype, steatorrhea and large intraductal calculi in an endemic region are classic for FCPD/tropical chronic calcific pancreatitis with diabetes of the exocrine pancreas.","hint":"Lean, young, tropical, big duct stones."},{"q":"What is the characteristic calculus pattern of FCPD/tropical CP?","opts":["No calcification","Rim-like capsular calcification","Large, dense intraductal calculi within a dilated main pancreatic duct","Fine peripheral vascular calcification"],"ans":2,"exp":"FCPD is defined by large intraductal stones in a dilated main duct — coarser and denser than the calcification of many other causes of CP.","hint":"Think big stones inside a big duct."},{"q":"The diabetes of FCPD is best described as:","opts":["Insulin-requiring but relatively ketosis-resistant, with exocrine insufficiency to screen for","Ketosis-prone and easily controlled with diet","Transient and reversible","Never requiring insulin"],"ans":0,"exp":"FCPD diabetes is typically insulin-requiring yet relatively resistant to ketosis, and coexisting exocrine insufficiency (low fecal elastase) should be assessed.","hint":"Needs insulin but doesn't readily go into ketosis."}],"id":5},{"category":"Type3c","tagClass":"tag-t3c","title":"Type 3c — Diabetes of the Exocrine Pancreas","concept":"Type 3c diabetes results from exocrine pancreatic disease: chronic pancreatitis, pancreatic cancer, cystic fibrosis, hemochromatosis, or pancreatic resection. Clues include exocrine insufficiency (low fecal elastase-1, steatorrhea, fat-soluble vitamin deficiency), brittle/hard-to-control glycemia, and loss of counter-regulatory and incretin responses. New-onset 'type 2' diabetes with weight loss or steatorrhea should trigger evaluation for an exocrine pancreatic cause, including cancer.","mcqs":[{"q":"Which laboratory test best supports coexisting exocrine pancreatic insufficiency?","opts":["Fecal elastase-1","Serum amylase","HbA1c","Serum IgG4"],"ans":0,"exp":"A low fecal elastase-1 is the practical screen for exocrine pancreatic insufficiency that accompanies type 3c diabetes.","hint":"A stool enzyme test."},{"q":"Which cause is NOT a recognised source of type 3c diabetes?","opts":["Pancreatic cancer","Chronic pancreatitis","Pancreatic resection","Autoimmune (type 1) islet destruction"],"ans":3,"exp":"Type 3c arises from exocrine pancreatic disease (CP, cancer, CF, hemochromatosis, resection). Autoimmune islet destruction is type 1 diabetes, a different mechanism.","hint":"One of these is an islet-autoimmune process, not exocrine disease."},{"q":"A 58-year-old labelled 'new type 2 diabetes' has unintentional weight loss and steatorrhea. The most appropriate action is:","opts":["Order thyroid function tests only","Intensify oral hypoglycaemics and review in a year","Start insulin and take no further action","Arrange pancreatic imaging to look for exocrine disease or malignancy"],"ans":3,"exp":"Weight loss plus steatorrhea with new diabetes is a red flag for exocrine pancreatic disease or pancreatic cancer and warrants dedicated pancreatic imaging.","hint":"Weight loss + steatorrhea + new DM = image the pancreas."}],"id":6},{"category":"Type1","tagClass":"tag-t1d","title":"Type 1 Diabetes — Pancreas Morphology","concept":"Type 1 diabetes is increasingly understood as a whole-pancreas disease: the pancreas is smaller than in controls even near diagnosis, continues to lose volume in the first year, and shows altered shape and diffusion with reduced exocrine enzyme output. These are research MRI/US findings and longitudinal volume decline can track progression, but pancreas size is NOT a routine diagnostic test — diagnosis rests on autoantibodies and C-peptide.","mcqs":[{"q":"Compared with matched controls, the pancreas in type 1 diabetes is typically:","opts":["Replaced by fat","Smaller in volume, with further decline around and after diagnosis","Larger and hyperenhancing","Unchanged in size"],"ans":1,"exp":"Cohort MRI/US studies show reduced pancreatic volume in T1D even near onset, with continued decline in the first year — evidence of whole-pancreas involvement.","hint":"Whole-pancreas disease means a shrinking gland."},{"q":"Can a small pancreas on MRI be used to diagnose type 1 diabetes?","opts":["Yes, it is diagnostic","Yes, if the patient is under 30","Only if calcifications are also present","No — it is a supportive research finding; diagnosis relies on autoantibodies and C-peptide"],"ans":3,"exp":"Reduced pancreas size supports the T1D phenotype but is not diagnostic; clinical diagnosis depends on islet autoantibodies and C-peptide.","hint":"Morphology supports, serology decides."},{"q":"In longitudinal MRI studies of at-risk individuals, declining pancreas volume:","opts":["Accompanies and can predict progression toward clinical (stage 3) type 1 diabetes","Indicates type 2 diabetes","Predicts nothing about progression","Reverses spontaneously"],"ans":0,"exp":"Serial MRI shows progressive volume loss that parallels and can predict progression to clinical type 1 diabetes.","hint":"The gland shrinks as disease advances."}],"id":7},{"category":"Type2","tagClass":"tag-t2d","title":"Type 2 Diabetes and the Fatty Pancreas (NAFPD)","concept":"Pancreatic steatosis / non-alcoholic fatty pancreas disease is quantified by MRI proton density fat fraction (PDFF), Dixon or MR spectroscopy; CT shows fat-density change and EUS shows a hyperechoic gland. It is associated with obesity, metabolic syndrome, type 2 diabetes and pancreatic cancer risk, but thresholds and causality are uncertain — treat it as a risk marker, not a standalone diagnosis, and separate metabolic steatosis from fat replacement due to CF, CEL-MODY or other exocrine disease.","mcqs":[{"q":"What is the best way to quantify pancreatic fat?","opts":["Serum triglycerides","Transabdominal ultrasound echogenicity","Non-contrast CT attenuation alone","MRI proton density fat fraction (PDFF), Dixon or MR spectroscopy"],"ans":3,"exp":"MRI PDFF/Dixon/MRS give reproducible fat quantification; CT and US are less precise surrogates.","hint":"A fat-fraction MRI technique."},{"q":"How should an incidental 'fatty pancreas' be interpreted in a person with type 2 diabetes?","opts":["As a definitive disease diagnosis requiring biopsy","As a metabolic risk marker, not a standalone label","As proof of chronic pancreatitis","As evidence of cancer"],"ans":1,"exp":"Fatty pancreas reflects ectopic fat biology and metabolic risk; thresholds and causal role are unsettled, so it is a risk marker rather than a diagnosis.","hint":"Risk marker, not a label."},{"q":"Marked fatty replacement of the pancreas should also prompt consideration of:","opts":["Cystic fibrosis, CEL-MODY or other exocrine disease — check fecal elastase and syndromic clues","Only obesity","Iron overload exclusively","Autoimmune pancreatitis"],"ans":0,"exp":"Fat replacement is not always metabolic; CF, CEL-MODY and other exocrine diseases cause it, so fecal elastase and syndromic features should be checked.","hint":"Not all fat is metabolic — think CF and CEL-MODY."}],"id":8},{"category":"Monogenic","tagClass":"tag-mono","title":"HNF1B / MODY5 / 17q12 Deletion","concept":"HNF1B (MODY5, 17q12) causes pancreatic hypoplasia/atrophy that preferentially involves the dorsal pancreas (body and tail). The syndromic footprint is key: renal cysts, hypomagnesemia, genital-tract anomalies, hyperuricemia/early gout and abnormal liver enzymes. Diabetes plus renal cysts and hypomagnesemia with a small or dorsal-deficient pancreas should trigger monogenic testing and renal/genital/family evaluation.","mcqs":[{"q":"Diabetes with renal cysts, hypomagnesemia and a small or dorsally-deficient pancreas on MRI most suggests:","opts":["GATA6 agenesis","Autoimmune pancreatitis","HNF1B / MODY5 (17q12)","Type 2 diabetes"],"ans":2,"exp":"The renal cysts + hypomagnesemia + dorsal pancreatic hypoplasia cluster is the classic HNF1B/MODY5 (17q12 deletion) phenotype.","hint":"Kidneys, magnesium and the tail of the pancreas."},{"q":"Which part of the pancreas is preferentially affected in HNF1B-related disease?","opts":["The dorsal pancreas (body and tail)","The head/uncinate (ventral) pancreas","Only the main duct","The whole gland uniformly"],"ans":0,"exp":"HNF1B disturbs dorsal pancreatic development, so body/tail hypoplasia (up to dorsal agenesis) is characteristic.","hint":"Dorsal bud becomes the body and tail."},{"q":"Which extra-pancreatic clues should be actively sought when HNF1B is suspected?","opts":["Cerebellar hypoplasia and congenital heart disease","Low pancreatic T2* and cardiac iron","Renal cysts, hypomagnesemia and genital-tract anomalies","Sausage pancreas and IgG4 elevation"],"ans":2,"exp":"HNF1B is a multisystem disorder — renal cysts, hypomagnesemia and genital-tract anomalies are the high-yield associations to screen for.","hint":"Think renal-cyst-and-diabetes syndrome."}],"id":9},{"category":"Monogenic","tagClass":"tag-mono","title":"GATA6 / PDX1 / PTF1A — Developmental Diabetes","concept":"GATA6, PDX1, PTF1A and RFX6 cause pancreatic agenesis/hypoplasia presenting as neonatal or childhood diabetes. Associated features localise the gene: GATA6 with congenital heart disease and biliary/intestinal anomalies; PTF1A with cerebellar agenesis/hypoplasia; PDX1 with pancreatic agenesis and exocrine insufficiency. Imaging (MRI/MRCP or CT) confirms parenchymal absence, with parallel renal and cardiac imaging.","mcqs":[{"q":"Neonatal diabetes with pancreatic agenesis and congenital heart disease most classically points to:","opts":["CEL-MODY","GATA6","HNF1B","Cystic fibrosis"],"ans":1,"exp":"GATA6 is the classic cause of pancreatic agenesis with congenital cardiac (and often biliary/intestinal) anomalies presenting as neonatal diabetes.","hint":"Agenesis plus a heart defect in a neonate."},{"q":"Pancreatic agenesis due to PTF1A is characteristically associated with:","opts":["Iron overload","Sausage-shaped pancreas","Renal cysts","Cerebellar agenesis or hypoplasia"],"ans":3,"exp":"PTF1A defects cause pancreatic AND cerebellar agenesis/hypoplasia — a distinctive neuro-pancreatic combination.","hint":"Think pancreas plus the little brain."},{"q":"What imaging is used to confirm suspected pancreatic agenesis in a child with neonatal diabetes?","opts":["MRI/MRCP or CT of the abdomen to confirm parenchymal absence, with renal/cardiac imaging","Thyroid ultrasound","Skeletal survey","Non-contrast CT of the chest"],"ans":0,"exp":"Cross-sectional MRI/MRCP or CT confirms absent pancreatic parenchyma, and associated organs are imaged based on the suspected gene.","hint":"Confirm the missing organ with cross-sectional imaging."}],"id":10},{"category":"Monogenic","tagClass":"tag-mono","title":"CEL-MODY (MODY8) — Exocrine + Endocrine","concept":"CEL-MODY (MODY8), from carboxyl-ester lipase gene defects, combines autosomal-dominant adult-onset diabetes with exocrine pancreatic dysfunction. Imaging shows pancreatic lipomatosis/fatty replacement, fibrosis, atrophy and pancreatic cysts. Suspect it when dominant-inheritance diabetes coexists with exocrine symptoms; work-up includes MRCP for cyst/duct anatomy, fecal elastase and family history.","mcqs":[{"q":"Autosomal-dominant adult-onset diabetes plus exocrine insufficiency and pancreatic cysts/lipomatosis suggests:","opts":["Type 1 diabetes","Hemochromatosis","CEL-MODY (MODY8)","GATA6 neonatal diabetes"],"ans":2,"exp":"CEL-MODY uniquely couples dominantly-inherited diabetes with exocrine dysfunction, lipomatosis, fibrosis and pancreatic cysts.","hint":"MODY with a fatty, cystic, insufficient pancreas."},{"q":"The typical pancreatic imaging pattern in CEL-MODY is:","opts":["Low T2* iron signal","Large intraductal calculi","Fatty replacement/lipomatosis with cysts and atrophy","Diffuse sausage enlargement with rim"],"ans":2,"exp":"CEL-MODY shows lipomatosis/fatty replacement combined with cysts and progressive atrophy.","hint":"Fat plus cysts plus shrinkage."},{"q":"Appropriate work-up when CEL-MODY is suspected includes:","opts":["Quantitative T2* MRI","MRCP for cyst/duct anatomy, fecal elastase, and family history","Serum IgG4 and steroid trial","Islet autoantibody panel only"],"ans":1,"exp":"MRCP characterises cysts/ducts, fecal elastase documents exocrine failure, and pedigree analysis supports the dominant inheritance pattern.","hint":"Map the ducts/cysts and confirm exocrine failure + inheritance."}],"id":11},{"category":"Mimic","tagClass":"tag-mimic","title":"Autoimmune Pancreatitis / IgG4-Related Disease","concept":"Autoimmune pancreatitis shows diffuse 'sausage-shaped' glandular enlargement, a capsule-like rim (halo) of delayed enhancement, and long or multifocal duct strictures without the marked upstream dilation seen in cancer. Focal, mass-like AIP mimics pancreatic ductal adenocarcinoma. Check serum IgG4 and other-organ involvement; AIP is steroid-responsive, but tissue must exclude cancer before a steroid trial in focal masses.","mcqs":[{"q":"A diffusely enlarged 'sausage' pancreas with a capsule-like rim and delayed homogeneous enhancement is most consistent with:","opts":["Autoimmune pancreatitis / IgG4-related disease","Chronic calcific pancreatitis","Pancreatic lipomatosis","Dorsal agenesis"],"ans":0,"exp":"The sausage gland, peripheral rim/halo and delayed enhancement are the hallmark AIP pattern of IgG4-related disease.","hint":"Sausage gland with a rind."},{"q":"What is the principal danger of focal, mass-forming autoimmune pancreatitis?","opts":["It mimics pancreatic ductal adenocarcinoma, so tissue is needed before a steroid trial","It calcifies rapidly","It causes iron overload","It always resolves without treatment"],"ans":0,"exp":"Focal AIP can look identical to PDAC; adequate cancer exclusion (tissue) is required before committing to steroids.","hint":"Don't steroid-treat what might be cancer."},{"q":"Which ductal feature favours AIP over pancreatic cancer?","opts":["Intraductal calculi","Long or multifocal strictures without marked upstream dilation","Abrupt duct cut-off with marked upstream dilation","Double-duct sign"],"ans":1,"exp":"AIP tends to produce long/skip strictures with relatively preserved calibre upstream, whereas cancer causes an abrupt cut-off with prominent upstream dilation.","hint":"Cancer cuts off abruptly; AIP narrows over a long segment."}],"id":12},{"category":"Mimic","tagClass":"tag-mimic","title":"Pancreatic Cancer-Associated Diabetes","concept":"New-onset diabetes after age 50 with weight loss can be paraneoplastic. Warning signs are a focal hypoenhancing mass, abrupt main-duct cut-off, distal parenchymal atrophy, the double-duct sign (dilated CBD and MPD), and vascular invasion — though early tumours can be subtle. These features mandate an urgent pancreas-protocol CT (with MRI/EUS and tissue if equivocal) rather than routine diabetes follow-up.","mcqs":[{"q":"A 61-year-old has new-onset diabetes, 8 kg weight loss and an abrupt main pancreatic duct cut-off. The correct approach is:","opts":["Start a steroid trial for autoimmune pancreatitis","Reassure and repeat imaging in one year","Manage as ordinary type 2 diabetes","Treat as pancreatic cancer until proven otherwise — pancreas-protocol CT and EUS/tissue pathway"],"ans":3,"exp":"New diabetes after 50 with weight loss and a duct cut-off is a high-risk paraneoplastic presentation requiring urgent cancer work-up.","hint":"Older age, weight loss, duct cut-off — assume the worst."},{"q":"The 'double-duct sign' refers to:","opts":["A duct within a pseudocyst","Two accessory pancreatic ducts","A duplicated cystic duct","Simultaneous dilation of the common bile duct and main pancreatic duct from an obstructing head lesion"],"ans":3,"exp":"Coexistent CBD and MPD dilation (double-duct sign) implies an obstructing lesion at the pancreatic head/ampulla and carries high suspicion for malignancy.","hint":"Two dilated ducts obstructed at the head."},{"q":"Which combination should trigger an urgent pancreas-protocol CT rather than routine diabetes care?","opts":["New-onset diabetes after 50 with weight loss, jaundice, back pain or rapid glycemic worsening","Stable HbA1c on metformin","Young lean patient with ketosis at onset","Family history of type 2 diabetes only"],"ans":0,"exp":"Age >50 new diabetes plus weight loss, jaundice, pain or rapidly worsening glucose are the recognised red flags for pancreatic cancer evaluation.","hint":"The over-50 weight-loss red-flag cluster."}],"id":13},{"category":"Mimic","tagClass":"tag-mimic","title":"Iron Overload — Hemochromatosis and Thalassemia","concept":"Pancreatic iron deposition (transfusion-dependent thalassemia, hereditary hemochromatosis) lowers pancreatic T2* and raises R2* on quantitative MRI, and may coexist with fatty change. Iron damages beta cells and can cause dysglycemia that sometimes precedes overt diabetes. Quantitative MRI T2*/R2* of pancreas, liver and heart guides chelation/phlebotomy, and endocrine (including pituitary) screening should be coordinated with hematology.","mcqs":[{"q":"A transfusion-dependent thalassemia patient with impaired glucose tolerance has low pancreatic T2* on MRI. This indicates:","opts":["Autoimmune pancreatitis","Fatty pancreas","Pancreatic iron overload damaging beta cells","Chronic calcific pancreatitis"],"ans":2,"exp":"Low pancreatic T2* (high R2*) reflects iron deposition, which injures beta cells and can drive dysglycemia.","hint":"Iron shortens T2*."},{"q":"Which test best quantifies pancreatic iron?","opts":["Serum ferritin alone","Quantitative MRI T2* / R2*","Fecal elastase","Non-contrast CT attenuation"],"ans":1,"exp":"Quantitative MRI T2*/R2* directly measures tissue iron in pancreas, liver and heart; serum ferritin is only an indirect marker.","hint":"An MRI relaxometry measurement."},{"q":"Management of iron-related dysglycemia should be coordinated with:","opts":["Surgery for resection","Hematology for chelation/phlebotomy plus endocrine (including pituitary) screening","Steroid therapy","Enzyme replacement only"],"ans":1,"exp":"Iron-overload diabetes is managed jointly with hematology (chelation/phlebotomy) and broad endocrine screening, since iron also affects the pituitary and other glands.","hint":"Treat the iron and screen the other endocrine organs."}],"id":14},{"category":"Mimic","tagClass":"tag-mimic","title":"Cystic Fibrosis-Related Diabetes (CFRD)","concept":"In cystic fibrosis the exocrine pancreas undergoes fatty replacement and atrophy with islet loss and inflammation, and pancreatic insufficiency is common. Imaging (MRI or CT) shows a small, fatty, sometimes cystic gland, but it is not the primary tool for diagnosing CFRD — screening is OGTT/CGM-based. Imaging characterises morphology and complications rather than making the diabetes diagnosis.","mcqs":[{"q":"What is the primary tool for diagnosing cystic fibrosis-related diabetes?","opts":["Oral glucose tolerance test / continuous glucose monitoring","Pancreatic MRI volume","Fecal elastase","Non-contrast CT for calcification"],"ans":0,"exp":"CFRD is screened and diagnosed with OGTT/CGM; imaging is not the diagnostic test.","hint":"A glucose test, not a picture."},{"q":"The typical pancreatic imaging appearance in cystic fibrosis is:","opts":["Hypoenhancing solid mass","Fatty replacement/atrophy, a small gland, sometimes cysts","Diffuse enlargement with rim","Large intraductal calculi"],"ans":1,"exp":"CF produces progressive fatty replacement and atrophy with occasional cysts as exocrine tissue is lost.","hint":"Fat and shrinkage of the exocrine gland."},{"q":"What is the role of cross-sectional imaging in a CF patient with deteriorating glycemia?","opts":["It is contraindicated","It characterises pancreatic morphology and complications, not the primary CFRD diagnosis","It is the main screening test for CFRD","It replaces OGTT"],"ans":1,"exp":"Imaging documents fatty atrophy and complications but does not supplant OGTT/CGM-based CFRD screening.","hint":"Supportive characterisation, not the screen."}],"id":15},{"category":"Structural","tagClass":"tag-struct","title":"Dorsal Agenesis vs Total Pancreatic Lipomatosis","concept":"Agenesis of the dorsal pancreas is congenital absence of the body and tail (the head/uncinate, being ventral in origin, remains) and can cause diabetes, pain or pancreatitis. It must be distinguished from acquired distal atrophy due to an obstructing head/neck cancer (look for a mass and duct cut-off). Total pancreatic lipomatosis is fat-density replacement of the whole gland. MRI/MRCP and CT define the anatomy.","mcqs":[{"q":"CT shows an absent pancreatic body and tail with a normal head, no mass and no duct cut-off. Best interpretation?","opts":["Autoimmune pancreatitis","Distal atrophy from pancreatic cancer","Agenesis of the dorsal pancreas","Chronic calcific pancreatitis"],"ans":2,"exp":"Congenital absence of body/tail with a preserved head and no obstructing mass is dorsal pancreatic agenesis rather than acquired atrophy.","hint":"Body and tail missing, head intact, no mass."},{"q":"How is dorsal agenesis distinguished from distal atrophy caused by pancreatic cancer?","opts":["By fecal elastase","By serum IgG4","By finding an obstructing head/neck mass with duct cut-off in acquired atrophy (absent in agenesis)","By pancreatic T2*"],"ans":2,"exp":"Acquired distal atrophy has an obstructing mass and abrupt duct cut-off upstream; congenital agenesis shows no mass and no cut-off.","hint":"Look for a tumour causing the tail to waste."},{"q":"Fat-density replacement of essentially the entire pancreas describes:","opts":["Pancreatic lipomatosis / total fatty replacement","Iron overload","Autoimmune pancreatitis","Pseudocyst"],"ans":0,"exp":"Diffuse fat-density replacement of the gland is pancreatic lipomatosis (total fatty replacement), which can accompany metabolic, CF or CEL-MODY processes.","hint":"The whole gland turned to fat."}],"id":16},{"category":"Workup","tagClass":"tag-workup","title":"When to Image and How to Request It","concept":"Match the trigger to the pathway. Recurrent acute pancreatitis / chronic pain / steatorrhea / malnutrition → CT or MRI/MRCP, with EUS or secretin-MRCP if early CP is suspected. Lean young diabetes with FCPD/TCP → US or CT for stones plus MRCP duct map. Neonatal/young diabetes with renal cysts, heart disease, genital anomaly or agenesis → MRI/MRCP or CT plus renal/cardiac imaging and monogenic testing. New diabetes after 50 with weight loss/jaundice/back pain → urgent pancreas-protocol CT. A good requisition asks the radiologist to assess pancreatic size/atrophy, calcifications/stones, main and side-branch ducts, cysts, masses and congenital anomalies.","mcqs":[{"q":"Which presentation warrants an URGENT pancreas-protocol CT?","opts":["Childhood diabetes with renal cysts","Stable type 2 diabetes on metformin","New-onset diabetes after age 50 with weight loss and jaundice","Lean young patient with ketosis-resistant diabetes and duct stones"],"ans":2,"exp":"The over-50 new-diabetes-with-weight-loss/jaundice pattern is the urgent cancer pathway; the others are worked up but not as emergencies.","hint":"The malignancy red-flag cluster is the urgent one."},{"q":"A well-phrased pancreatic imaging requisition for atypical diabetes should ask the radiologist to assess:","opts":["Splenic volume only","Only the presence of gallstones","Bowel wall thickness","Pancreatic size/atrophy, calcifications/stones, main and side-branch ducts, cysts, masses and congenital anomalies"],"ans":3,"exp":"The requisition should direct attention to the full diabetes-relevant checklist: parenchyma, calcification, ducts, cysts, masses and congenital anatomy.","hint":"List the whole parenchyma-duct-mass checklist."},{"q":"For suspected diabetes of the exocrine pancreas, the parallel endocrine/functional work-up includes:","opts":["Only HbA1c","Serum IgG4 alone","Thyroid ultrasound","Fecal elastase for exocrine insufficiency, fat-soluble vitamins, and autoantibodies/C-peptide as relevant"],"ans":3,"exp":"Alongside imaging, assess exocrine function (fecal elastase), nutritional consequences (fat-soluble vitamins) and, where relevant, islet autoantibodies/C-peptide to classify the diabetes.","hint":"Test exocrine function and nutrition, not just glucose."}],"id":17},{"category":"Workup","tagClass":"tag-workup","title":"The Diabetes-Focused Pancreas Report","concept":"A structured report for diabetes-related pancreatic disease covers three domains. Parenchyma: size/volume (normal, atrophic, hypoplastic, agenesis), fatty replacement/lipomatosis, calcifications (parenchymal vs intraductal), T1 signal, delayed enhancement/fibrosis, diffusion. Ducts and anatomy: main-duct diameter and irregularity, strictures, stones, side-branch ectasia, divisum or dorsal agenesis, secretin response. Complications and mimics: pseudocyst, walled-off necrosis, vascular complications, focal mass with duct cut-off and distal atrophy, and AIP signs (capsule rim, diffuse enlargement, delayed enhancement).","mcqs":[{"q":"When reporting pancreatic calcification in a diabetes work-up, it is important to specify:","opts":["Only the total number","Whether it is parenchymal or intraductal","Whether the spleen is enlarged","The Hounsfield unit to one decimal"],"ans":1,"exp":"Distinguishing parenchymal from intraductal calcification shapes the differential (e.g. large intraductal stones favour FCPD/CCP).","hint":"Where the calcium sits changes the diagnosis."},{"q":"Which ductal features belong in a diabetes-focused pancreas report?","opts":["Only the presence of a pseudocyst","Only main-duct diameter","Main-duct diameter and irregularity, strictures, stones, side-branch ectasia, and divisum/dorsal anatomy","Splenic vein diameter only"],"ans":2,"exp":"A complete ductal description includes calibre and irregularity, strictures, stones, side-branch changes and congenital variants such as divisum or dorsal agenesis.","hint":"Describe the whole ductal tree and its variants."},{"q":"Which 'mimic' features must a report actively exclude?","opts":["Renal cysts and hypomagnesemia","Gallbladder polyps","A focal mass with duct cut-off/distal atrophy, and AIP signs such as a capsule rim and delayed enhancement","Cardiac iron"],"ans":2,"exp":"The dangerous mimics are cancer (focal mass, duct cut-off, distal atrophy) and AIP (rim, diffuse enlargement, delayed enhancement); both must be explicitly addressed.","hint":"Cancer and AIP are the mimics to call out."}],"id":18}];
+const CAT_NAMES={Modality:"Modality & Protocols",ChronicPancreatitis:"Chronic Pancreatitis",FCPD:"FCPD / Tropical CP",Type3c:"Type 3c / Exocrine DM",Type1:"Type 1 DM",Type2:"Type 2 / Fatty Pancreas",Monogenic:"Monogenic / Developmental",Mimic:"Structural Mimics",Structural:"Congenital Structural",Workup:"When to Image & Report"};
+const CAT_ICON={Modality:"🛠️",ChronicPancreatitis:"🪨",FCPD:"🌴",Type3c:"🧪",Type1:"🩹",Type2:"🫗",Monogenic:"🧬",Mimic:"⚠️",Structural:"🧩",Workup:"📋"};
+const LS_KEY="pancreatic_diabetes_v1";
+function loadStore(){try{return JSON.parse(localStorage.getItem(LS_KEY))||{}}catch(e){return {}}}
+function saveStore(s){localStorage.setItem(LS_KEY,JSON.stringify(s))}
+let store=loadStore();
+let curFilter="all", curId=null;
+
+function go(v){['home','gallery','case','exam'].forEach(x=>document.getElementById('view-'+x).classList.toggle('hidden',x!==v));window.scrollTo(0,0)}
+function caseDone(c){const s=store[c.id];return s&&s.done>=c.mcqs.length}
+function updateHdr(){const n=CASES.filter(caseDone).length;document.getElementById('hdr-prog').textContent=n+' / '+CASES.length+' cases'}
+
+function renderChips(){
+  const cats=['all',...Array.from(new Set(CASES.map(c=>c.category)))];
+  document.getElementById('chips').innerHTML=cats.map(c=>{
+    const label=c==='all'?'All ('+CASES.length+')':(CAT_NAMES[c]||c)+' ('+CASES.filter(x=>x.category===c).length+')';
+    return '<div class="chip'+(c===curFilter?' active':'')+'" onclick="setFilter(\''+c+'\')">'+label+'</div>';
+  }).join('');
+}
+function setFilter(c){curFilter=c;renderChips();renderGrid()}
+function renderGrid(){
+  const list=CASES.filter(c=>curFilter==='all'||c.category===curFilter);
+  document.getElementById('grid').innerHTML=list.map(c=>
+    '<div class="card" onclick="openCase('+c.id+')">'+
+      (caseDone(c)?'<div class="done-badge">✓</div>':'')+
+      '<span class="tag '+c.tagClass+'">'+(CAT_NAMES[c.category]||c.category)+'</span>'+
+      '<h3>'+c.title+'</h3>'+
+      '<div class="meta"><span>'+(CAT_ICON[c.category]||'🔬')+' '+c.mcqs.length+' questions</span></div>'+
+    '</div>').join('');
+}
+function openRandom(){openCase(CASES[Math.floor(Math.random()*CASES.length)].id)}
+function navCase(d){const i=CASES.findIndex(c=>c.id===curId);let n=i+d;if(n<0)n=CASES.length-1;if(n>=CASES.length)n=0;openCase(CASES[n].id)}
+
+function openCase(id){
+  curId=id;const c=CASES.find(x=>x.id===id);go('case');
+  const media = c.file
+    ? '<img class="case-img" src="'+c.file+'" alt="'+c.title.replace(/"/g,'')+'">'
+    : '<div class="concept-hero"><div class="big-ic">'+(CAT_ICON[c.category]||'🔬')+'</div><div><h2>'+c.title+'</h2><span class="tag '+c.tagClass+'">'+(CAT_NAMES[c.category]||c.category)+'</span></div></div>';
+  let h='<div class="case-panel">'+media+
+    '<div class="reveal-box"><div class="lbl">Key concept</div>'+
+    '<button class="mini" onclick="toggleConcept()" id="cbtn">▸ Reveal key concept</button>'+
+    '<div class="concept-text" id="concept">'+c.concept+'</div></div></div>';
+  if(c.file){h='<div class="case-head"><span class="tag '+c.tagClass+'">'+(CAT_NAMES[c.category]||c.category)+'</span><h2 style="font-size:22px;font-weight:800">'+c.title+'</h2></div>'+h;}
+  h+=c.mcqs.map((m,qi)=>renderQ(c,m,qi)).join('');
+  document.getElementById('case-body').innerHTML=h;
+}
+function toggleConcept(){const el=document.getElementById('concept');el.classList.toggle('show');document.getElementById('cbtn').textContent=(el.classList.contains('show')?'▾ Hide key concept':'▸ Reveal key concept')}
+function renderQ(c,m,qi){
+  return '<div class="q-block" data-cid="'+c.id+'" data-qi="'+qi+'">'+
+    '<div class="q-num">Question '+(qi+1)+'</div>'+
+    '<div class="q-stem">'+m.q+'</div>'+
+    '<div class="opts">'+m.opts.map((o,oi)=>'<button class="opt" onclick="answer('+c.id+','+qi+','+oi+')"><span class="mk">'+'ABCD'[oi]+'</span>'+o+'</button>').join('')+'</div>'+
+    '<div class="q-tools"><button class="mini" onclick="showHint(this)">💡 Hint</button></div>'+
+    '<div class="hint-box">'+m.hint+'</div>'+
+    '<div class="exp-box"></div></div>';
+}
+function showHint(btn){btn.closest('.q-block').querySelector('.hint-box').classList.add('show')}
+function answer(cid,qi,oi){
+  const c=CASES.find(x=>x.id===cid);const m=c.mcqs[qi];
+  const block=document.querySelector('.q-block[data-cid="'+cid+'"][data-qi="'+qi+'"]');
+  if(block.dataset.answered)return;block.dataset.answered='1';
+  const opts=block.querySelectorAll('.opt');
+  opts.forEach((b,i)=>{b.disabled=true;if(i===m.ans)b.classList.add('correct');if(i===oi&&oi!==m.ans)b.classList.add('wrong')});
+  const exp=block.querySelector('.exp-box');exp.innerHTML='<b>'+(oi===m.ans?'✓ Correct. ':'✗ ')+'</b>'+m.exp;exp.classList.add('show');
+  // progress
+  const s=store[cid]||{done:0,correct:0,seen:{}};
+  if(!s.seen)s.seen={};
+  if(!s.seen[qi]){s.seen[qi]=1;s.done=(s.done||0)+1;if(oi===m.ans)s.correct=(s.correct||0)+1}
+  store[cid]=s;saveStore(store);updateHdr();
+}
+function resetProg(){if(confirm('Clear all saved progress?')){store={};saveStore(store);updateHdr();renderGrid()}}
+
+/* exam */
+let exam=null;
+function startExam(){
+  const pool=[];CASES.forEach(c=>c.mcqs.forEach((m,qi)=>pool.push({c,m,qi})));
+  for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]]}
+  exam={items:pool.slice(0,20),i:0,correct:0,sel:null};go('exam');renderExam();
+}
+function renderExam(){
+  const b=document.getElementById('exam-body');
+  if(exam.i>=exam.items.length){
+    const pct=Math.round(exam.correct/exam.items.length*100);
+    const msg=pct>=80?'Excellent — sharp pancreatic eye! 🎯':pct>=60?'Solid — review the misses. 👍':'Keep training — revisit the library. 📚';
+    b.innerHTML='<div class="result-big"><div class="result-score">'+pct+'%</div><p style="color:var(--muted);margin:10px 0 22px">'+exam.correct+' / '+exam.items.length+' correct · '+msg+'</p><button class="btn primary" onclick="startExam()">Retake</button> <button class="btn ghost" onclick="go(\'home\')">Home</button></div>';return;
+  }
+  const {c,m}=exam.items[exam.i];
+  b.innerHTML='<div class="progress-bar"><i style="width:'+(exam.i/exam.items.length*100)+'%"></i></div>'+
+    '<div class="q-num" style="color:var(--accent);font-weight:700;font-size:12px;text-transform:uppercase">Q '+(exam.i+1)+' / '+exam.items.length+' · '+(CAT_NAMES[c.category]||c.category)+'</div>'+
+    '<div class="q-stem" style="font-size:18px;font-weight:600;margin:8px 0 16px">'+m.q+'</div>'+
+    '<div id="exam-opts">'+m.opts.map((o,oi)=>'<button class="opt" onclick="examPick('+oi+')"><span class="mk">'+'ABCD'[oi]+'</span>'+o+'</button>').join('')+'</div>'+
+    '<div class="exp-box" id="exam-exp"></div>'+
+    '<div style="text-align:right;margin-top:16px"><button class="btn primary hidden" id="exam-next" onclick="examNext()">Next →</button></div>';
+}
+function examPick(oi){
+  if(exam.sel!==null)return;exam.sel=oi;const {m}=exam.items[exam.i];
+  document.querySelectorAll('#exam-opts .opt').forEach((b,i)=>{b.disabled=true;if(i===m.ans)b.classList.add('correct');if(i===oi&&oi!==m.ans)b.classList.add('wrong')});
+  if(oi===m.ans)exam.correct++;
+  const e=document.getElementById('exam-exp');e.innerHTML='<b>'+(oi===m.ans?'✓ Correct. ':'✗ ')+'</b>'+m.exp;e.classList.add('show');
+  document.getElementById('exam-next').classList.remove('hidden');
+}
+function examNext(){exam.i++;exam.sel=null;renderExam()}
+
+renderChips();renderGrid();updateHdr();
+</script>
+</body>
+</html>
