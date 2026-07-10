@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bone Age Trainer — Male (GP Atlas) | Pediatric Endocrinology</title>
+<meta name="description" content="Interactive Greulich-Pyle bone age training for male standards. Study annotated hand/wrist X-ray standards from newborn to 19 years with expert MCQs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0a0f1e;--bg2:#0f1729;--bg3:#172035;--card:#131d30;
+    --border:rgba(59,130,246,0.18);
+    --accent:#3b82f6;--accent2:#1d4ed8;--accent-glow:rgba(59,130,246,0.25);
+    --text:#e2e8f0;--muted:#64748b;--muted2:#94a3b8;
+    --radius:14px;--radius-sm:8px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Inter",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+  body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 10%,rgba(59,130,246,0.07) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 80%,rgba(29,78,216,0.07) 0%,transparent 60%);pointer-events:none;z-index:0}
+  header{position:sticky;top:0;z-index:100;background:rgba(10,15,30,0.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
+  .logo{display:flex;align-items:center;gap:10px;cursor:pointer}
+  .logo-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 0 16px var(--accent-glow)}
+  .logo-text{font-weight:700;font-size:15px}
+  .logo-text span{color:var(--accent)}
+  .hdr-r{display:flex;align-items:center;gap:12px}
+  .pill{background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:4px 12px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600}
+  .pill .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+  .hlink{font-size:12px;color:var(--muted2);text-decoration:none;padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);transition:all .2s}
+  .hlink:hover{color:var(--accent);border-color:var(--accent)}
+  main{position:relative;z-index:1}
+  .view{display:none}.view.active{display:block}
+  .wrap{max-width:1240px;margin:0 auto;padding:32px 24px}
+  .hero{text-align:center;padding-top:60px;margin-bottom:40px}
+  .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.3);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:600;color:var(--accent);margin-bottom:20px}
+  h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800;line-height:1.15;background:linear-gradient(135deg,#e2e8f0 0%,#94a3b8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:16px}
+  h1 .aw{background:linear-gradient(135deg,var(--accent),#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .hero-sub{font-size:16px;color:var(--muted2);max-width:560px;margin:0 auto 36px;line-height:1.7}
+  .sr{display:flex;justify-content:center;gap:32px;flex-wrap:wrap;margin-bottom:48px}
+  .si{text-align:center}
+  .sn{font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--accent),#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .sl{font-size:12px;color:var(--muted);font-weight:500;margin-top:2px}
+  .mg{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:860px;margin:0 auto 60px}
+  .mc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;cursor:pointer;transition:all .3s ease}
+  .mc:hover{border-color:rgba(59,130,246,0.5);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.35)}
+  .mi{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:16px;background:rgba(59,130,246,0.12)}
+  .mt{font-size:17px;font-weight:700;margin-bottom:6px}
+  .md{font-size:13px;color:var(--muted2);line-height:1.5;margin-bottom:16px}
+  .mb{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:var(--accent);background:rgba(59,130,246,0.1);border-radius:6px;padding:3px 8px}
+  .vh{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+  .vt{font-size:22px;font-weight:700}
+  .vs{font-size:13px;color:var(--muted2);margin-top:3px}
+  .bb{display:inline-flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 16px;color:var(--muted2);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
+  .bb:hover{border-color:var(--accent);color:var(--accent)}
+  .fb{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+  .fbtn{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid var(--border);background:var(--bg3);color:var(--muted2);cursor:pointer;transition:all .2s}
+  .fbtn.active,.fbtn:hover{border-color:var(--accent);color:var(--accent);background:rgba(59,130,246,0.1)}
+  .gg{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+  .gc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all .25s;display:flex;flex-direction:column}
+  .gc:hover{border-color:rgba(59,130,246,0.5);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.4)}
+  .gth{width:100%;aspect-ratio:3/4;object-fit:cover;background:#000;border-bottom:1px solid var(--border)}
+  .gb{padding:14px;flex:1;display:flex;flex-direction:column;gap:8px}
+  .ga{font-size:18px;font-weight:800;color:var(--accent)}
+  .gtl{font-size:12px;font-weight:500;color:var(--muted2);line-height:1.4}
+  .gm{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:6px}
+  .tag{font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.03em}
+  .te{background:rgba(59,130,246,0.15);color:#93c5fd}
+  .tm{background:rgba(34,197,94,0.15);color:#86efac}
+  .tl{background:rgba(245,158,11,0.15);color:#fcd34d}
+  .ta{background:rgba(239,68,68,0.15);color:#fca5a5}
+  .qc{font-size:11px;color:var(--muted2);font-weight:600}
+  .cg{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+  @media(max-width:900px){.cg{grid-template-columns:1fr}}
+  .ciw{position:sticky;top:80px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+  .ci{width:100%;display:block}
+  .icr{border-top:1px solid var(--border);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .cl{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+  .bct{font-size:12px;font-weight:600;color:var(--accent);background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);border-radius:6px;padding:5px 12px;cursor:pointer;transition:all .2s}
+  .bct:hover{background:rgba(59,130,246,0.2)}
+  .ct{display:none;font-size:13px;color:var(--muted2);padding:0 18px 14px;line-height:1.6}
+  .ct.shown{display:block}
+  .cp{display:flex;flex-direction:column;gap:20px}
+  .ch{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  .cn{display:flex;gap:8px}
+  .nb{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--muted2);font-size:16px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center}
+  .nb:hover{border-color:var(--accent);color:var(--accent)}
+  .pw{margin-bottom:4px}
+  .pb{height:4px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:6px}
+  .pf{height:100%;background:linear-gradient(90deg,var(--accent),#60a5fa);border-radius:4px;transition:width .4s ease}
+  .cbg{background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.25);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.03em}
+  .mqc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .2s}
+  .mqh{padding:16px 18px 14px;border-bottom:1px solid var(--border)}
+  .mql{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+  .mqs{font-size:14px;font-weight:500;line-height:1.6}
+  .moo{padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+  .op{padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--bg3);cursor:pointer;font-size:13px;transition:all .15s;display:flex;align-items:flex-start;gap:10px}
+  .op:hover:not(.dis){border-color:rgba(59,130,246,0.4);background:rgba(59,130,246,0.06)}
+  .op.cor{border-color:#22c55e;background:rgba(34,197,94,0.1)}
+  .op.wrg{border-color:#ef4444;background:rgba(239,68,68,0.1)}
+  .op.dis{pointer-events:none}
+  .ol{width:22px;height:22px;flex-shrink:0;border-radius:50%;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--muted)}
+  .op.cor .ol{background:#16a34a;border-color:#16a34a;color:#fff}
+  .op.wrg .ol{background:#dc2626;border-color:#dc2626;color:#fff}
+  .eb{margin:0 14px 14px;padding:12px;background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.2);border-radius:10px;font-size:13px;color:var(--muted2);line-height:1.6;display:none}
+  .eb.show{display:block}
+  footer{text-align:center;padding:32px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);margin-top:60px}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo" onclick="showView('home')">
+    <div class="logo-icon">🦴</div>
+    <div class="logo-text">Bone Age <span>♂ Male</span></div>
+  </div>
+  <div class="hdr-r">
+    <div class="pill"><div class="dot"></div>22 Standards · 66 MCQs</div>
+    <a class="hlink" href="index.html">← Hub</a>
+  </div>
+</header>
+<main>
+<div id="view-home" class="view active">
+  <div class="wrap">
+    <div class="hero">
+      <div class="hero-badge">♂ Greulich-Pyle Atlas · Male Standards</div>
+      <h1>Male <span class="aw">Bone Age</span> Trainer</h1>
+      <p class="hero-sub">Annotated hand/wrist X-ray standards from the Greulich-Pyle atlas — Newborn to 19 years. Study, self-test, and master skeletal maturation patterns.</p>
+      <div class="sr">
+        <div class="si"><div class="sn">22</div><div class="sl">Standards</div></div>
+        <div class="si"><div class="sn">66</div><div class="sl">MCQs</div></div>
+        <div class="si"><div class="sn">GP</div><div class="sl">Atlas</div></div>
+        <div class="si"><div class="sn">0–19y</div><div class="sl">Age Range</div></div>
+      </div>
+      <div class="mg">
+        <div class="mc" onclick="showGallery()"><div class="mi">🖼️</div><div class="mt">Image Gallery</div><div class="md">Browse all 22 male standards with annotated X-rays. Filter by age group.</div><div class="mb">✦ 22 images</div></div>
+        <div class="mc" onclick="startQuiz()"><div class="mi">🧠</div><div class="mt">MCQ Quiz</div><div class="md">Test yourself with 3 MCQs per image — identify skeletal age, key features, and clinical implications.</div><div class="mb">✦ 66 questions</div></div>
+        <div class="mc" onclick="showGallery('early')"><div class="mi">👶</div><div class="mt">Early Childhood</div><div class="md">Newborn to 5 years — carpal ossification, phalangeal epiphyses, metaphyseal modelling.</div><div class="mb">✦ 0–5 years</div></div>
+        <div class="mc" onclick="showGallery('late')"><div class="mi">🏃</div><div class="mt">Puberty &amp; Fusion</div><div class="md">11–19 years — epiphyseal capping, fusion sequences, adult maturation.</div><div class="mb">✦ 11–19 years</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="view-gallery" class="view">
+  <div class="wrap">
+    <div class="vh">
+      <div>
+        <button class="bb" onclick="showView('home')">← Back</button>
+        <div class="vt" style="margin-top:10px">Male Standards Gallery</div>
+        <div class="vs">Greulich-Pyle Atlas — 22 standards. Click any image to study.</div>
+      </div>
+    </div>
+    <div class="fb">
+      <button class="fbtn active" onclick="filterGal('all',this)">All</button>
+      <button class="fbtn" onclick="filterGal('early',this)">Infant (0–2y)</button>
+      <button class="fbtn" onclick="filterGal('preschool',this)">Pre-school (3–5y)</button>
+      <button class="fbtn" onclick="filterGal('school',this)">School (6–10y)</button>
+      <button class="fbtn" onclick="filterGal('puberty',this)">Puberty (11–13y)</button>
+      <button class="fbtn" onclick="filterGal('late',this)">Late (14–19y)</button>
+    </div>
+    <div class="gg" id="gal-grid"></div>
+  </div>
+</div>
+<div id="view-case" class="view">
+  <div class="wrap">
+    <div class="vh">
+      <button class="bb" onclick="showView('gallery')">← Gallery</button>
+      <div class="cn">
+        <button class="nb" id="prev-btn" onclick="nav(-1)">◀</button>
+        <button class="nb" id="next-btn" onclick="nav(1)">▶</button>
+      </div>
+    </div>
+    <div class="cg">
+      <div class="ciw">
+        <img class="ci" id="case-img" src="" alt="Hand/wrist X-ray">
+        <div class="icr">
+          <span class="cl">Expert Caption</span>
+          <button class="bct" id="cap-toggle" onclick="toggleCap()">Reveal</button>
+        </div>
+        <div class="ct" id="cap-text"></div>
+      </div>
+      <div class="cp">
+        <div class="ch">
+          <div>
+            <div class="cbg" id="cbadge">Male · Newborn</div>
+            <div class="pw">
+              <div style="font-size:12px;color:var(--muted);margin-top:6px" id="prog-lbl">Case 1 of 22</div>
+              <div class="pb"><div class="pf" id="prog-fill" style="width:5%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div id="mqc"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+<footer>Greulich-Pyle Atlas — Male Standards · Pediatric Bone Age Trainer</footer>
+<script>
+const IM=[
+  {id:1,file:"bone_age_boys/ba_032.jpg",age:"Newborn (term)",g:"early",cap:"<b>Skeletal Age: Newborn (term).</b> The 2nd–5th metacarpal shafts are constricted (waisted) in the middle. The proximal and middle phalanges are rounded distally but wider and flattened proximally. Metacarpal shafts radiate from the carpus with the typical degree of radial flare for a full-term newborn. No epiphyseal ossification centres are present.",
+   mcqs:[
+    {q:"In a full-term male newborn hand X-ray, which carpal bone typically ossifies FIRST?",o:["Capitate","Hamate","Triquetrum","Pisiform"],a:0,e:"The capitate is the first carpal bone to ossify (~1–3 months of age), closely followed by the hamate. Both are visible by 3 months in most infants."},
+    {q:"The 2nd–5th metacarpal shafts in the newborn GP standard appear:",o:["Widely flared at both ends","Constricted (waisted) in the middle","Uniformly cylindrical","Already showing epiphyseal centres"],a:1,e:"In the newborn, metacarpal shafts show characteristic mid-shaft constriction ('waisting'). Epiphyseal ossification centres are not yet present."},
+    {q:"Which phalangeal feature distinguishes a full-term from a premature infant on the GP newborn standard?",o:["Presence of all ossification centres","Rounded distal ends with flattened proximal ends","Metaphyseal flaring of the radius","Pisiform ossification present"],a:1,e:"In the full-term newborn, phalanges are rounded distally and flattened/wider proximally — a feature increasingly pronounced with gestational maturity. Premature infants lack this pattern."}
+  ]},
+  {id:2,file:"bone_age_boys/ba_034.jpg",age:"6 Months",g:"early",cap:"<b>Skeletal Age: 6 Months.</b> The metacarpals have distinct individual differences in morphology. The capitate and hamate have enlarged but both remain rounded; the long axis of the capitate is now established. Pronounced flaring of the distal ends of the radius and ulna.",
+   mcqs:[
+    {q:"At 6-month male GP standard, the capitate and hamate are characterised as:",o:["Fully formed with distinct articular surfaces","Enlarged but both remaining rounded","Sharply angular with established long axes","Absent — not yet ossified"],a:1,e:"By 6 months, both carpal bones have enlarged but remain rounded. The long axis of the capitate is established, though distinct articular surface shaping is not yet seen."},
+    {q:"Which radiographic finding is prominent at the radius and ulna at 6 months?",o:["Epiphyseal ossification centres appear","Pronounced flaring of the distal ends","Complete fusion of growth plates","Ulnar styloid process visible"],a:1,e:"Pronounced flaring of the distal radius and ulna is characteristic at 6 months, reflecting active metaphyseal modelling."},
+    {q:"On the Greulich-Pyle (GP) atlas, bone age is determined by:",o:["Measuring total hand length","Comparing overall appearance to the nearest-matching standard","Counting ossification centres","Calculating metacarpal to carpal density ratio"],a:1,e:"The GP method compares the left hand/wrist X-ray to the nearest-matching atlas standard by overall gestalt — not by a scoring formula. This differs from the Tanner-Whitehouse (TW) scoring method."}
+  ]},
+  {id:3,file:"bone_age_boys/ba_036.jpg",age:"1 Year",g:"early",cap:"<b>Skeletal Age: 1 Year.</b> The capitate articular surface of the 2nd metacarpal has flattened. Phalangeal and metacarpal epiphyses are beginning to ossify as small, flattened disc-like centres.",
+   mcqs:[
+    {q:"At 1-year male GP standard, the epiphyses of the phalanges and metacarpals appear as:",o:["Large dome-shaped centres","Small, flattened disc-like centres","Irregular spiculated calcifications","Complete cap-shaped epiphyses"],a:1,e:"By 1 year, epiphyseal centres appear as small flattened disc-like structures — present but immature. A key distinction from the newborn where no epiphyseal centres are visible."},
+    {q:"On the 6-month male GP standard, phalangeal epiphyses are:",o:["Fully formed","Partially formed","Absent — not yet ossified","Fusing with their shafts"],a:2,e:"Phalangeal epiphyses have NOT appeared at 6 months. They first appear around 1 year as small disc-like centres, making their presence a landmark of the 1-year standard."},
+    {q:"The GP atlas reference population — its most important clinical limitation for South Asian children — is:",o:["It uses right-hand X-rays","Reference population was predominantly White American children from 1930s–40s","It requires a lateral view","It ignores pubertal Tanner staging"],a:1,e:"The GP standards were derived from White American children born in the 1930s–40s. This population-based limitation means the GP atlas may over- or under-estimate bone age in modern Asian/South Asian children — local standards and the Gilsanz-Ratibu atlas are alternatives."}
+  ]},
+  {id:4,file:"bone_age_boys/ba_037.jpg",age:"2 Years",g:"early",cap:"<b>Skeletal Age: 2 Years.</b> Phalangeal ossification centres are slightly larger and more disc-shaped. Lunate ossification has begun. Volar (white line) and dorsal (more distal margin) surfaces of the radial epiphysis can now be distinguished.",
+   mcqs:[
+    {q:"The key advance at the 2-year male GP standard over the 1-year standard is:",o:["Appearance of the pisiform","Phalangeal epiphyses become distinctly disc-shaped and larger","Metacarpal fusion begins","Scaphoid fully formed"],a:1,e:"By 2 years, phalangeal ossification centres have grown and become more distinctly disc-shaped. The lunate also begins to appear, and the radial epiphyseal surfaces become distinguishable."},
+    {q:"The ability to distinguish volar from dorsal surfaces of the radial epiphysis first appears at:",o:["Newborn","6 months","1 year","2 years"],a:3,e:"At 2 years (male GP), the volar surface of the radial epiphysis appears as a white line and the dorsal margin as the more distal border — the two surfaces are now radiologically distinguishable."},
+    {q:"In a child with precocious puberty, bone age is typically:",o:["Behind chronological age","Equal to chronological age","Ahead of chronological age","Unrelated to pubertal status"],a:2,e:"Sex steroid excess in precocious puberty accelerates skeletal maturation, advancing bone age ahead of chronological age. This threatens final adult height by causing premature epiphyseal fusion."}
+  ]},
+  {id:5,file:"bone_age_boys/ba_039.jpg",age:"3 Years",g:"preschool",cap:"<b>Skeletal Age: 3 Years.</b> Phalangeal ossification centres slightly larger and more disc-shaped. Metacarpal ossification centres have enlarged. Lunate ossification is evident. Volar (white line) and dorsal (more distal margin) surfaces of the radial epiphysis are now clearly distinguished.",
+   mcqs:[
+    {q:"At 3-year male GP standard, which carpal bone typically makes its first appearance?",o:["Pisiform","Lunate","Trapezoid","Scaphoid"],a:1,e:"The lunate typically begins to ossify around 2–3 years in the GP male standards. The carpal ossification sequence is: capitate → hamate → triquetrum → lunate → scaphoid → trapezium/trapezoid → pisiform."},
+    {q:"The correct carpal bone ossification sequence (GP atlas) is:",o:["Capitate→Hamate→Triquetrum→Lunate→Scaphoid→Trapezium/Trapezoid→Pisiform","Hamate→Capitate→Lunate→Pisiform→Scaphoid→Triquetrum→Trapezoid","Scaphoid→Lunate→Capitate→Hamate→Trapezoid→Pisiform→Triquetrum","Pisiform→Hamate→Capitate→Scaphoid→Lunate→Trapezoid→Triquetrum"],a:0,e:"Capitate (~3 mo) → Hamate (~3 mo) → Triquetrum (~2.5 yr) → Lunate (~3 yr) → Scaphoid (~5 yr) → Trapezium/Trapezoid (~5 yr) → Pisiform (~8–10 yr). A commonly tested clinical fact."},
+    {q:"A 5-year-old child with short stature has a bone age of 3 years. This is best interpreted as:",o:["Normal variant requiring no evaluation","Delayed bone age suggesting possible endocrine or systemic cause","Confirms growth hormone deficiency","Rules out constitutional delay"],a:1,e:"A bone age 2 years behind chronological age warrants evaluation. GHD, hypothyroidism, chronic illness, and constitutional delay all must be considered. Bone age alone cannot diagnose the cause."}
+  ]},
+  {id:6,file:"bone_age_boys/ba_040.jpg",age:"4 Years",g:"preschool",cap:"<b>Skeletal Age: 4 Years.</b> Ossification centres have appeared in all phalangeal epiphyses including the 5th middle phalanx. Epiphyses of the 2nd and 3rd proximal phalanges are mildly wedge-shaped, tapering toward their ulnar aspects. Trapezium ossification may appear precociously but is not required for this bone age assignment.",
+   mcqs:[
+    {q:"By the 4-year male GP standard, ossification centres have appeared in:",o:["Only the proximal phalanges","Only the metacarpals","All phalangeal epiphyses, including the 5th middle phalanx","Only the distal phalanges"],a:2,e:"By 4 years, ossification centres have appeared in ALL phalangeal epiphyses, including the typically last-appearing 5th middle phalanx — a key milestone."},
+    {q:"Trapezium ossification appearing 'precociously' at 4 years means:",o:["It is required to make the 4-year diagnosis","It is a normal variant NOT required for this bone age assignment","It indicates pathological calcification","The bone age is actually 5 years"],a:1,e:"The GP atlas notes the trapezium may appear precociously at 4 years but is NOT required for assigning this bone age. Its early appearance is a normal variant."},
+    {q:"Which bone age method assigns a score to each individual bone rather than matching to a standard?",o:["Greulich-Pyle (GP)","Tanner-Whitehouse (TW3)","Gilsanz-Ratibu","Sontag-Snell"],a:1,e:"The TW3 method scores 20 individual hand/wrist bones according to maturation stages (A–H), then sums scores to derive bone age. It is more analytical than GP atlas-matching."}
+  ]},
+  {id:7,file:"bone_age_boys/ba_056.jpg",age:"5 Years",g:"preschool",cap:"<b>Skeletal Age: 5 Years.</b> Joint spaces have progressively narrowed as phalangeal and metacarpal epiphyses have enlarged. The scaphoid and trapezium/trapezoid begin to appear around this age.",
+   mcqs:[
+    {q:"At 5-year male GP standard, the joint spaces are:",o:["Widened due to cartilage growth","Progressively narrowed as epiphyses enlarge","Unchanged","Fully fused"],a:1,e:"As epiphyses enlarge, radiographic joint spaces (representing cartilage) progressively narrow. By 5 years this narrowing is clearly evident."},
+    {q:"The scaphoid typically begins to ossify at approximately:",o:["1 year","3 years","5 years","8 years"],a:2,e:"The scaphoid and trapezium/trapezoid typically begin ossifying around 5 years in GP male standards — the 5th and 6th carpal bones to appear."},
+    {q:"Which diagnosis is LEAST consistent with delayed bone age in a 7-year-old boy?",o:["Growth hormone deficiency","Constitutional delay of growth and puberty","Precocious puberty","Hypothyroidism"],a:2,e:"Precocious puberty causes ADVANCED bone age (ahead of chronological age), not delayed. GHD, CDGP, and hypothyroidism all commonly cause delayed bone age."}
+  ]},
+  {id:8,file:"bone_age_boys/ba_041.jpg",age:"6 Years",g:"school",cap:"<b>Skeletal Age: 6 Years.</b> The 2nd metacarpal is more clearly concave at its articular margin with the trapezoid. Early enlargement of the radial epiphysis corresponding to the scaphoid facet. Joint spaces have progressively narrowed.",
+   mcqs:[
+    {q:"At 6-year male GP standard, concavity developing at the 2nd metacarpal base occurs at its articulation with the:",o:["Scaphoid","Trapezoid","Capitate","Trapezium"],a:1,e:"By 6 years, the concavity at the 2nd metacarpal base at its trapezoid articulation becomes clearly established — an important shaping feature of this standard."},
+    {q:"Which carpal bone appears LAST in the ossification sequence?",o:["Capitate","Hamate","Triquetrum","Pisiform"],a:3,e:"The pisiform is the last carpal bone to ossify, typically at 8–10 years in GP male standards."},
+    {q:"Bone age assessment by the GP atlas is performed on X-ray of:",o:["Right hand and wrist, PA view","Left hand and wrist, PA view","Both hands, AP view","Left hand, lateral view"],a:1,e:"The GP atlas uses the LEFT hand and wrist, posteroanterior (PA) view. Left hand is used by convention; PA view provides the best visualisation of epiphyseal centres."}
+  ]},
+  {id:9,file:"bone_age_boys/ba_042.jpg",age:"7 Years",g:"school",cap:"<b>Skeletal Age: 7 Years.</b> Reciprocal convexity and concavity of the hamate and capitate begins. White lines are now evident at metacarpal surfaces of hamate, capitate, and trapezoid, denoting emergence of their volar surfaces.",
+   mcqs:[
+    {q:"The 'white lines' at carpal surfaces at 7 years represent:",o:["Fracture lines","Volar surfaces becoming radiologically visible","Ligament calcification","Pathological periostitis"],a:1,e:"White lines in the GP atlas represent the radiological emergence of volar surfaces as carpal shaping progresses — a normal developmental feature."},
+    {q:"Reciprocal convexity and concavity begins between which two carpal bones at 7 years?",o:["Scaphoid and lunate","Hamate and capitate","Trapezoid and trapezium","Pisiform and triquetrum"],a:1,e:"By 7 years, reciprocal shaping (one convex, one concave) between the hamate and capitate begins — specifically noted in the 7-year GP description."},
+    {q:"In CDGP, IGF-1 that appears low for chronological age should be:",o:["Taken as confirmation of GH deficiency","Interpreted relative to bone age — may be normal for bone age","Immediately followed by GH stimulation testing","Treated with IGF-1 replacement"],a:1,e:"In CDGP, the child's biological maturity matches bone age, not chronological age. IGF-1 low for chronological age 13 may be appropriate for bone age 10 — this does NOT confirm GHD."}
+  ]},
+  {id:10,file:"bone_age_boys/ba_043.jpg",age:"8 Years",g:"school",cap:"<b>Skeletal Age: 8 Years.</b> Hamate, capitate, and trapezoid articular surface shaping continues. The metacarpal surfaces of these bones show well-defined volar and dorsal edges. 2nd metacarpal head showing concavity at its trapezoid articulation.",
+   mcqs:[
+    {q:"At 8-year male GP standard, which carpal bone is still typically ABSENT?",o:["Lunate","Trapezoid","Pisiform","Capitate"],a:2,e:"The pisiform is the last carpal to ossify — typically at 8–10 years. All others (capitate, hamate, triquetrum, lunate, scaphoid, trapezium, trapezoid) are present by 8 years."},
+    {q:"Progressive reciprocal shaping of metacarpal surfaces to match carpal articulators occurs over:",o:["1–3 years","4–5 years","7–9 years","12–14 years"],a:2,e:"Metacarpal-carpal reciprocal shaping occurs over 7–9 years: hamate/capitate at 7, 2nd metacarpal/trapezoid at 8, continued at 9."},
+    {q:"Which condition causes ADVANCED bone age in a prepubertal child?",o:["Hypothyroidism","Growth hormone deficiency","Congenital adrenal hyperplasia (CAH)","Turner syndrome"],a:2,e:"CAH causes androgen excess driving bone age advancement. Similarly, GIPP, McCune-Albright syndrome, and premature adrenarche with androgen excess advance bone age. GHD, hypothyroidism, and Turner syndrome delay bone age."}
+  ]},
+  {id:11,file:"bone_age_boys/ba_044.jpg",age:"9 Years",g:"school",cap:"<b>Skeletal Age: 9 Years.</b> Ulnar distal hamate developing a projection to articulate with the 5th metacarpal. Ulnar epiphysis enlarged with early styloid process evident. Trapezium developing a process projecting toward 2nd metacarpal. Distal ends of 2nd and 3rd proximal phalanges are slightly concave at their trochlear surfaces.",
+   mcqs:[
+    {q:"At 9-year male GP standard, the trochlear surfaces of the 2nd and 3rd proximal phalanges have become:",o:["Flat","Convex","Slightly concave","Fused to middle phalanges"],a:2,e:"By 9 years, the distal articular surfaces of the 2nd and 3rd proximal phalanges are slightly concave at their trochlear surfaces, matching the concavity of the middle phalangeal bases."},
+    {q:"The pisiform most commonly appears at approximately:",o:["5–6 years","7–8 years","8–10 years","12–14 years"],a:2,e:"The pisiform (last carpal to ossify) typically appears at 8–10 years in GP male standards."},
+    {q:"Childhood obesity is most commonly associated with bone age that is:",o:["Significantly delayed","Mildly advanced","Unchanged","Unreliable"],a:1,e:"Obesity is associated with mildly advanced bone age, likely due to increased leptin and insulin signalling promoting skeletal maturation — not usually clinically significant."}
+  ]},
+  {id:12,file:"bone_age_boys/ba_045.jpg",age:"10 Years",g:"school",cap:"<b>Skeletal Age: 10 Years.</b> Flattening of trapezoid surface adjacent to scaphoid. Slight concavity of hamate discernible at 4th metacarpal articulation. Tips of 2nd–5th distal phalangeal epiphyses slightly bent distally; trochlear portions of adjacent middle phalanges slightly concave. 2nd–5th metacarpal epiphyses now as wide as their metaphyses.",
+   mcqs:[
+    {q:"At 10-year male GP standard, metacarpal epiphyses have grown to be:",o:["One quarter width of metaphyses","One half width","Three quarters width","Equal width (as wide as metaphyses)"],a:3,e:"By 10 years, the 2nd–5th metacarpal epiphyses are as wide as their metaphyses — 'full-width' appearance is a key landmark."},
+    {q:"Slight distal bending of the 2nd–5th distal phalangeal epiphyses tips first appears at:",o:["7 years","8 years","9 years","10 years"],a:3,e:"This distal bending of epiphyseal tips with early trochlear concavity of adjacent middle phalanges is a specific feature of the 10-year male standard."},
+    {q:"A 12-year-old boy with bone age 10 years and growth velocity 4 cm/year — the most likely diagnosis is:",o:["Constitutional delay of growth and puberty (CDGP)","Growth hormone deficiency","Celiac disease","Cushing syndrome"],a:0,e:"CDGP is the most common cause — bone age 2 years behind with low-normal growth velocity (4 cm/year) and no other features. GHD, celiac disease, and Cushing must be excluded."}
+  ]},
+  {id:13,file:"bone_age_boys/ba_046.jpg",age:"11 Years",g:"puberty",cap:"<b>Skeletal Age: 11 Years.</b> Epiphyses of all proximal phalanges now cap their shafts. Volar and dorsal surfaces of the hamate discernible at the 4th metacarpal base articulation. 2nd–5th metacarpal epiphyses as wide as their metaphyses.",
+   mcqs:[
+    {q:"At 11-year male GP standard, the proximal phalangeal epiphyses:",o:["Have just appeared for the first time","Are now capping their shafts (margins extend beyond shaft edges)","Show complete fusion","Are the same width as their metaphyses but do not yet cap"],a:1,e:"By 11 years, epiphyses of all proximal phalanges are capping their shafts — the margins extend beyond the edges of the shaft. This progresses from 11 to 13 years."},
+    {q:"In boys, puberty onset (testicular volume ≥4 mL) typically occurs at chronological age:",o:["8–9 years","9–11 years","11–13 years","13–15 years"],a:1,e:"Boys typically begin puberty (gonadarche, TV ≥4 mL) at 9–11 years chronological age. Delayed puberty = no testicular enlargement by age 14. Bone age at puberty onset is typically 11–12 years."},
+    {q:"GnRH agonist therapy for central precocious puberty:",o:["Accelerates bone age advancement","Halts or slows bone age advancement","Has no effect on bone age","Causes immediate epiphyseal fusion"],a:1,e:"GnRH agonists suppress the HPG axis, reducing sex steroids and slowing bone age advancement — the primary rationale for treatment to preserve final adult height."}
+  ]},
+  {id:14,file:"bone_age_boys/ba_047.jpg",age:"11 Years 6 Months",g:"puberty",cap:"<b>Skeletal Age: 11 Years 6 Months.</b> The capitate and scaphoid now mildly overlap. Further reciprocal shaping at all carpal articulations. Proximal phalangeal epiphyses continue to cap shafts more completely.",
+   mcqs:[
+    {q:"Overlapping of the capitate and scaphoid is a specific feature first appearing at the:",o:["9-year male standard","10-year male standard","11-year male standard","11-year 6-month male standard"],a:3,e:"Mild overlap of the capitate and scaphoid is specifically noted at the 11.5-year male GP standard — a distinguishing feature from the 11-year standard."},
+    {q:"Bone age correlates most closely with:",o:["Chronological age","Pubertal stage","Nutritional intake","Psychological age"],a:1,e:"Bone age correlates more closely with pubertal stage (Tanner staging, HPG axis activation) than with chronological age."},
+    {q:"Predicted adult height using bone age is calculated with:",o:["Bayley-Pinneau tables (used with GP bone age)","Tanner-Whitehouse SDS formula","Mid-parental height alone","Harris-Benedict equation"],a:0,e:"The Bayley-Pinneau tables are used with GP bone age to predict adult height — they provide percent of adult height already achieved for a given bone age and sex."}
+  ]},
+  {id:15,file:"bone_age_boys/ba_048.jpg",age:"12 Years 6 Months",g:"puberty",cap:"<b>Skeletal Age: 12 Years 6 Months.</b> Epiphyses of 2nd–3rd middle phalanges and 3rd–5th proximal phalanges now capping shafts (margins point proximally). Radial epiphysis enlarging toward the scaphoid facet. Early capping of metacarpal epiphyses begins.",
+   mcqs:[
+    {q:"Epiphyseal capping (margins pointing proximally) is a feature of the male GP age range:",o:["5–8 years","8–10 years","11–14 years","15–17 years"],a:2,e:"Epiphyseal capping is a progressive feature of the 11–14 year range, becoming more complete as fusion approaches."},
+    {q:"At 12.5-year male GP standard, capping is most clearly seen in:",o:["All metacarpals and phalanges","2nd–3rd middle phalanges and 3rd–5th proximal phalanges","Only distal phalanges","Only the radius"],a:1,e:"At 12.5 years, the 2nd–3rd middle phalanges and 3rd–5th proximal phalanges show capping. The process is sequential, not simultaneous."},
+    {q:"A 14-year-old boy with bone age 12.5 years and TV 6 mL (Tanner G2) — most appropriate interpretation:",o:["Immediate GH deficiency treatment","CDGP — bone age and pubertal stage concordant with delayed maturation","Hypogonadotropic hypogonadism","Urgent testosterone therapy"],a:1,e:"This is consistent with CDGP — both bone age and pubertal stage are delayed and concordant. Spontaneous testicular growth (TV 6 mL) indicates HPG axis activation; reassurance/monitoring is appropriate."}
+  ]},
+  {id:16,file:"bone_age_boys/ba_049.jpg",age:"13 Years",g:"puberty",cap:"<b>Skeletal Age: 13 Years.</b> Radial epiphysis continues to enlarge. Tips of 2nd–5th distal phalangeal epiphyses are bent slightly distally; trochlear portions of middle phalanges are slightly concave. 2nd–5th metacarpal epiphyses are as wide as their metaphyses.",
+   mcqs:[
+    {q:"At 13-year male GP standard, which epiphyses are as wide as or wider than their metaphyses?",o:["Proximal phalanges only","Middle phalanges only","2nd–5th metacarpal epiphyses","Distal phalanges"],a:2,e:"By 13 years, the 2nd–5th metacarpal epiphyses are as wide as their metaphyses — a key distinguishing feature."},
+    {q:"A child with bone age 13 years and precocious puberty confirmed on GnRH stimulation — the most useful initial intervention is:",o:["Immediate GnRH agonist therapy","Growth hormone therapy","Watchful waiting","Aromatase inhibitor"],a:0,e:"If bone age is advanced with confirmed central precocious puberty (pubertal LH response, no peripheral cause), GnRH agonist therapy is indicated to slow bone age advancement and preserve height."},
+    {q:"Bone age is LEAST useful in isolation for distinguishing:",o:["Precocious puberty from normal puberty","CDGP from GH deficiency","Advanced from delayed skeletal maturity","Newborn from 1-year standard"],a:1,e:"Both CDGP and GHD show delayed bone age — bone age alone cannot distinguish between them. It must be combined with growth velocity, IGF-1 (referenced to bone age), and GH stimulation test results."}
+  ]},
+  {id:17,file:"bone_age_boys/ba_050.jpg",age:"14 Years",g:"late",cap:"<b>Skeletal Age: 14 Years.</b> The radial epiphysis has begun to cap its shaft (margins point proximally). Fusion has begun at the epiphyses of all distal phalanges. Epiphyses of the 2nd–5th metacarpals have begun to fuse.",
+   mcqs:[
+    {q:"At 14-year male GP standard, fusion has begun in:",o:["Proximal phalanges only","Distal phalanges and 2nd–5th metacarpals","Radius only","Middle phalanges only"],a:1,e:"Fusion begins at the distal phalangeal epiphyses and the 2nd–5th metacarpal epiphyses have begun to fuse by 14 years."},
+    {q:"In the hand/wrist, the general sequence of epiphyseal fusion in males is:",o:["Radius→Metacarpals→Distal phalanges→Proximal phalanges","Distal phalanges→Proximal phalanges→Metacarpals→Radius","Metacarpals→Distal phalanges→Proximal phalanges→Radius","Proximal phalanges→Distal phalanges→Metacarpals→Radius"],a:1,e:"Distal phalanges fuse first (~14–15 years), then proximal phalanges and metacarpals, and the radius is typically last to complete fusion (~17–19 years)."},
+    {q:"A boy at bone age 14 years is likely at approximately which Tanner stage?",o:["G1 (prepubertal)","G2 (TV 4–6 mL)","G3–4 (active puberty)","G5 (adult)"],a:2,e:"Bone age 14 years in males corresponds to mid-to-late puberty (Tanner G3–G4). Voice breaking, PH stage 3–4, and testicular volume 10–15 mL would be expected."}
+  ]},
+  {id:18,file:"bone_age_boys/ba_051.jpg",age:"15 Years",g:"late",cap:"<b>Skeletal Age: 15 Years.</b> Fusion is advanced at distal phalangeal epiphyses. Radial epiphysis continues capping its shaft.",
+   mcqs:[
+    {q:"At 15-year male GP standard, the radial epiphysis:",o:["Is completely fused","Has just appeared","Caps its shaft with margins pointing proximally","Is equal to metaphysis width but not capping"],a:2,e:"By 15 years the radial epiphysis is capping its shaft — pre-fusion morphology that precedes complete fusion at 17–19 years."},
+    {q:"Predicted adult height from bone age is most accurate at:",o:["Early bone ages (3–8 years)","Mid-pubertal bone ages (10–13 years)","Advanced pubertal bone ages when little growth remains","At birth"],a:1,e:"Bayley-Pinneau predictions are most reliable at mid-pubertal bone ages (~10–13 years) when significant growth potential remains but the pubertal growth pattern is established."},
+    {q:"Final adult height in CDGP (without treatment) is typically:",o:["Significantly below mid-parental height","Close to mid-parental target height","Permanently stunted","50th centile regardless of parental height"],a:1,e:"CDGP is a normal variant — boys eventually have a pubertal growth spurt and typically reach their mid-parental target height even without treatment. Testosterone can be used for psychosocial benefit but does not necessarily improve final height."}
+  ]},
+  {id:19,file:"bone_age_boys/ba_052.jpg",age:"16 Years",g:"late",cap:"<b>Skeletal Age: 16 Years.</b> Fusion is advanced in all proximal phalanges and in the 2nd and 5th middle phalanges. Fusion has begun in the 3rd and 4th middle phalanges. Epiphyses of 2nd–5th metacarpals have begun to fuse. Accessory sesamoid bones are usually evident by this stage if they will develop.",
+   mcqs:[
+    {q:"At 16-year male GP standard, fusion is ADVANCED in:",o:["All distal phalanges and all proximal phalanges","All proximal phalanges and 2nd/5th middle phalanges","Radius only","Only the 1st metacarpal"],a:0,e:"By 16 years, fusion is advanced in all proximal phalanges and 2nd/5th middle phalanges. 3rd and 4th middle phalanges are beginning. Metacarpals have also begun fusing."},
+    {q:"Accessory sesamoid bones are typically evident on GP atlas by approximately:",o:["6–8 years","10–12 years","14–16 years","After complete skeletal maturity"],a:2,e:"The GP atlas notes that if accessory sesamoids will develop, they are usually evident by the 16-year standard. These are small ossicles at volar aspects of the 1st proximal phalanx and 2nd/5th metacarpal heads."},
+    {q:"A 16-year-old with bone age 14 and Tanner G3 (spontaneous puberty progressing) — next appropriate management:",o:["No investigation — likely CDGP with normal puberty","MRI brain (pituitary) to exclude tumour","GnRH stimulation test","Immediate testosterone replacement"],a:0,e:"Spontaneous puberty (G3) indicates the HPG axis is active. Bone age 14 at chronological age 16 with progressing puberty is consistent with CDGP — reassurance and 6-monthly monitoring is appropriate."}
+  ]},
+  {id:20,file:"bone_age_boys/ba_053.jpg",age:"17 Years",g:"late",cap:"<b>Skeletal Age: 17 Years.</b> All phalangeal epiphyses have fused. The 3rd and 4th middle phalangeal epiphyses are often the last to fuse. Fusion of 2nd–5th metacarpal epiphyses is complete. Fusion has begun at the ulnar growth plate.",
+   mcqs:[
+    {q:"At 17-year male GP standard, the last phalangeal epiphyses to fuse are typically:",o:["2nd and 5th proximal phalanges","3rd and 4th middle phalanges","All distal phalanges","Thumb metacarpal"],a:1,e:"The 3rd and 4th middle phalangeal epiphyses are specifically the last to fuse among the phalanges at 17 years."},
+    {q:"Metacarpal epiphyseal fusion at 17-year male standard is:",o:["Just beginning","50% complete","Fully completed for 2nd–5th metacarpals","Not yet started"],a:2,e:"Fusion of the 2nd–5th metacarpal epiphyses is fully completed by 17 years. The radial epiphysis is still fusing."},
+    {q:"The Bayley-Pinneau tables are used with the GP atlas to:",o:["Score each individual bone","Predict adult height (% of adult height already attained for given bone age and sex)","Assess pubertal stage","Compare to the TW3 standard"],a:1,e:"The Bayley-Pinneau tables provide the percentage of adult height already achieved for each bone age and sex, allowing calculation of predicted adult height from current height measurement."}
+  ]},
+  {id:21,file:"bone_age_boys/ba_054.jpg",age:"18 Years",g:"late",cap:"<b>Skeletal Age: 18 Years.</b> Vertical white lines on 2nd–5th metacarpal heads (outlining volar surfaces) now become continuous with their shafts as fusion occurs. All epiphyses except the radius have fully fused. Radial epiphyseal fusion is nearly complete.",
+   mcqs:[
+    {q:"At 18-year male GP standard, the last epiphysis to complete fusion is:",o:["3rd middle phalanx","2nd metacarpal","Distal radius","Ulnar styloid"],a:2,e:"The distal radial epiphysis is the last to fuse — nearly complete at 18 years, fully fused by 19 years. This is clinically important in assessing remaining growth potential."},
+    {q:"The continuous white lines at metacarpal heads at 18 years represent:",o:["Residual physeal cartilage","Volar surface lines now continuous as fusion is complete","Periosteal reaction","Pathological calcification"],a:1,e:"Prior to fusion, volar surface lines at metacarpal heads are interrupted by growth plates. As fusion occurs at 18 years, these lines become continuous with the shaft — a direct radiological sign of epiphyseal fusion."},
+    {q:"A 16-year-old male with bone age 18 years and Tanner G5 (height 158 cm) — prognosis for further growth:",o:["Excellent — 10+ cm gain","Moderate — 5–8 cm gain","Poor — very little growth potential remains","Cannot predict without GH stimulation test"],a:2,e:"Bone age 18 + Tanner G5 = near-complete epiphyseal fusion. Minimal further growth (<2 cm) is possible. This counselling is important for the patient and family."}
+  ]},
+  {id:22,file:"bone_age_boys/ba_055.jpg",age:"19 Years",g:"late",cap:"<b>Skeletal Age: 19 Years — Skeletal Maturity.</b> The epiphyseal line of the radius is now only faintly seen — it may disappear completely or persist as a thin line into adulthood. The radial epiphysis is completely fused, completing skeletal maturation of the hand and wrist.",
+   mcqs:[
+    {q:"At 19 years (male GP), the radial growth plate is:",o:["Wide and active","Partially fused","Completely fused — skeletal maturation complete","Expanding laterally"],a:2,e:"By 19 years, the radial epiphysis is completely fused, completing skeletal maturation of the hand and wrist."},
+    {q:"At the 19-year male GP standard, the radial epiphyseal line:",o:["Always disappears completely","Is only faintly seen — may disappear or persist as a thin line into adulthood","Is wide and clearly visible","Represents active growth plate"],a:1,e:"The GP atlas notes the epiphyseal line may disappear or persist as a thin line into adulthood — both are normal variants."},
+    {q:"Once all hand/wrist epiphyses are fused, GP bone age assessment can only state:",o:["Bone age is exactly 19 years","Bone age is at least 19 years — assignment beyond this is unreliable from hand X-rays","Bone age is 20–25 years","Assessment continues using density measurement"],a:1,e:"With complete hand/wrist fusion (≥19 years male GP), the X-ray can only confirm skeletal maturity. Chronological age assignment beyond this requires other sites (iliac crest, medial clavicle) for forensic/legal purposes."}
+  ]}
+];
+
+let cur=0,ans={};
+function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById('view-'+id).classList.add('active');window.scrollTo(0,0)}
+function showGallery(f){showView('gallery');renderGal(f?IM.filter(i=>i.g===f):IM);if(f){const b=document.querySelector('.fbtn[onclick*="\''+f+'\'"]');if(b){document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('active'));b.classList.add('active')}}}
+function renderGal(items){
+  const g=document.getElementById('gal-grid');
+  const tags={early:'te',preschool:'te',school:'tm',puberty:'tl',late:'ta'};
+  const tlb={early:'Infant',preschool:'Pre-school',school:'School Age',puberty:'Puberty',late:'Late Puberty'};
+  g.innerHTML=items.map((im,i)=>`<div class="gc" onclick="openCase(${IM.indexOf(im)})"><img class="gth" src="${im.file}" alt="${im.age}" loading="lazy"><div class="gb"><div class="ga">${im.age}</div><div class="gtl">${im.cap.replace(/<[^>]+>/g,'').substring(0,60)}…</div><div class="gm"><span class="tag ${tags[im.g]||'tm'}">${tlb[im.g]||'Standard'}</span><span class="qc">${(ans[im.id]||[]).length}/3 MCQs</span></div></div></div>`).join('')}
+function filterGal(k,b){document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderGal(k==='all'?IM:IM.filter(i=>i.g===k))}
+function openCase(i){cur=i;renderCase();showView('case')}
+function startQuiz(){cur=0;renderCase();showView('case')}
+function nav(d){cur=Math.max(0,Math.min(IM.length-1,cur+d));renderCase();window.scrollTo(0,80)}
+function renderCase(){
+  const im=IM[cur];
+  document.getElementById('case-img').src=im.file;
+  document.getElementById('cbadge').textContent='♂ Male · '+im.age;
+  document.getElementById('cap-text').innerHTML=im.cap;
+  document.getElementById('cap-text').classList.remove('shown');
+  document.getElementById('cap-toggle').textContent='Reveal';
+  document.getElementById('prog-lbl').textContent='Case '+(cur+1)+' of '+IM.length;
+  document.getElementById('prog-fill').style.width=(((cur+1)/IM.length)*100)+'%';
+  document.getElementById('prev-btn').disabled=cur===0;
+  document.getElementById('next-btn').disabled=cur===IM.length-1;
+  const a=ans[im.id]||[];
+  document.getElementById('mqc').innerHTML=im.mcqs.map((q,qi)=>{
+    const done=a[qi]!==undefined;
+    return `<div class="mqc"><div class="mqh"><div class="mql">Question ${qi+1} of 3</div><div class="mqs">${q.q}</div></div><div class="moo">${q.o.map((o,oi)=>{let c='op'+(done?' dis':'');if(done){if(oi===q.a)c+=' cor';else if(oi===a[qi]&&a[qi]!==q.a)c+=' wrg'}return`<div class="${c}" onclick="doAns(${qi},${oi})"><span class="ol">${'ABCD'[oi]}</span><span>${o}</span></div>`}).join('')}</div><div class="eb${done?' show':''}" id="e${qi}">${q.e}</div></div>`;
+  }).join('')}
+function toggleCap(){const t=document.getElementById('cap-text'),b=document.getElementById('cap-toggle');t.classList.toggle('shown');b.textContent=t.classList.contains('shown')?'Hide':'Reveal'}
+function doAns(qi,oi){const im=IM[cur];if(!ans[im.id])ans[im.id]=[];if(ans[im.id][qi]!==undefined)return;ans[im.id][qi]=oi;const q=im.mcqs[qi];document.querySelectorAll(`#mqc>div:nth-child(${qi+1}) .op`).forEach((op,i)=>{op.classList.add('dis');if(i===q.a)op.classList.add('cor');else if(i===oi&&oi!==q.a)op.classList.add('wrg')});document.getElementById('e'+qi).classList.add('show')}
+renderGal(IM);
+</script>
+</body>
+</html>
