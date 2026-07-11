@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root{
+  :root{--acc-rgb:167,139,250;
     --bg:#1a0a1e;--bg2:#1f1029;--bg3:#2a1535;--card:#1d1030;
     --border:rgba(167,139,250,0.18);
     --accent:#a78bfa;--accent2:#7c3aed;--accent-glow:rgba(167,139,250,0.25);
@@ -105,6 +105,53 @@
   .eb{margin:0 14px 14px;padding:12px;background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.2);border-radius:10px;font-size:13px;color:var(--muted2);line-height:1.6;display:none}
   .eb.show{display:block}
   footer{text-align:center;padding:32px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);margin-top:60px}
+
+  /* India Evidence Notes styles */
+  .tabs-nav{display:flex;gap:6px;margin-bottom:24px;flex-wrap:wrap}
+  .tnav{padding:7px 16px;border-radius:20px;font-size:12px;font-weight:700;border:1px solid var(--border);background:var(--bg3);color:var(--muted2);cursor:pointer;transition:all .2s}
+  .tnav.active,.tnav:hover{background:rgba(var(--acc-rgb),.15);border-color:rgba(var(--acc-rgb),.5);color:var(--accent)}
+  .notes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-bottom:28px}
+  .ncard{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px}
+  .ncard h3{font-size:15px;font-weight:700;margin-bottom:12px;color:var(--accent)}
+  .ncard p,.ncard li{font-size:13px;color:var(--muted2);line-height:1.7}
+  .ncard ul{padding-left:18px;display:flex;flex-direction:column;gap:5px}
+  .mtbl{width:100%;border-collapse:collapse;font-size:12px}
+  .mtbl th{background:var(--bg3);color:var(--muted2);padding:9px 10px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--border)}
+  .mtbl td{padding:9px 10px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;color:var(--muted2)}
+  .mtbl tr:hover td{background:rgba(255,255,255,0.02)}
+  .pearl{display:flex;gap:10px;align-items:flex-start;padding:10px;border-radius:8px;background:rgba(var(--acc-rgb),.06);border:1px solid rgba(var(--acc-rgb),.15);margin-bottom:8px}
+  .pn{flex-shrink:0;width:24px;height:24px;border-radius:6px;background:rgba(var(--acc-rgb),.2);color:var(--accent);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .pt{font-size:12px;color:var(--muted2);line-height:1.6}
+  .roi-bar{height:8px;border-radius:4px;overflow:hidden;display:flex;margin:6px 0 3px}
+  .rb-c{background:#f59e0b}.rb-d{background:#3b82f6}.rb-r{background:#6366f1}
+  .roilbl{display:flex;gap:12px;font-size:10px;color:var(--muted)}
+  .roilbl span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px}
+  /* T/F and A/R question styles */
+  .tf-card,.ar-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:4px}
+  .tf-card .mqh,.ar-card .mqh{padding:14px 18px 10px;border-bottom:1px solid var(--border)}
+  .tf-lbl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:6px}
+  .tf-q,.ar-q{font-size:13px;font-weight:500;line-height:1.6}
+  .ar-stmt{font-size:13px;line-height:1.6;padding:10px 14px;border-radius:8px;background:rgba(var(--acc-rgb),.05);border:1px solid rgba(var(--acc-rgb),.12);margin:0 14px 8px}
+  .ar-stmt b{color:var(--accent)}
+  .tf-opts,.ar-opts{padding:10px 14px;display:flex;flex-direction:column;gap:7px}
+  .tfo,.aro{padding:9px 13px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);cursor:pointer;font-size:12px;transition:all .15s;display:flex;align-items:flex-start;gap:8px}
+  .tfo:hover:not(.dis),.aro:hover:not(.dis){border-color:rgba(var(--acc-rgb),.4);background:rgba(var(--acc-rgb),.06)}
+  .tfo.cor,.aro.cor{border-color:#22c55e;background:rgba(34,197,94,0.1)}
+  .tfo.wrg,.aro.wrg{border-color:#ef4444;background:rgba(239,68,68,0.1)}
+  .tfo.dis,.aro.dis{pointer-events:none}
+  .q-eb{margin:0 14px 12px;padding:10px 12px;background:rgba(var(--acc-rgb),.06);border:1px solid rgba(var(--acc-rgb),.15);border-radius:8px;font-size:12px;color:var(--muted2);line-height:1.6;display:none}
+  .q-eb.show{display:block}
+  /* India checkpoint panel per case */
+  .india-panel{margin-top:4px;background:var(--card);border:1px solid rgba(245,158,11,0.25);border-radius:var(--radius);overflow:hidden}
+  .india-h{padding:12px 16px;border-bottom:1px solid rgba(245,158,11,0.15);display:flex;align-items:center;justify-content:space-between;background:rgba(245,158,11,0.06)}
+  .india-title{font-size:12px;font-weight:700;color:#f59e0b;display:flex;align-items:center;gap:6px}
+  .india-body{padding:12px 16px;display:none}
+  .india-body.open{display:block}
+  .india-pts{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
+  .india-pts li{font-size:12px;color:var(--muted2);line-height:1.55;padding-left:16px;position:relative}
+  .india-pts li::before{content:"›";position:absolute;left:0;color:#f59e0b;font-weight:700}
+  .india-toggle{font-size:11px;font-weight:600;color:#f59e0b;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.25);border-radius:5px;padding:3px 9px;cursor:pointer;transition:all .2s}
+
 </style>
 </head>
 <body>
@@ -115,6 +162,7 @@
   </div>
   <div class="hdr-r">
     <div class="pill"><div class="dot"></div>20 Standards · 60 MCQs</div>
+    <a class="hlink" href="#" onclick="showView('notes');return false">📚 Notes</a>
     <a class="hlink" href="index.html">← Hub</a>
   </div>
 </header>
@@ -193,6 +241,372 @@
     </div>
   </div>
 </div>
+
+<div id="view-notes" class="view">
+  <div class="wrap">
+    <div class="vh">
+      <div>
+        <button class="bb" onclick="showView('home')">← Back</button>
+        <div class="vt" style="margin-top:10px">India Evidence Notes</div>
+        <div class="vs">GP·TW3·BoneXpert·digiBONE — evidence for Indian children</div>
+      </div>
+    </div>
+
+    <!-- India summary + workflow -->
+    <div class="notes-grid">
+      <div class="ncard" style="grid-column:1/-1">
+        <h3>🇮🇳 Indian Evidence in One Paragraph</h3>
+        <p>In a large <b>Pune cohort (851 children)</b>, TW3-RUS was closest to expert consensus overall — especially for girls and prepubertal boys — while GP and GR showed age/sex bias. Later studies (2024) validated <b>BoneXpert v3</b> in 920 healthy Indian children; error was larger in boys and GP50 best matched manual rating. The <b>Indian 3-bone method</b> (radius + hamate + DP3) had RMSE ~0.6–0.7 y vs GP/TW in 493 films. <b>digiBONE</b> (2026, Indian-domain CNNs) achieved MAD 4.75 months in boys, 4.93 months in girls. Indian studies consistently find <b>relatively delayed carpal maturity</b>, especially in boys — segment-aware rating is recommended. <b>No nationally representative 0–18 Indian atlas yet exists.</b></p>
+      </div>
+      <div class="ncard">
+        <h3>⚠️ Three Core Cautions</h3>
+        <ul>
+          <li><b>Do not use CA as ground truth.</b> A healthy child can normally mature earlier or later. Validation should use expert consensus, not correlation alone.</li>
+          <li><b>Carpal–RUS discordance matters.</b> Carpals ossify by appositional growth; tubular bones mature through physes and are more sex-steroid responsive. Report major dissociation rather than averaging.</li>
+          <li><b>Not for legal age declaration.</b> A hand film alone cannot establish exact chronological age or an 18-year threshold. Forensic protocols and jurisdiction-specific standards are separate.</li>
+        </ul>
+      </div>
+      <div class="ncard">
+        <h3>🔬 Clinical Workflow (6 Steps)</h3>
+        <ol style="padding-left:18px;display:flex;flex-direction:column;gap:7px">
+          <li style="font-size:12px;color:var(--muted2)"><b>Confirm indication and identity</b> — record sex, exact CA, height/velocity, pubertal stage, diagnosis.</li>
+          <li style="font-size:12px;color:var(--muted2)"><b>Acquire standard PA left hand/wrist</b> — palm flat, fingers separated, middle finger aligned with forearm.</li>
+          <li style="font-size:12px;color:var(--muted2)"><b>Quality and anatomy screen</b> — check rotation, flexion, motion, exposure, fracture, prior surgery, dysplasia.</li>
+          <li style="font-size:12px;color:var(--muted2)"><b>Read three segments</b> — distal radius/ulna → carpals → metacarpals/phalanges. Record segmental disagreement.</li>
+          <li style="font-size:12px;color:var(--muted2)"><b>Apply one declared method</b> — GP, TW3-RUS, BoneXpert, digiBONE, or Indian 3-bone. State version and reference population.</li>
+          <li style="font-size:12px;color:var(--muted2)"><b>Integrate, do not over-claim</b> — interpret BA–CA with growth, puberty, nutrition and disease context.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- ROI Emphasis by age -->
+    <div class="ncard" style="margin-bottom:18px">
+      <h3>📊 ROI Emphasis by Age (Carpal : Digit : Radius)</h3>
+      <p style="margin-bottom:14px">Weightings shift from carpal-dominant (infancy) to radius-dominant (late adolescence). Based on Indian GP-weighting study and BoneXpert segment analysis.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px">
+        <!-- age weights: [carpal%, digit%, radius%] -->
+        <script>
+        (function(){
+          const wts=[[0,55,30,15],[1,55,30,15],[2,55,32,13],[3,52,34,14],[4,50,36,14],[5,48,38,14],[6,43,42,15],[7,38,47,15],[8,32,52,16],[9,27,56,17],[10,22,59,19],[11,18,61,21],[12,14,61,25],[13,10,61,29],[14,7,59,34],[15,4,54,42],[16,2,42,56],[17,1,29,70],[18,0,14,86]];
+          const div=document.currentScript.parentElement;
+          wts.forEach(([age,c,d,r])=>{
+            div.insertAdjacentHTML('beforeend',`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px"><div style="font-size:11px;font-weight:700;color:var(--muted2);margin-bottom:6px">Age ${age}y</div><div class="roi-bar"><div class="rb-c" style="width:${c}%"></div><div class="rb-d" style="width:${d}%"></div><div class="rb-r" style="width:${r}%"></div></div><div style="font-size:10px;color:var(--muted)">${c}:${d}:${r}</div></div>`);
+          });
+        })();
+        const GIRLS_TF=[{"q": "In the GP female standards, girls complete hand/wrist skeletal maturation approximately 2 years earlier than males.", "a": true, "e": "Females reach skeletal maturity at ~16–17 years vs ~17–19 years in males — a 1–2 year advantage consistent throughout childhood and adolescence."}, {"q": "At 6 months female GP standard, the capitate and hamate are enlarged and show distinct articular surface shaping.", "a": false, "e": "By 6 months, capitate and hamate are enlarged but remain rounded — distinct articular surface shaping comes later as skeletal maturation advances."}, {"q": "Isolated premature thelarche (breast development before age 8) is associated with advanced bone age for chronological age.", "a": false, "e": "Isolated premature thelarche has a NORMAL bone age for chronological age. Advanced bone age distinguishes precocious puberty from isolated premature thelarche."}, {"q": "In Indian girls, TW3-RUS was closest to expert bone age consensus in the Pune cohort.", "a": true, "e": "Shah et al. (851-child Pune cohort) found TW3-RUS closest overall, with particular accuracy for girls — making it the preferred method for serial studies in Indian girls."}, {"q": "Non-classic congenital adrenal hyperplasia (21-hydroxylase deficiency) typically presents with delayed bone age.", "a": false, "e": "Non-classic CAH causes androgen excess driving ADVANCED bone age — not delayed. Advanced bone age with premature adrenarche should prompt evaluation for non-classic CAH."}, {"q": "Carpal–RUS discordance in a girl with precocious puberty typically shows RUS MORE advanced than carpals.", "a": true, "e": "Sex steroids act preferentially on tubular bone physes (RUS), advancing digital/metacarpal maturation faster than carpal maturation (appositional growth). This carpal–RUS discordance is characteristic of conditions with sex-steroid excess."}, {"q": "The Indian 3-bone method uses the radius, hamate, and distal phalanx of the middle finger, achieving RMSE ~0.6–0.7 years vs GP/TW.", "a": true, "e": "The Indian 3-bone method (Khadilkar group) uses exactly these three ROIs. In 493 Indian films, RMSE was ~0.6–0.7 years vs full GP/TW3 — a clinically acceptable accuracy for a rapid assessment."}, {"q": "Gilsanz–Ratib atlas performed best for pubertal girls in the Pune cohort study.", "a": false, "e": "In the Shah et al. Pune cohort, GR performed best for PUBERTAL BOYS — NOT girls. TW3-RUS was best for girls overall."}, {"q": "A peak LH >5 IU/L on GnRH stimulation test confirms gonadotropin-dependent (central) precocious puberty.", "a": true, "e": "A pubertal LH response (peak >5 IU/L using ICMA assay) on GnRH stimulation confirms central (gonadotropin-dependent) precocious puberty. A prepubertal response suggests GIPP or no CPP."}, {"q": "Bone age at the time of normal menarche in girls is approximately 13 years.", "a": true, "e": "Menarche typically occurs when bone age is approximately 13 years in girls — clinically useful as a landmark for predicting onset and remaining growth potential."}, {"q": "GnRH agonist therapy for CPP shows the greatest height benefit when started at bone age >13 years.", "a": false, "e": "GnRH agonist therapy benefits final height most when started EARLY — bone age <12 years in girls. Once bone age exceeds 12–13 years, little growth potential remains to be protected."}, {"q": "In Turner syndrome (45,X), bone age is typically advanced relative to chronological age.", "a": false, "e": "Turner syndrome is associated with estrogen deficiency — untreated, this causes delayed skeletal maturation (delayed bone age) and failure of normal epiphyseal progression, NOT advanced bone age."}, {"q": "Epiphyseal fusion in girls typically begins at the distal phalanx of the thumb at the 13-year GP standard.", "a": true, "e": "In the female GP standards, fusion begins at the distal phalanx of the thumb at the 13-year standard — the first fusion landmark in the female GP atlas."}, {"q": "At 14-year female GP standard, fusion is complete in the 2nd–5th distal phalanges.", "a": true, "e": "By 14 years (female GP), fusion is complete in the 2nd–5th distal phalanges and near-complete in all proximal phalanges — approximately 2 years ahead of the equivalent male timeline."}, {"q": "Bayley-Pinneau adult height predictions are most accurate at bone ages <8 years.", "a": false, "e": "Bayley-Pinneau predictions are MOST accurate at mid-pubertal bone ages (~10–12 years) when significant growth remains but pubertal trajectory is established. At very early ages, predictions are highly uncertain."}, {"q": "Complete radial epiphyseal fusion in a girl confirms a chronological age of ≥16 years.", "a": false, "e": "Complete radial fusion in females confirms skeletal maturity (typically ≥16–17 years) but CANNOT confirm exact chronological age. 'Skeletally mature' is the appropriate term; hand X-rays cannot distinguish 16 from 25 years."}, {"q": "At 16-year female GP standard, the radial epiphysis is partially fused (fused except along the periphery).", "a": true, "e": "At 16 years (female GP), the radial epiphysis has fused except along its periphery — near-complete fusion, with full fusion typically by 17 years in females."}, {"q": "The final female GP standard is described as 'indistinguishable from a young adult hand.'", "a": true, "e": "The final female GP standard is explicitly described as 'indistinguishable from a young adult' — no specific age is assigned beyond skeletal maturity. This is distinct from the male atlas which labels the final plate '19 years.'"}, {"q": "digiBONE achieved a composite MAD of 4.93 months in girls using Indian-domain CNNs.", "a": true, "e": "digiBONE (2026) reported HCJBA composite MAD 4.93 months for girls using Indian-domain fine-tuned CNNs — slightly higher than the 4.75-month MAD achieved for boys."}, {"q": "In the GP female atlas, the pisiform typically appears around 5–6 years.", "a": false, "e": "The pisiform is the LAST carpal bone to ossify in both sexes — typically appearing at 8–10 years in the female GP standards, not at 5–6 years."}];
+const GIRLS_AR=[{"a": "In the female newborn GP standard, secondary hand/wrist ossification centres are absent.", "r": "Secondary ossification centres require postnatal hormonal stimulation (particularly GH and thyroid hormone) to begin mineralisation.", "o": ["A: Both true, R explains A", "B: Both true, R does not explain A", "C: A true, R false", "D: A false, R true"], "ans": 2, "e": "A is TRUE — no secondary ossification centres are present at birth (female GP). R is partially true but overstated; the newborn lacks secondary centres primarily because ossification is still in progress developmentally, not solely due to absence of postnatal hormones — these begin secreting before birth. C is best."}, {"a": "Isolated premature thelarche has a normal bone age for chronological age.", "r": "Unlike central precocious puberty, isolated premature thelarche does not activate the HPG axis and therefore does not drive sex-steroid–mediated physeal maturation.", "o": ["A: Both true, R explains A", "B: Both true, R does not explain A", "C: A true, R false", "D: A false, R true"], "ans": 0, "e": "Both statements are true and R correctly explains A. Isolated premature thelarche is benign with no HPG axis activation — no sex-steroid drive → no bone age advancement."}, {"a": "Premature adrenarche with bone age advanced >2 years warrants evaluation for non-classic CAH.", "r": "Adrenal androgen excess (e.g., 21-hydroxylase deficiency) drives physeal maturation through androgen receptor and aromatised oestrogen receptor pathways, advancing bone age.", "o": ["A: Both true, R explains A", "B: Both true, R does not explain A", "C: A true, R false", "D: A false, R true"], "ans": 0, "e": "Both statements are true and R correctly explains A. Normal premature adrenarche has minimal bone age advancement (<1 year); >2 years advancement suggests significant androgen excess, most importantly non-classic CAH."}, {"a": "Females are approximately 1–2 years ahead of males in skeletal maturation throughout childhood.", "r": "Female sex hormones (oestrogen) are produced in higher concentrations from birth in females, continuously driving physeal maturation faster than in males.", "o": ["A: Both true, R explains A", "B: Both true, R does not explain A", "C: A true, R false", "D: A false, R true"], "ans": 2, "e": "A is TRUE — females are 1–2 years ahead in skeletal maturation. R is FALSE — significant sex hormone differences are not present prepubertally; the female maturation advantage is largely genetic/constitutional and linked to the timing of puberty, not continuous prepubertal oestrogen differences."}, {"a": "In girls with CPP, GnRH agonist therapy is most effective when bone age is <12 years at treatment start.", "r": "At bone age <12 years, sufficient growth potential remains in the epiphyseal plates to benefit from suppression of sex-steroid–driven maturation.", "o": ["A: Both true, R explains A", "B: Both true, R does not explain A", "C: A true, R false", "D: A false, R true"], "ans": 0, "e": "Both statements are true and R correctly explains A. Meta-analyses confirm greatest final height benefit when GnRH agonist therapy is started with bone age <12 years in girls."}, {"a": "The carpal ossification sequence in girls is the same as in boys but typically occurs 1–2 years earlier in chronological age.", "r": "Girls have accelerated skeletal maturation throughout childhood due to earlier pubertal onset, which shifts all developmental milestones earlier in chronological time.", "o": ["A: Both true, R explains A", "B: Both true, R does not explain A", "C: A true, R false", "D: A false, R true"], "ans": 1, "e": "A is TRUE — carpal sequence is identical; girls just reach each standard at an earlier chronological age. R is partially true but overstated — the 1–2 year maturation advantage is present throughout childhood, not only due to earlier puberty (constitutional sex differences contribute prepubertally too). B is the best answer."}, {"a": "At 5 years 9 months female GP, overlap between capitate and hamate is a specific finding.", "r": "As carpals enlarge and articular surfaces develop, adjacent bones fill the wrist space and begin to overlap radiographically — a sign of carpal maturation.", "o": ["A: Both true, R explains A", "B: Both true, R does not explain A", "C: A true, R false", "D: A false, R true"], "ans": 0, "e": "Both statements are true and R correctly explains A. Capitate–hamate overlap at 5 years 9 months is a specific GP female landmark, reflecting progressive carpal shaping and space occupation."}, {"a": "Bone age correlates more closely with pubertal stage than with chronological age.", "r": "Sex steroids produced by the HPG-activated gonad and adrenal gland stimulate physeal maturation through oestrogen receptor pathways at growth plates.", "o": ["A: Both true, R explains A", "B: Both true, R does not explain A", "C: A true, R false", "D: A false, R true"], "ans": 0, "e": "Both statements are true and R correctly explains A. The HPG axis-driven sex-steroid surge links pubertal stage to bone age progression more tightly than chronological age."}, {"a": "At 8 years female GP standard, a girl with bone age 10 years and Tanner B3 requires evaluation for central precocious puberty.", "r": "Bone age >2 years advanced with established pubertal development confirms central precocious puberty without further testing.", "o": ["A: Both true, R explains A", "B: Both true, R does not explain A", "C: A true, R false", "D: A false, R true"], "ans": 2, "e": "A is TRUE — BA 2 years advanced with Tanner B3 at chronological age 8 warrants CPP evaluation. R is FALSE — bone age alone does not CONFIRM CPP; GnRH stimulation test (peak LH >5 IU/L) is needed to confirm gonadotropin-dependent precocious puberty. C is correct."}, {"a": "Menarche typically occurs at Tanner B4 in girls.", "r": "The oestrogen surge at Tanner B4 triggers endometrial maturation sufficient for the first menstrual bleed, which typically occurs 2.5–3 years after thelarche.", "o": ["A: Both true, R explains A", "B: Both true, R does not explain A", "C: A true, R false", "D: A false, R true"], "ans": 0, "e": "Both statements are true and R correctly explains A. Menarche at B4, approximately 2.5–3 years post-thelarche, reflects cumulative oestrogen-driven endometrial development."}, {"a": "At 11-year female GP standard, all proximal phalangeal epiphyses cap their shafts.", "r": "Epiphyseal capping reflects pubertal sex-steroid–driven physeal growth, where the epiphysis enlarges beyond the metaphyseal diameter.", "o": ["A: Both true, R explains A", "B: Both true, R does not explain A", "C: A true, R false", "D: A false, R true"], "ans": 0, "e": "Both statements are true and R correctly explains A. Capping at 11 years female indicates active pubertal physeal growth — epiphyses cap the shaft when sex-steroid–driven chondrocyte activity causes epiphyseal widening beyond the metaphyseal margin."}, {"a": "At 12-year female GP standard, the radial epiphysis caps the shaft — more advanced than the equivalent male standard.", "r": "Female skeletal maturation is 1–2 years ahead of males, so features that appear in the male 13–14 year standard are seen in girls at 12 years.", "o": ["A: Both true, R explains A", "B: Both true, R does not explain A", "C: A true, R false", "D: A false, R true"], "ans": 0, "e": "Both statements are true and R correctly explains A. Radial capping at 12 years female corresponds to approximately 14 years male — consistent with 1–2 year female maturation advantage."}, {"a": "Bone age at menarche is approximately 13 years in normal girls.", "r": "Menarche requires attainment of a critical level of skeletal and somatic maturity, which corresponds to a bone age of ~13 years regardless of chronological age.", "o": ["A: Both true, R explains A", "B: Both true, R does not explain A", "C: A true, R false", "D: A false, R true"], "ans": 0, "e": "Both statements are true and R correctly explains A. Menarche at BA ~13 years is a well-established landmark — it correlates better with bone age than with chronological age."}, {"a": "At 14-year female GP standard, distal phalangeal fusion is complete for 2nd–5th fingers.", "r": "Distal phalanges fuse first in the hand/wrist fusion sequence because they are the smallest bones and subject to greatest tensile forces during grip.", "o": ["A: Both true, R explains A", "B: Both true, R does not explain A", "C: A true, R false", "D: A false, R true"], "ans": 1, "e": "A is TRUE — distal phalangeal fusion is complete by 14 years in females. R gives a plausible but unsubstantiated reason; the actual reason for earlier distal phalangeal fusion is not firmly established mechanistically. B is the best answer."}, {"a": "Bayley-Pinneau predicted adult height is calculated as current height divided by the fraction of adult height already attained for that bone age.", "r": "The Bayley-Pinneau tables, used with GP bone age, provide the percentage of final adult height achieved at each bone age-sex combination.", "o": ["A: Both true, R explains A", "B: Both true, R does not explain A", "C: A true, R false", "D: A false, R true"], "ans": 0, "e": "Both statements are true and R correctly explains A. Predicted adult height (PAH) = current height ÷ (BP% ÷ 100). This is the standard calculation."}, {"a": "At 15-year female GP standard, most metacarpal and proximal phalangeal epiphyses are fused.", "r": "By 15 years, female skeletal maturation is equivalent to the male 17-year standard, where fusion is complete in phalanges and most metacarpals.", "o": ["A: Both true, R explains A", "B: Both true, R does not explain A", "C: A true, R false", "D: A false, R true"], "ans": 0, "e": "Both statements are true and R correctly explains A. Female 15-year standard corresponds to approximately male 17-year standard, confirming the ~2-year female maturation advantage."}, {"a": "In Turner syndrome without oestrogen replacement, epiphyseal plates fail to undergo normal pubertal fusion.", "r": "Oestrogen is required for growth plate senescence and epiphyseal fusion; Turner syndrome causes oestrogen deficiency that prevents normal physeal closure.", "o": ["A: Both true, R explains A", "B: Both true, R does not explain A", "C: A true, R false", "D: A false, R true"], "ans": 0, "e": "Both statements are true and R correctly explains A. Oestrogen drives final growth plate closure; Turner syndrome girls without replacement may have paradoxically slow epiphyseal fusion and relatively prolonged growth — but stunted because the pubertal growth spurt also fails."}, {"a": "At 16-year female GP standard, a thin line at the former radial physis is a normal variant.", "r": "Residual physeal scars (thin terminal lines) persist at sites of completed epiphyseal fusion as normal fibrous remnants and should not be interpreted as active growth plates.", "o": ["A: Both true, R explains A", "B: Both true, R does not explain A", "C: A true, R false", "D: A false, R true"], "ans": 0, "e": "Both statements are true and R correctly explains A. Thin terminal lines at former physes are documented as normal at 16–17 years female GP — they do not indicate pathology."}, {"a": "The final female GP standard cannot assign a bone age beyond 'adult/skeletally mature.'", "r": "Hand/wrist radiographs lose discriminatory power once all epiphyses are fused; the GP atlas explicitly describes the final plate as 'indistinguishable from a young adult.'", "o": ["A: Both true, R explains A", "B: Both true, R does not explain A", "C: A true, R false", "D: A false, R true"], "ans": 0, "e": "Both statements are true and R correctly explains A. The GP female atlas final standard is described as 'indistinguishable from a young adult' — no further chronological age assignment is possible."}, {"a": "digiBONE represents a nationally validated clinical standard for bone age in Indian girls as of 2026.", "r": "digiBONE was developed using Indian-domain fine-tuned CNNs and published in 2026 with prospective multicentre validation.", "o": ["A: Both true, R explains A", "B: Both true, R does not explain A", "C: A true, R false", "D: A false, R true"], "ans": 3, "e": "A is FALSE — digiBONE (2026) is a research framework, not yet a nationally validated clinical standard. R is partially true (Indian-domain CNNs, published 2026) but overstates validation status. D is the best answer."}];
+
+const INDIA_FEMALE={
+  0:["A newborn girl also usually has no visible secondary hand/wrist ossification centres; sex differences are smaller than normal overlap.","Carpals: capitate and hamate remain cartilaginous at birth and should not be required for a normal newborn film.","Digits: phalangeal and metacarpal epiphyses are absent; inspect shaft number, form and congenital anomalies instead.","Wrist: distal radius and ulna epiphyses are absent; use a true PA image and avoid rotational pseudo-morphology.","Indian lens: do not force a GP/GR plate match below the atlas's useful resolution; state that neonatal hand age is approximate."],
+  1:["Girls commonly show the same centres slightly earlier: capitate/hamate are established and the distal radius may already be visible.","Carpals: assess relative size and contour of capitate and hamate, not simply their presence.","Digits: proximal phalangeal and metacarpal epiphyses often begin to appear; note asymmetry or segmentation anomalies.","Wrist: distal radius is an early useful landmark; distal ulna is still not expected.","Indian lens: apparent female advancement is a group tendency, not a rule for an individual infant."],
+  2:["Digital secondary centres are generally more numerous and better defined than in boys of the same chronological age.","Carpals: the triquetrum may appear after capitate and hamate; count and inspect contour, recognising wide overlap.","Digits: proximal and middle phalangeal epiphyses and several metacarpal epiphyses are visible and widening.","Wrist: the distal radius centre is established; distal ulna is still usually absent.","Indian lens: use sex-specific standards and document the chosen method; do not translate a Western plate directly into exact CA."],
+  3:["More advanced carpal and digital contours may be seen than in boys at the same CA.","Carpals: triquetrum is established and the lunate may be appearing; assess shape as well as count.","Digits: most secondary epiphyses are visible and progressively broaden across the shafts.","Wrist: distal radius is well formed; a tiny distal ulnar centre can occur but is not required.","Indian lens: compare the nearest younger and older female standards; an isolated early centre should not define the entire BA."],
+  4:["The radial-side carpals may begin to appear, making the carpal cluster more complex.","Carpals: lunate is established; trapezium, trapezoid or scaphoid may begin to ossify, with variable sequence.","Digits: epiphyses are broader and contours more mature than at 3 years.","Wrist: distal radius is robust; distal ulna may start to appear earlier than in boys.","Indian lens: use morphology and segment agreement; avoid calling delay from one late-appearing carpal alone."],
+  5:["Most carpals other than pisiform may be visible or emerging by this stage.","Carpals: scaphoid, trapezium and trapezoid are more often established; assess size, density and inter-carpal spacing.","Digits: epiphyses widen toward shaft width while physes remain fully open.","Wrist: distal ulna commonly becomes visible and provides a new maturity marker.","Indian lens: nutritional status can influence apparent maturation; a delayed BA is a finding, not an endocrine diagnosis."],
+  6:["The carpal cluster is usually well populated, and sex-related advancement becomes more visible.","Carpals: seven non-pisiform carpals are often identifiable; pisiform remains absent.","Digits: epiphyses approach shaft width and become less rounded, while all physes remain open.","Wrist: distal ulna is generally visible and enlarging; radius remains the larger reference centre.","Indian lens: the Pune study found TW3 close overall in girls; it still requires correct scoring and an appropriate reference table."],
+  7:["A seven-carpal pattern is typical, with increasing angularity and joint-surface modelling.","Carpals: pisiform is generally still absent; the other carpals enlarge and occupy more of the wrist.","Digits: epiphyses can equal metaphyseal width in some rays but should not yet show pubertal fusion.","Wrist: radius and ulna contours become more adult-like while the physes remain broad.","Indian lens: if a GP plate fits digits but not carpals, state the discordance; consider TW3-RUS for a reproducible series."],
+  8:["Pubertal onset may begin in early-maturing girls, introducing capping before age 9.","Carpals: pisiform is still usually absent; seven centres form the expected cluster.","Digits: epiphyses widen toward metaphyseal width; early rounding of articular surfaces may appear.","Wrist: radius and ulna are open; no narrowing expected.","Indian lens: in early-maturing girls, document any discordance between carpal and RUS segment ages before treatment decisions."],
+  9:["Early pubertal girls may show capping; prepubertal pattern remains the majority.","Carpals: pisiform may appear in more advanced girls.","Digits: epiphyses at or near metaphyseal width; sesamoid may emerge in advancing girls.","Wrist: both physes remain widely open.","Indian lens: isolate pubertal bone age change from nutritional delay — integrate weight, height velocity and clinical Tanner staging."],
+  10:["The midchildhood-to-puberty transition; sesamoid is often visible.","Carpals: all eight may be present in more advanced girls.","Digits: early capping may begin; sesamoid is a useful pubertal marker.","Wrist: radius and ulna remain open with no narrowing.","Indian lens: TW3-RUS was best overall in the Pune cohort at this age; declare one method for serial comparison."],
+  11:["Capping progresses across short bones; distal phalangeal union may begin in early maturers.","Carpals: adult count and contour; do not weight carpal information for age at this stage.","Digits: prominent capping; distal physes may begin narrowing.","Wrist: radial capping begins; both forearm physes remain open.","Indian lens: bone age at puberty onset (typically 10–11 y in girls) is a better anchor for treatment decisions than chronological age alone."],
+  12:["Distal phalangeal fusion progresses; this is the dominant feature.","Carpals: fully configured; no further discriminating change.","Digits: distal physes often fusing; proximal phalangeal narrowing starts; middle physes remain visible.","Wrist: radius and ulna stay open, preserving useful late-maturity information.","Indian lens: girls may advance rapidly after the pubertal growth spurt; serial change must be judged against elapsed time and treatment context."],
+  13:["Short-bone fusion is the dominant feature; the distal radius becomes the key remaining clock.","Carpals: fully configured with minimal additional discriminating change.","Digits: distal physes are often fused; proximal phalangeal union progresses and middle phalanges follow.","Wrist: distal radius/ulna are narrowed but often still open; assess for a residual physeal line.","Indian lens: late female ages have atlas ceiling effects; report segmental maturity and avoid false month-level precision."],
+  14:["Most short-bone physes are fused or close to fusion; evaluate the distal forearm carefully.","Carpals: no meaningful developmental change for age discrimination.","Digits: distal and proximal phalanges are commonly fused; middle phalangeal/metacarpal fusion is advanced.","Wrist: distal radial and ulnar physes narrow markedly and may begin closure.","Indian lens: remaining linear growth is limited but not inferable from one physis alone; integrate height velocity and menarchal history."],
+  15:["A mature or nearly mature hand/wrist pattern is expected in many girls.","Carpals: mature.","Digits: metacarpal and phalangeal physes are usually fused; residual scars should not be mistaken for an open physis.","Wrist: distal radius/ulna are closing or fused; complete radial union marks the practical hand-age ceiling.","Indian lens: use 'skeletally mature' when appropriate rather than assigning an exact older age; individual variation remains."],
+  16:["The female hand/wrist is approaching or at its practical skeletal-age ceiling.","Carpals: fully mature.","Digits: all routine short-bone physes are fused; only physeal scars may remain.","Wrist: radius and ulna are typically fused or show a closing scar.","Indian lens: report maturity and any abnormal morphology; hand BA cannot reliably separate 16 from 18+ chronological years in girls."],
+  17:["The female hand/wrist has reached its practical skeletal-age ceiling.","Carpals: adult configuration and non-discriminating.","Digits: all metacarpal and phalangeal epiphyses are fused.","Wrist: distal radius and ulna are fused; a smooth physeal scar can persist.","Indian lens: no reliable hand-film distinction exists among late adolescents and young adults; avoid exact CA or remaining-height claims."],
+  18:["Skeletally mature — same as 17-year female Indian lens.","Carpals: adult morphology.","Digits: all physes fused.","Wrist: radial epiphyseal scar may persist — this is normal.","Indian lens: 'skeletally mature' is the appropriate reporting term; hand X-ray cannot distinguish 17 from 25 years in females."]
+};
+
+
+// ── India Evidence Notes ──
+const PEARLS=[
+  "TW3-RUS was closest to expert consensus in the Pune cohort (851 Indian children), especially for girls and prepubertal boys.",
+  "BoneXpert v3 was validated in 920 healthy Indian children; systematic error was larger in boys; GP50 output best matched manual GP rating.",
+  "digiBONE (2026), an Indian-domain CNN, achieved composite MAD 4.75 months in boys and 4.93 months in girls.",
+  "The Indian 3-bone method (radius + hamate + DP of middle finger) had RMSE ~0.6–0.7 years vs GP/TW in 493 Indian films.",
+  "Indian studies consistently find relatively delayed carpal maturity, particularly in boys — segment-aware rating is recommended.",
+  "The Pune cohort study (Shah et al.) found that Gilsanz–Ratib performed best for pubertal boys — this finding should not be generalised beyond similar settings.",
+  "A GP meta-analysis found apparent bone age delay in Asian boys aged 6–9 years; this is a population tendency, not a diagnostic finding in any individual.",
+  "Carpal ROI emphasis decreases from ~55% at infancy to ~1% at age 17; radius emphasis rises from ~15% to ~70% — according to the Indian GP-weighting study.",
+  "No nationally representative 0–18 normative atlas exists for Indian children as of 2026; reported checkpoints are literature syntheses, not prescriptive norms.",
+  "Carpal–RUS discordance should be reported, not averaged away — carpals ossify by appositional growth; tubular bones mature through sex-steroid–responsive physes.",
+  "Do not use chronological age as 'ground truth' in validation studies — expert consensus BA is preferable, and agreement statistics (Bland–Altman, MAE, RMSE) are more informative than Pearson correlation.",
+  "Do not mix TW2 and TW3 outputs in a longitudinal series — the scoring tables differ and switching methods can simulate apparent acceleration or delay.",
+  "BoneXpert v3 adds a separate visible-carpal bone age and self-validation — an automated output cannot replace morphology review for dysplasia, trauma or rotation.",
+  "A hand X-ray alone cannot establish chronological age ≥18 years for legal/forensic purposes — report 'skeletally mature' rather than an exact age.",
+  "Serial bone age films should use a stable method, atlas edition, and reader — compare prior film side by side and assess change relative to elapsed CA."
+];
+
+const GLOBAL_TF=[
+  {q:"TW3 and TW2 bone age outputs are interchangeable in longitudinal follow-up.",a:false,e:"TW2 and TW3 use different scoring tables and reference data. Switching methods between visits can simulate apparent acceleration or delay — always document and maintain one method."},
+  {q:"In the Pune cohort, TW3-RUS was closest to expert bone age consensus overall.",a:true,e:"Shah et al. (851 Indian children) found TW3-RUS closest overall, especially for girls and prepubertal boys."},
+  {q:"A hand/wrist X-ray can reliably confirm a chronological age of ≥18 years for legal purposes.",a:false,e:"Complete hand/wrist epiphyseal fusion (skeletally mature) cannot distinguish 17 from 19+ years. Forensic protocols require separate skeletal sites and jurisdiction-specific standards."},
+  {q:"BoneXpert v3 adds a separate carpal bone age to the tubular-bone estimate.",a:true,e:"BoneXpert v3 generates 21 tubular-bone BA, a separate visible-carpal BA, and a self-validation score — a key advance over the original system."},
+  {q:"Indian children consistently show advanced carpal maturity relative to tubular bones.",a:false,e:"Indian studies show relatively DELAYED carpal maturity, especially in boys. This makes segment-aware and carpal-separated reporting particularly important in Indian practice."}
+];
+
+const GLOBAL_AR=[
+  {a:"Assertion: Bone age correlates more closely with pubertal stage than with chronological age.",
+   r:"Reason: Sex steroids produced by the activated HPG axis accelerate physeal maturation through oestrogen receptor stimulation at growth plates.",
+   o:["A: Both A and R are true, and R is the correct explanation of A","B: Both A and R are true, but R does NOT explain A","C: A is true but R is false","D: A is false but R is true"],
+   ans:0,e:"Both statements are true and the reason correctly explains the assertion — sex-steroid-driven physeal maturation links bone age progression to pubertal stage."},
+  {a:"Assertion: TW3-RUS is generally preferred over GP atlas in serial studies of Indian children.",
+   r:"Reason: GP atlas-matching is inherently less reproducible because the whole-plate match is subjective and Indian children may match different segments to different plates.",
+   o:["A: Both A and R are true, and R is the correct explanation of A","B: Both A and R are true, but R does NOT explain A","C: A is true but R is false","D: A is false but R is true"],
+   ans:0,e:"TW3-RUS is preferred for serial work due to its anatomically explicit scoring reducing observer variability. The Pune cohort confirmed TW3 closest overall in Indian children."},
+  {a:"Assertion: Carpal–RUS discordance should be reported and not averaged in a single-number bone age.",
+   r:"Reason: Carpals mature by appositional growth while tubular-bone physes respond to sex steroids; conditions such as CAH or GHD can dissociate the two segments.",
+   o:["A: Both A and R are true, and R is the correct explanation of A","B: Both A and R are true, but R does NOT explain A","C: A is true but R is false","D: A is false but R is true"],
+   ans:0,e:"Carpal and tubular-bone maturation have different biological drivers. In conditions with sex-steroid excess (CAH, precocious puberty), RUS advances faster than carpals; in GHD/hypothyroidism, both may lag but rates differ."},
+  {a:"Assertion: The Indian 3-bone method uses the distal radius, hamate, and distal phalanx of the middle finger.",
+   r:"Reason: These three bones sample late maturity (radius), carpal (hamate), and digital (DP3) segments simultaneously, providing a time-efficient composite assessment.",
+   o:["A: Both A and R are true, and R is the correct explanation of A","B: Both A and R are true, but R does NOT explain A","C: A is true but R is false","D: A is false but R is true"],
+   ans:0,e:"The Indian 3-bone method (Khadilkar group) uses exactly these three ROIs. RMSE was ~0.6–0.7 years vs full GP/TW3 in 493 Indian films."},
+  {a:"Assertion: In prepubertal boys, Gilsanz–Ratib atlas performed best among the three manual methods tested in the Pune cohort.",
+   r:"Reason: Gilsanz–Ratib uses idealised digital reference images built from Los Angeles Caucasian children, which happen to match Indian prepubertal boys well.",
+   o:["A: Both A and R are true, and R is the correct explanation of A","B: Both A and R are true, but R does NOT explain A","C: A is false but R is true","D: Both A and R are false"],
+   ans:3,e:"The Pune cohort found GR performed BEST for PUBERTAL boys (not prepubertal). TW3 was best overall and for prepubertal boys. The reason given is also incorrect — this specific match cannot be attributed to the Caucasian source population."}
+];
+
+// India checkpoints per age (male)
+const INDIA_MALE={
+  0:["At a newborn standard, only the ossified shafts are conspicuous; most secondary epiphyses are still radiolucent cartilage.","Carpals: no visible ossification centre is expected; capitate and hamate usually appear during the first postnatal months.","Digits: metacarpal and phalangeal secondary epiphyses are not yet visible, so digit staging contributes little.","Wrist: distal radial and ulnar epiphyses are absent; do not confuse the ossified metaphyses with an epiphyseal centre.","Indian lens: the hand/wrist alone has coarse precision in neonates; no Indian neonatal norms; an exact age claim is inappropriate."],
+  1:["The first-year standard is driven by the appearance and enlargement of the capitate and hamate.","Carpals: capitate and hamate are the dominant paired centres; additional carpals should generally not be expected.","Digits: early epiphyses at proximal phalanges and metacarpals may just be appearing, often later than in girls.","Wrist: the distal radial epiphysis may be absent early and becomes visible around the transition into the second year; ulna remains absent.","Indian lens: month-level timing varies widely — compare adjacent infant standards; avoid chronological-age precision."],
+  2:["Several digital epiphyses become visible, making the film more informative than at 1 year.","Carpals: capitate and hamate enlarge; the triquetrum may be emerging but has a broad normal window.","Digits: proximal phalangeal and metacarpal epiphyses are clearer; middle/distal phalangeal centres begin to contribute.","Wrist: distal radius is usually established while distal ulna remains cartilaginous.","Indian lens: evidence under age 2 is limited; describe centres and morphology rather than declaring an exact normal/abnormal cutoff."],
+  3:["The hand shifts from centre-counting toward combined size-and-shape assessment.","Carpals: triquetrum is usually visible; lunate may be absent or only emerging.","Digits: epiphyses across metacarpals and phalanges are present but remain narrower than their shafts.","Wrist: distal radius enlarges and rounds; distal ulna is generally not yet a dependable landmark.","Indian lens: GP is quick, but a bone-by-bone check prevents a single advanced carpal from dominating the whole-hand age."],
+  4:["Morphology of epiphyses now adds more information than simple presence/absence.","Carpals: capitate, hamate and triquetrum are established; lunate is usually visible or becoming clear.","Digits: phalangeal epiphyses approach roughly half the width of their shafts and develop smoother margins.","Wrist: distal radius broadens; distal ulna often remains absent.","Indian lens: early-childhood BA may lag a historic GP plate in healthy children, especially boys; integrate nutrition and growth."],
+  5:["The radial carpal row begins to fill in, but centre timing remains variable.","Carpals: lunate is evident; scaphoid, trapezium and trapezoid may be appearing, often incompletely.","Digits: metacarpal and phalangeal epiphyses broaden and flatten on the metaphyseal side.","Wrist: distal radius is mature in contour for childhood; the ulnar epiphysis may just emerge.","Indian lens: carpal morphology is highly informative, but record any carpal–digit dissociation before assigning an overall age."],
+  6:["Childhood assessment now uses a balanced carpal-plus-RUS reading.","Carpals: most centres except pisiform are present or nearing visibility; radial-side centres may still be small.","Digits: epiphyses are broad, with increasingly flat articular and metaphyseal contours; no capping or fusion is expected.","Wrist: distal ulna often appears; radius and ulna remain widely open.","Indian/Asian caution: GP meta-analysis shows particular risk of apparent delay in Asian boys aged 6–9; use local evidence and clinical context."],
+  7:["Most non-pisiform carpals can now be inspected for shape rather than merely counted.","Carpals: scaphoid, trapezium and trapezoid enlarge; the pisiform is still usually absent.","Digits: epiphyses near metaphyseal width; margins are smooth with open, uniform physes.","Wrist: distal ulna becomes more reliable; radius/ulna shape should agree with digital maturity.","Indian lens: relatively delayed carpal age has been reported, more in boys; do not average segments blindly."],
+  8:["This remains a prepubertal pattern for most boys: broad epiphyses, open physes and no consistent sesamoid.","Carpals: seven centres are usually visible; pisiform is absent or only exceptionally early.","Digits: epiphyseal width approaches the metaphysis, with early contour modelling but no true capping.","Wrist: radius/ulna remain open and provide a cross-check rather than the dominant age.","Indian lens: BoneXpert India validation (920 children) showed larger error in boys at this age range; manual segment review remains important."],
+  9:["Pubertal onset can begin in early-maturing boys and may alter the expected pattern.","Carpals: pisiform may be visible in more advanced boys; seven carpals are typical.","Digits: epiphyses equal metaphyseal width; early contour modelling without definite capping.","Wrist: distal ulna is a more reliable cross-check; neither physis shows narrowing.","Indian lens: GP meta-analysis found apparent carpal delay in South Asian boys; TW3-RUS reduces observer variability in this age group."],
+  10:["The midchildhood pattern transitions toward puberty; sesamoid may appear in advanced boys.","Carpals: all eight may be present in advanced children; pisiform is the last expected.","Digits: epiphyses meet or slightly exceed metaphyseal width; very early rounding of articular contours.","Wrist: radius and ulna remain widely open; no narrowing is expected.","Indian lens: TW3-RUS was closest overall in the Pune cohort at this mid-childhood range; declare one method for serial follow-up."],
+  11:["Pubertal boys show capping; prepubertal boys still show broad epiphyses without definite cap morphology.","Carpals: complete in non-capping pattern; pisiform is expected by now in most.","Digits: thumb sesamoid usually visible in more advanced boys; phalangeal epiphyses may begin early curvature.","Wrist: distal radius and ulna remain open; no narrowing.","Indian lens: integrate bone age with clinical Tanner staging — BA alone cannot replace clinical examination for pubertal assessment."],
+  12:["Capping progresses across the short bones; pubertal tempo determines the precise picture.","Carpals: all eight present; no further dominant landmark from carpal inspection.","Digits: capping progresses from distal phalanges proximally; sesamoid is visible.","Wrist: radial capping begins; both forearm physes remain open.","Indian lens: in serial GH therapy monitoring (Bajpai AIIMS study), segment-level rather than whole-hand BA change was more informative."],
+  13:["Capping is prominent across the short bones; fusion generally has not progressed far.","Carpals: essentially adult in count and contour; do not let them dilute more active physeal information.","Digits: broad cap-shaped epiphyses, visible thumb sesamoid and open physes are typical.","Wrist: distal radius and ulna remain open; radial capping is a useful cross-check.","Indian lens: use RUS or bone-by-bone GP rather than carpal counting; note any premature distal-phalangeal union."],
+  14:["This often corresponds to peak pubertal skeletal change, with capping before widespread fusion.","Carpals: mature configuration; no meaningful age should be based on carpal appearance alone.","Digits: capping is marked; distal phalangeal physes may begin to narrow but many remain open.","Wrist: radial capping is clear and both distal forearm physes remain open.","Indian lens: growth potential remains but is changing rapidly; avoid adult-height prediction from BA without diagnosis-specific uncertainty."],
+  15:["The earliest clear unions in selected digits become more useful than carpal morphology.","Carpals: fully mature in appearance and no longer a fine age marker.","Digits: distal phalangeal union is visible or progressing; proximal phalangeal physes may begin union.","Wrist: distal radius and ulna remain open/capped and carry much of the remaining age information.","Indian lens: GP, TW3 and simplified systems can diverge in puberty; keep one declared method across follow-up."],
+  16:["Fusion progresses from the short bones toward a late-open distal radius.","Carpals: mature and non-discriminating.","Digits: distal and proximal phalangeal physes are largely fused; middle phalangeal union progresses.","Wrist: distal radius is often still visible and becomes the principal late-maturity ROI; ulna may be similarly open.","Indian lens: inspect the actual radius rather than accepting an automated mature output if the field of view is incomplete."],
+  17:["Most short-bone physes are fused, leaving the distal radius/ulna as the final informative region.","Carpals: mature, with no reliable discrimination from an 18-year standard.","Digits: phalangeal and metacarpal unions are complete or near complete.","Wrist: distal radial/ulnar physes are markedly narrowed, partially fused or completing fusion.","Indian/Asian caution: GP meta-analysis found apparent advancement in some Asian males at 17; never use this alone for legal majority."],
+  18:["A mature hand is expected, although the distal radius/ulna may be finishing fusion in some boys.","Carpals: adult morphology with no useful age progression.","Digits: epiphyseal fusion is complete; residual lines are scars, not evidence of open growth plates.","Wrist: confirm complete or near-complete distal radial/ulnar union; this sets a ceiling rather than an exact age.","Indian lens: do not declare chronological age ≥18 from the hand alone; use 'skeletally mature' and clinical/forensic protocols."],
+  19:["Skeletal maturity — same as 18-year Indian lens applies.","Carpals: fully adult; no further assessment possible from hand.","Digits: all physes fused.","Wrist: radial epiphyseal line may persist as a scar into adulthood — this is normal.","Indian lens: 'skeletally mature' is the appropriate reporting term; hand X-ray cannot distinguish 19 from 25 years."]
+};
+
+function renderIndia(age,sex){
+  const data = sex==='m' ? INDIA_MALE : INDIA_FEMALE;
+  const pts = data[age] || data[Math.min(age,18)] || [];
+  if(!pts.length) return '';
+  return `<div class="india-panel">
+    <div class="india-h">
+      <div class="india-title">🇮🇳 India Evidence Checkpoint — ${sex==='m'?'Male':'Female'} ${age}y</div>
+      <button class="india-toggle" onclick="this.closest('.india-panel').querySelector('.india-body').classList.toggle('open');this.textContent=this.closest('.india-panel').querySelector('.india-body').classList.contains('open')?'Hide':'Show'">Show</button>
+    </div>
+    <div class="india-body">
+      <ul class="india-pts">${pts.map(p=>`<li>${p}</li>`).join('')}</ul>
+    </div>
+  </div>`;
+}
+
+function parseBoneAge(ageStr){
+  // extract first number from age string like "6 Months", "2 Years", "11 Years 6 Months"
+  if(!ageStr) return 0;
+  const m = ageStr.match(/(\d+)/);
+  if(!m) return 0;
+  const n = parseInt(m[1]);
+  // if months
+  if(ageStr.toLowerCase().includes('month') && !ageStr.toLowerCase().includes('year')) return 0;
+  return n;
+}
+
+function renderTF(im,qi,ansObj){
+  if(!im.tf) return '';
+  const done = ansObj && ansObj['tf']!==undefined;
+  const correct = im.tf.a; // true or false
+  const opts=['True','False'];
+  return `<div class="tf-card">
+    <div class="mqh"><div class="tf-lbl">True / False — India Evidence</div><div class="tf-q">${im.tf.q}</div></div>
+    <div class="tf-opts">${opts.map((o,oi)=>{
+      let cl='tfo'+(done?' dis':'');
+      const isT = oi===0;
+      if(done){if(isT===correct)cl+=' cor'; else if(isT!==correct && (done && (ansObj['tf']==='T')===isT)) cl+=' wrg';}
+      return `<div class="${cl}" onclick="doTF(${qi},'${oi===0?'T':'F'}')"><span class="ol" style="width:16px;height:16px;font-size:10px">${oi===0?'T':'F'}</span><span>${o}</span></div>`;
+    }).join('')}</div>
+    <div class="q-eb${done?' show':''}" id="tf-eb${qi}">${im.tf.e}</div>
+  </div>`;
+}
+
+function renderAR(im,qi,ansObj){
+  if(!im.ar) return '';
+  const done = ansObj && ansObj['ar']!==undefined;
+  return `<div class="ar-card">
+    <div class="mqh"><div class="tf-lbl">Assertion – Reason</div></div>
+    <div style="padding:10px 14px 0">
+      <div class="ar-stmt"><b>Assertion (A):</b> ${im.ar.a}</div>
+      <div class="ar-stmt"><b>Reason (R):</b> ${im.ar.r}</div>
+    </div>
+    <div class="ar-opts">${im.ar.o.map((o,oi)=>{
+      let cl='aro'+(done?' dis':'');
+      if(done){if(oi===im.ar.ans)cl+=' cor'; else if(oi===ansObj['ar']&&oi!==im.ar.ans)cl+=' wrg';}
+      return `<div class="${cl}" onclick="doAR(${qi},${oi})"><span class="ol" style="font-size:10px">${'ABCD'[oi]}</span><span>${o}</span></div>`;
+    }).join('')}</div>
+    <div class="q-eb${done?' show':''}" id="ar-eb${qi}">${im.ar.e}</div>
+  </div>`;
+}
+
+function doTF(qi,val){
+  const im=IM[cur];if(!ans[im.id])ans[im.id]={};if(ans[im.id]['tf']!==undefined)return;
+  ans[im.id]['tf']=val;
+  const correct=im.tf.a;
+  document.querySelectorAll('#mqc .tfo').forEach((el,i)=>{
+    el.classList.add('dis');
+    if((i===0&&correct)||(i===1&&!correct))el.classList.add('cor');
+    else if((i===0&&!correct&&val==='T')||(i===1&&correct&&val==='F'))el.classList.add('wrg');
+  });
+  document.getElementById('tf-eb'+qi).classList.add('show');
+}
+
+function doAR(qi,oi){
+  const im=IM[cur];if(!ans[im.id])ans[im.id]={};if(ans[im.id]['ar']!==undefined)return;
+  ans[im.id]['ar']=oi;
+  document.querySelectorAll('#mqc .aro').forEach((el,i)=>{
+    el.classList.add('dis');
+    if(i===im.ar.ans)el.classList.add('cor');
+    else if(i===oi&&oi!==im.ar.ans)el.classList.add('wrg');
+  });
+  document.getElementById('ar-eb'+qi).classList.add('show');
+}
+
+// Render global notes
+function renderNotes(){
+  // Pearls
+  const pc=document.getElementById('pearls-container');
+  if(pc){pc.innerHTML=PEARLS.map((p,i)=>`<div class="pearl"><div class="pn">${i+1}</div><div class="pt">${p}</div></div>`).join('');}
+  // Global T/F
+  const tc=document.getElementById('global-tf-container');
+  if(tc){let html='';GLOBAL_TF.forEach((q,i)=>{
+    html+=`<div class="tf-card" style="margin-bottom:10px">
+      <div class="mqh"><div class="tf-lbl">True / False ${i+1} of ${GLOBAL_TF.length}</div><div class="tf-q">${q.q}</div></div>
+      <div class="tf-opts">
+        <div class="tfo" onclick="doGlobalTF(this,true,${q.a},'gtfe${i}')"><span class="ol" style="width:16px;height:16px;font-size:10px">T</span><span>True</span></div>
+        <div class="tfo" onclick="doGlobalTF(this,false,${q.a},'gtfe${i}')"><span class="ol" style="width:16px;height:16px;font-size:10px">F</span><span>False</span></div>
+      </div>
+      <div class="q-eb" id="gtfe${i}">${q.e}</div>
+    </div>`;
+  });tc.innerHTML=html;}
+  // Global A/R
+  const ac=document.getElementById('global-ar-container');
+  if(ac){let html='';GLOBAL_AR.forEach((q,i)=>{
+    html+=`<div class="ar-card" style="margin-bottom:10px">
+      <div class="mqh"><div class="tf-lbl">A–R ${i+1} of ${GLOBAL_AR.length}</div></div>
+      <div style="padding:10px 14px 0">
+        <div class="ar-stmt"><b>Assertion (A):</b> ${q.a}</div>
+        <div class="ar-stmt"><b>Reason (R):</b> ${q.r}</div>
+      </div>
+      <div class="ar-opts">${q.o.map((o,oi)=>`<div class="aro" onclick="doGlobalAR(this,${oi},${q.ans},'gare${i}')"><span class="ol" style="font-size:10px">${'ABCD'[oi]}</span><span>${o}</span></div>`).join('')}</div>
+      <div class="q-eb" id="gare${i}">${q.e}</div>
+    </div>`;
+  });ac.innerHTML=html;}
+}
+
+function doGlobalTF(el,val,correct,ebId){
+  const parent=el.closest('.tf-opts');
+  if(parent.querySelector('.dis'))return;
+  parent.querySelectorAll('.tfo').forEach((t,i)=>{
+    t.classList.add('dis');
+    if((i===0&&correct)||(i===1&&!correct))t.classList.add('cor');
+    else if((i===0&&!correct&&val)||(i===1&&correct&&!val))t.classList.add('wrg');
+  });
+  document.getElementById(ebId).classList.add('show');
+}
+function doGlobalAR(el,oi,ans,ebId){
+  const parent=el.closest('.ar-opts');
+  if(parent.querySelector('.dis'))return;
+  parent.querySelectorAll('.aro').forEach((t,ti)=>{
+    t.classList.add('dis');
+    if(ti===ans)t.classList.add('cor');
+    else if(ti===oi&&oi!==ans)t.classList.add('wrg');
+  });
+  document.getElementById(ebId).classList.add('show');
+}
+
+// Patch renderCase to include India panel + T/F + A/R
+const _origRender = renderCase;
+renderCase = function(){
+  _origRender();
+  const im=IM[cur];
+  const a=ans[im.id]||{};
+  const age=parseBoneAge(im.age);
+  const indiaHtml=renderIndia(age,'f');
+  const tfHtml=renderTF(im,IM.length,a);
+  const arHtml=renderAR(im,IM.length+1,a);
+  const extra=document.createElement('div');
+  extra.innerHTML=indiaHtml+tfHtml+arHtml;
+  const mqcEl=document.getElementById('mqc');
+  if(mqcEl){while(extra.firstChild)mqcEl.appendChild(extra.firstChild);}
+};
+
+document.addEventListener('DOMContentLoaded',()=>{
+  renderNotes();
+});
+// also call now if DOM already loaded
+if(document.readyState!=='loading'){renderNotes();}
+
+// Bind T/F and A/R to each case
+(function(){
+  const tfs=GIRLS_TF;
+  const ars=GIRLS_AR;
+  IM.forEach((im,i)=>{
+    if(tfs[i]) im.tf=tfs[i];
+    if(ars[i]) im.ar=ars[i];
+  });
+})();
+
+</script>
+      </div>
+      <div class="roilbl" style="margin-top:10px">
+        <span style="--c:#f59e0b">Carpal</span>
+        <span style="--c:#3b82f6">Digit/RUS</span>
+        <span style="--c:#6366f1">Radius/ulna</span>
+      </div>
+    </div>
+
+    <!-- Method comparison table -->
+    <div class="ncard" style="margin-bottom:18px;overflow-x:auto">
+      <h3>🔭 Six Method Comparison</h3>
+      <table class="mtbl">
+        <thead><tr><th>Method</th><th>Approach</th><th>Strengths</th><th>Cautions</th><th>Indian evidence</th></tr></thead>
+        <tbody>
+          <tr><td><b>Greulich–Pyle (GP)</b></td><td>Holistic sex-specific atlas; radius/ulna→carpals→metacarpals/phalanges</td><td>Fast, visual; broad 0–maturity coverage</td><td>Historic white US sample; observer variability; nearest-plate matching inadequate when segments disagree</td><td>Useful, but shows age/sex bias and relative carpal delay in Indian children [1,2,4]</td></tr>
+          <tr><td><b>TW3-RUS</b></td><td>Stage 13 bones A–I; sex-specific weights summed → RUS bone age</td><td>Reproducible; suitable for serial scoring</td><td>Slower; TW2 and TW3 differ — never mix versions</td><td>Closest overall in 851-child Pune study, especially girls and prepubertal boys</td></tr>
+          <tr><td><b>Gilsanz–Ratib (GR)</b></td><td>Idealised digital sex/age-specific atlas from 6 hand/wrist regions</td><td>High-quality evenly-spaced references; good digital visual teaching</td><td>Caucasian LA source; atlas matching; not an Indian norm</td><td>Best for pubertal boys in Shah et al. — do not generalise beyond similar settings</td></tr>
+          <tr><td><b>BoneXpert v3</b></td><td>Automated 21 tubular-bone estimate + separate carpal age; self-validation</td><td>Fast, repeatable, bone-level output; rejects risky images; GP and TW outputs available</td><td>Check software version/range; input sex; automated BA does not replace morphology review</td><td>Validated in 920 healthy Indian children; error larger in boys; GP50 best matched manual rating</td></tr>
+          <tr><td><b>Indian 3-bone</b></td><td>Radius + hamate + DP of middle finger; stages synthesised from GP/TW3</td><td>Samples late, carpal and digital maturation; quick and reproducible</td><td>Needs external multicentre validation; caution at reported outlier ages</td><td>RMSE ~0.6–0.7 y vs GP/TW in 493 films</td></tr>
+          <tr><td><b>digiBONE</b></td><td>Indian-domain CNNs for full hand, short bones, carpals and wrist; composite segmental GP prediction</td><td>Indian domain fine-tuning; interpretable asynchrony; segment-informed automation</td><td>2026 research framework; domain shift and local validation remain central</td><td>HCJBA composite MAD 4.75 mo boys, 4.93 mo girls</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 15 India pearls -->
+    <div class="ncard" style="margin-bottom:28px">
+      <h3>💎 15 India-Specific Teaching Pearls</h3>
+      <div id="pearls-container"></div>
+    </div>
+
+    <!-- True/False quiz section -->
+    <div class="ncard">
+      <h3>✅ True / False Practice — India Evidence</h3>
+      <div id="global-tf-container"></div>
+    </div>
+
+    <!-- Assertion-Reason practice -->
+    <div class="ncard" style="margin-top:18px">
+      <h3>🔗 Assertion-Reason Practice — Bone Age Methods</h3>
+      <div id="global-ar-container"></div>
+    </div>
+  </div>
+</div>
+
 </main>
 <footer>Greulich-Pyle Atlas — Female Standards · Pediatric Bone Age Trainer</footer>
 <script>
